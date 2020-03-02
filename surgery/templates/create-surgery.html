@@ -18,15 +18,7 @@
       </div>
     </div>
   </section>
-  <section class="panel panel-default">
-    <div class="panel-body">
-      <div class="form-row">
-        <div class="col-sm-6 pull-right">
-          {{ master_form.surgery_name|as_crispy_field}}
-        </div>
-      </div>
-    </div>
-  </section>
+          {{ master_form.surgery_name}}
 
   <section class="panel panel-default">
     <div class="panel-body">
@@ -56,7 +48,7 @@
               {% endfor %}
               {% endif %}
               {{ field.errors.as_ul }}
-              {{ field|as_crispy_field }}
+              {{ field }}
             </td>
           </tr>
           {% endfor %}
