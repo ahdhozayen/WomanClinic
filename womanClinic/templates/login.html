@@ -1,0 +1,76 @@
+{% load i18n %}
+{% load static %}
+{% load l10n %}
+{% get_current_language as LANGUAGE_CODE %}
+{% get_current_language_bidi as LANGUAGE_BIDI %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>عيادة النسا {% trans "تسجيل الدخول" %}</title>
+
+  <!-- Bootstrap Core CSS -->
+  <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+  <!-- MetisMenu CSS -->
+  <link href="{% static 'vendor/metisMenu/metisMenu.min.css' %}" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <link href="{% static 'dist/css/sb-admin-2.css' %}" rel="stylesheet">
+
+  <!-- Morris Charts CSS -->
+  <link href="{% static 'vendor/morrisjs/morris.css' %}" rel="stylesheet">
+
+  <!-- Custom Fonts -->
+  <link href="{% static 'vendor/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+
+</head>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-4 mx-md-auto">
+        <div class="login-panel card">
+          <div class="card-header">
+            <h3 class="card-title">تسجيل الدخول</h3>
+          </div>
+          <div class="card-body">
+            <form method="post">
+              {% csrf_token %}
+              {% include 'messages.html' %}
+              <fieldset>
+                <div class="form-group">
+                  <input class="form-control" placeholder="Username" name="username" type="text" autofocus>
+                </div>
+                <div class="form-group">
+                  <input class="form-control" placeholder="Password" name="password" type="password" value="">
+                </div>
+                <button type="submit" class="btn btn-lg btn-success btn-block">دخول</button>
+              </fieldset>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- jQuery -->
+  <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+
+  <!-- Bootstrap Core JavaScript -->
+  <script src="{% static 'vendor/popper/popper.min.js' %}"></script>
+  <script src="{% static 'vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+
+  <!-- Metis Menu Plugin JavaScript -->
+  <script src="{% static 'vendor/metisMenu/metisMenu.min.js' %}"></script>
+
+  <!-- Custom Theme JavaScript -->
+  <script src="{% static 'dist/js/sb-admin-2.js' %}"></script>
+</body>
+
+</html>

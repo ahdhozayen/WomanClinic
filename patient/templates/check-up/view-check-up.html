@@ -1,0 +1,119 @@
+{% extends 'master.html'%}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load i18n %}
+{% load l10n %}
+{% block body %}
+<!-- end Header -->
+<form id="my_form" method="POST">
+  {% csrf_token %}
+  {% include 'messages.html' %}
+  <section class="panel panel-default">
+    <div class="panel-body">
+      <header class="font-bold pull-left">{{ page_title }}</header>
+      <div class="doc-buttons pull-right">
+        <a href="{% url 'patient:all-checkup' patient_id=patient_id %}" class="btn btn-s-md btn-default">{% trans "الغاء" %}</a>
+      </div>
+    </div>
+  </section>
+  <section class="panel panel-default">
+    <div class="panel-body">
+      <div class="form-row">
+        <div class="col-sm-3 pull-right">
+          {{ check_up_form.week_number|as_crispy_field}}
+        </div>
+        <div class="col-sm-3 pull-right">
+          {{ check_up_form.complain|as_crispy_field}}
+        </div>
+        <div class="col-sm-3 pull-right">
+          {{ check_up_form.visit_date|as_crispy_field}}
+        </div>
+        <div class="col-sm-3 pull-right">
+          {{ check_up_form.next_visit|as_crispy_field}}
+        </div>
+        <div class="col-sm-3 pull-right">
+          {{ check_up_form.blood_presure|as_crispy_field}}
+        </div>
+        <div class="col-sm-3 pull-right">
+          {{ check_up_form.protine|as_crispy_field}}
+        </div>
+        <div class="col-sm-3 pull-right">
+          {{ check_up_form.rbs|as_crispy_field}}
+        </div>
+        <div class="col-sm-3 pull-right">
+          {{ check_up_form.hemoglobin|as_crispy_field}}
+        </div>
+        <div class="col-sm-3 pull-right">
+          {{ check_up_form.placenta|as_crispy_field}}
+        </div>
+        <div class="col-sm-3 pull-right">
+          {{ check_up_form.water|as_crispy_field}}
+        </div>
+        <div class="col-sm-3 pull-right">
+          {{ check_up_form.fetal_position|as_crispy_field}}
+        </div>
+        <div class="col-sm-3 pull-right">
+          {{ check_up_form.fetal_movement|as_crispy_field}}
+        </div>
+        <div class="col-sm-3 pull-right">
+          {{ check_up_form.fetal_heart_rate|as_crispy_field}}
+        </div>
+        <div class="col-sm-3 pull-right">
+          {{ check_up_form.weight|as_crispy_field}}
+        </div>
+        <div class="col-sm-3 pull-right">
+          {{ check_up_form.exit_nature|as_crispy_field}}
+        </div>
+        <div class="col-sm-3 pull-right">
+          {{ check_up_form.exit_desc|as_crispy_field}}
+        </div>
+        <div class="col-sm-3 pull-right">
+          {{ check_up_form.surgery|as_crispy_field}}
+        </div>
+        <div class="col-sm-3 pull-right">
+          {{ check_up_form.surgery_desc|as_crispy_field}}
+        </div>
+        <div class="col-sm-3 pull-right">
+          {{ check_up_form.calcsan_sarf_date|as_crispy_field}}
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="panel panel-default">
+    <div class="table-responsive">
+      <table class="table table-hover" id="dataTable">
+        <thead style="background-color: #9d9858b3;">
+          <tr role="row">
+            <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">#</th>
+            <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">الدواء</th>
+            <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">تاريخ الصرف</th>
+            <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">الجرعة</th>
+            <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">ملاحظات</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for check in list_patient_med %}
+          <tr>
+            <th scope="row">{{ forloop.counter }}</th>
+            <td>{{check.medicine}}</td>
+            <td>{{check.issue_date}}</td>
+            <td>{{check.dose}}</td>
+            <td>{{check.notes}}</td>
+          </tr>
+          {% endfor %}
+      </table>
+    </div>
+  </section>
+  <section class="panel panel-default">
+    <div class="row">
+    </div>
+  </section>
+  <section class="panel panel-default">
+    <div class="panel-body">
+      <header class="font-bold pull-left"></header>
+      <div class="doc-buttons pull-right">
+      </div>
+    </div>
+  </section>
+</form>
+{% endblock body %}

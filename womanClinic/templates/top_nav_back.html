@@ -1,0 +1,59 @@
+{% load i18n %}
+{% load l10n %}
+{% load static %}
+
+<div class="navbar-header aside-md" style="float:right ;">
+  <a class="btn btn-link visible-xs" data-toggle="class:nav-off-screen,open" data-target="#nav,html">
+    <i class="fa fa-bars"></i>
+  </a>
+  <a href="#" class="navbar-brand" data-toggle="fullscreen">
+    <img style="max-height:50%;max-width: 50%;" src="{% static 'img/gyn.png' %}"></a>
+  <a class="btn btn-link visible-xs" data-toggle="dropdown" data-target=".nav-user">
+    <i class="fa fa-cog"></i>
+  </a>
+</div>
+<ul class="nav navbar-nav navbar-right hidden-xs nav-user" style="padding-left:40px;">
+  <li class="dropdown">
+    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+      <span class="profile-ava">
+        {% trans 'مرحبا' %} &emsp;
+      </span>
+      <span class="username">{{user.username|upper}}</span>
+      <b class="caret"></b>
+    </a>
+
+    <ul class="dropdown-menu animated fadeInLeft">
+      <span class="arrow top"></span>
+      {% if user.is_superuser %}
+      <li> <a href="{% url 'home:new-user'%}">{% trans "اضافة مستخدم جديد" %}</a> </li>
+      {% endif %}
+      <li class="divider"></li>
+      <li>
+        {% if user.is_authenticated %}
+        <a href="#" data-toggle="modal" data-target="#logoutModal">{% trans "Log out" %}</a>
+        {% else %}
+        <a class="dropdown-item" href="#">{% trans "Log in" %}</a>
+        {% endif %}
+      </li>
+    </ul>
+  </li>
+
+</ul>
+<!-- Logout Modal-->
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">{% trans "واثق من الخروج؟" %}</h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true"></span>
+        </button>
+      </div>
+      <div class="modal-body">{% trans "اذا اردت الخروج من البرنامج اضغط خروج" %}</div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" data-dismiss="modal">{% trans "الغاء" %}</button>
+        <a class="btn btn-info" href="{% url 'home:logout'%}">{% trans "خروج" %}</a>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,40 @@
+{% extends 'master.html'%}
+{% load static %}
+{% load i18n %}
+{% load l10n %}
+{% block body %}
+
+<div class="col-xl-12">
+  <div class="card">
+    <div class="card-header"><strong>{{ page_title }}</strong></div>
+    <!-- /.card-header -->
+    <div class="card-body">
+      <div class="table-responsive">
+        <table id="consultant_list_tbl" class="table table-striped table-bordered table-hover">
+          <thead>
+            <tr role="row">
+              <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"></th>
+              <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">التشخيص بالعربي</th>
+              <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">التشخيص بالانجليزي</th>
+              <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"></th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {% for gyno in all_gyno %}
+            <tr>
+              <th scope="row">{{ forloop.counter }}</th>
+              <td>{{gyno.diagnosis_en}}</td>
+              <td>{{gyno.diagnosis_ar}}</td>
+              <td><a href="{% url 'patient:update-gyno' pk=gyno.id %}">{% trans "تعديل" %}</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+      </div>
+      <!-- /.table-responsive -->
+    </div>
+    <!-- /.card-body -->
+  </div>
+  <!-- /.panel -->
+</div>
+{% endblock body %}

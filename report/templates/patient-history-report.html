@@ -1,0 +1,164 @@
+{% extends 'master.html'%}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load i18n %}
+{% load l10n %}
+{% block body %}
+
+<section class="panel panel-default">
+  <div class="panel-body">
+    <header class="font-bold pull-left">{{ page_title }}</header>
+    <div class="m-b-sm">
+      <div class="btn-group">
+      </div>
+      <div class="btn-group">
+        <a href="{% url 'report:rep-all-patients' %}" class="btn btn-default">الرجوع</a>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="panel panel-default">
+  <div class="panel-body">
+    <div class="form-group">
+      <div class="form-group">
+        <div class="col-sm-3 pull-right">
+          <label>الأسم : </label>
+          <strong>{{ required_patient.name}}</strong>
+        </div>
+        <div class="col-sm-3 pull-right">
+          <label>العنوان : </label>
+          {{ required_patient.address}}
+        </div>
+        <div class="col-sm-3 pull-right">
+          <label>الوظيفة : </label>
+          {{ required_patient.job}}
+        </div>
+        <div class="col-sm-3 pull-right">
+          <label>الهاتف : </label>
+          {{ required_patient.phone}}
+        </div>
+        <div class="col-sm-3 pull-right">
+          <label>المحمول : </label>
+          {{ required_patient.mobile}}
+        </div>
+        <div class="col-sm-3 pull-right">
+          <label>تاريخ الميلاد : </label>
+          {{ required_patient.date_of_birth}}
+        </div>
+        <div class="col-sm-3 pull-right">
+          <label>الرقم التأميني : </label>
+          {{ required_patient.insurance_number}}
+        </div>
+        <div class="col-sm-3 pull-right">
+          <label>رقم الدخول : </label>
+          {{ required_patient.entrance_number}}
+        </div>
+        <div class="col-sm-3 pull-right">
+          <label>رقم المستشفي الموحد : </label>
+          {{ required_patient.hospital_number}}
+        </div>
+        <div class="col-sm-3 pull-right">
+          <label>رقم المريضة : </label>
+          {{ required_patient.patient_number}}
+        </div>
+        <div class="col-sm-3 pull-right">
+          <label>الغرفة : </label>
+          {{ required_patient.room}}
+        </div>
+        <div class="col-sm-3 pull-right">
+          <label>القسم : </label>
+          {{ required_patient.hospital_section}}
+        </div>
+        <div class="col-sm-3 pull-right">
+          <label>قرار صرف كلكسان : </label>
+          {{ required_patient.clexane_order_number}}
+        </div>
+        <div class="col-sm-3 pull-right">
+          <label>استشاري : </label>
+          {% if required_patient.consultant_flag %}
+          &#10004;
+          {% else %}
+          -
+          {% endif %}
+        </div>
+        <div class="col-sm-3 pull-right">
+          <label>محول من : </label>
+          {% if required_patient.transferred_from == 'insurance' %}
+          عيادة تأمين
+          {% elif required_patient.transferred_from == 'consultant' %}
+          عيادة استشاري
+          {% elif required_patient.transferred_from == 'outpatient' %}
+          طبيب خارجي
+          {% else %}
+          المريض نفسه
+          {% endif %}
+        </div>
+        <div class="col-sm-3 pull-right">
+          <label>ملاحظات : </label>
+          {{ required_patient.notes}}
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+<section class="panel panel-default">
+  <table class="table table-hover" id="dataTable">
+    <thead style="background-color: #9d9858b3;">
+      <tr role="row">
+        <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">#</th>
+        <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">متابعة الاسبوع</th>
+        <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">الدواء</th>
+        <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">تاريخ الصرف</th>
+        <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">الجرعة</th>
+        <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">ملاحظات</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for check in patient_medicine %}
+      <tr>
+        <th scope="row">{{ forloop.counter }}</th>
+        <td>{{check.check_up.week_number}}</td>
+        <td>{{check.medicine}}</td>
+        <td>{{check.issue_date}}</td>
+        <td>{{check.dose}}</td>
+        <td>{{check.notes}}</td>
+      </tr>
+      {% endfor %}
+  </table>
+</section>
+<section class="panel panel-default">
+  <table class="table table-hover" id="dataTable">
+    <thead style="background-color: #9d9858b3;">
+      <tr role="row">
+        <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">#</th>
+        <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">تاريخ بداية الاجازة</th>
+        <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">تاريخ نهاية الاجازة</th>
+        <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">عدد ايام الاجازة</th>
+        <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">ملاحظات</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for check in patient_days_off %}
+      <tr>
+        <th scope="row">{{ forloop.counter }}</th>
+        <td>{{check.date_start}}</td>
+        <td>{{check.date_end}}</td>
+        <td>{{check.num_of_days}}</td>
+        <td>{{check.notes}}</td>
+      </tr>
+      {% endfor %}
+  </table>
+</section>
+<section class="panel panel-default">
+  <div class="row">
+  </div>
+</section>
+<section class="panel panel-default">
+  <div class="panel-body">
+    <header class="font-bold pull-left"></header>
+    <div class="doc-buttons pull-right">
+    </div>
+  </div>
+</section>
+{% endblock body %}

@@ -1,0 +1,102 @@
+{% load i18n %}
+{% load l10n %}
+{% load static %}
+
+<aside id="nav" class="bg-light lter b-r aside-md hidden-print">
+  <section class="vbox">
+    <section class="w-f scrollable">
+      <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 142px;">
+        <div class="slim-scroll" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="5px" data-color="#333333" style="overflow: hidden; width: auto; height: 142px;">
+          <nav class="nav-primary hidden-xs">
+            <ul class="nav">
+              <li>
+                <a href="{% url 'patient:all-patients'%}" class="active">
+                  <i class="fa fa-dashboard icon pull-right">
+                    <b class="bg-dark"></b>
+                  </i>
+                  <span>{% trans 'الرئيسية'%}</span> </a>
+              </li>
+              <!-- بيانات اساسية -->
+              <li>
+                <a href="#">
+                  <i class="fa fa-th-large icon pull-right">
+                    <b class="bg-dark"></b>
+                  </i>
+                  <span>بيانات اساسية
+                    <span class="pull-left">
+                      <i class="fa fa-angle-down text" style="text-align:right"></i>
+                      <i class="fa fa-angle-up text-active"></i></span></span>
+                </a>
+                <ul class="nav lt">
+                  <li> <a href="{% url 'patient:create-patient'%}">
+                      <i class="fa fa-angle-left"></i>
+                      <span>تسجيل بيانات المرضي</span> </a>
+                  </li>
+                  <li> <a href="{% url 'pharmacy:all-medicines'%}">
+                      <i class="fa fa-angle-left"></i>
+                      <span>تسجيل الادوية</span> </a>
+                  </li>
+                  <li> <a href="{% url 'patient:all-gynos'%}">
+                      <i class="fa fa-angle-left"></i>
+                      <span>تشخيص امراض النسا</span> </a>
+                  </li>
+                  <li> <a href="{% url 'surgery:list-surgery-types'%}">
+                      <i class="fa fa-angle-left"></i>
+                      <span>بيانات عمليات النسا</span> </a>
+                  </li>
+                  <li> <a href="{% url 'surgery:list-surgery-doctors'%}">
+                      <i class="fa fa-angle-left"></i>
+                      <span>قاعدة بيانات الجراحين</span> </a>
+                  </li>
+                </ul>
+              </li>
+              <!-- نهاية بيانات اساسية -->
+              <!-- شاشة المتابعات -->
+              <li>
+                <a>
+                  <i class="fa fa-group icon pull-right">
+                    <b class="bg-dark"></b> </i>
+                  <span>المتابعات<span class="pull-left">
+                      <i class="fa fa-angle-down text"></i>
+                      <i class="fa fa-angle-up text-active"></i>
+                    </span></span>
+                  </a>
+                <ul class="nav lt">
+                  <li>
+                    <a href="{% url 'patient:all-patients'%}">
+                      <i class="fa fa-angle-left"></i>
+                      <span>متابعة عامة</span>
+                    </a>
+                  </li>
+                  <li> <a href="{% url 'patient:all-con-patients'%}">
+                      <i class="fa fa-angle-left"></i>
+                      <span>متابعة الاستشاري</span>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <!-- نهاية المتابعات -->
+              <!-- شاشات التقارير -->
+              <li>
+                <a>
+                  <i class="fa fa-file-text icon pull-right">
+                    <b class="bg-dark"></b> </i>
+                  <span>التقارير<span class="pull-left">
+                      <i class="fa fa-angle-down text"></i>
+                      <i class="fa fa-angle-up text-active"></i>
+                    </span></span> </a>
+                <ul class="nav lt">
+                  <li> <a href="{% url 'report:rep-dashboard' %}">
+                      <i class="fa fa-angle-left"></i>
+                      <span>تقارير</span> </a>
+                  </li>
+                </ul>
+              </li>
+              <!-- نهاية التقارير -->
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </section>
+  </section>
+</aside>

@@ -1,0 +1,103 @@
+{% extends 'master.html'%}
+{% load static %}
+{% load i18n %}
+{% load l10n %}
+{% block body %}
+<section class="panel panel-default">
+  <div class="panel-body">
+    <header class="panel-heading font-bold pull-left">{{ page_title }}</header>
+  </div>
+</section>
+<!-- end Header -->
+
+<section class="panel panel-default">
+  <div class="table-responsive">
+    <section class="panel panel-default">
+      <div class="row m-l-none m-r-none bg-light lter">
+        <div class="col-sm-6 col-md-4 padder-v b-r b-light">
+          <span class="fa-stack fa-2x pull-left m-r-sm">
+            <i class="fa fa-circle fa-stack-2x text-info"></i>
+            <i class="fa fa-male fa-stack-1x text-white"></i>
+          </span>
+          <a class="clear" href="{% url 'report:rep-all-patients' %}">
+            <span class="h3 block m-t-xs">
+              <strong>{{patient_count}}</strong>
+            </span>
+            <small class="text-muted text-uc">اجمالي عدد المريضات</small>
+          </a>
+        </div>
+        <div class="col-sm-6 col-md-4 padder-v b-r b-light">
+          <span class="fa-stack fa-2x pull-left m-r-sm">
+            <i class="fa fa-circle fa-stack-2x text-warning"></i>
+            <i class="fa fa-user-md fa-stack-1x text-white"></i>
+          </span>
+          <a class="clear" href="{% url 'report:total-patients-details' %}">
+            <span class="h3 block m-t-xs">
+              <strong id="bugs">{{patients_consult_count}}</strong>
+            </span>
+            <small class="text-muted text-uc">اجمالي مريضات الأستشاري</small>
+          </a>
+        </div>
+        <div class="col-sm-6 col-md-4 padder-v b-r b-light">
+          <span class="fa-stack fa-2x pull-left m-r-sm">
+            <i class="fa fa-circle fa-stack-2x text-danger"></i>
+            <!-- <i class="fa fa-fire-extinguisher fa-stack-1x text-white"></i> -->
+            <i class="fa fa-medkit fa-stack-1x text-white"></i>
+          </span>
+          <a class="clear" href="#">
+            <span class="h3 block m-t-xs">
+              <strong id="firers">{{patients_clexane_count}}</strong>
+            </span>
+            <small class="text-muted text-uc">اجمالي مريضات الكلكسان</small>
+          </a>
+        </div>
+      </div>
+    </section>
+    <section class="panel panel-default">
+      <div class="table-responsive">
+        <section class="panel panel-default">
+          <canvas id="myChart"></canvas>
+        </section>
+      </div>
+    </section>
+  </div>
+</section>
+
+{% endblock body %}
+{% block js %}
+<script>
+  var endpoint = '/report/patient/api/'
+  var char_data = []
+  var char_labels = []
+  $.ajax({
+    method: "GET",
+    url: endpoint,
+    success: function(repContext) {
+      char_labels = {{labels}}
+      char_data = {{chart_data}}
+      var ctx = document.getElementById('myChart').getContext('2d');
+      var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: char_labels,
+          datasets: [{
+            barPercentage: 0.5,
+            label: 'بيانات المريضات',
+            data: char_data,
+          }]
+        }
+      })
+      options: {
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        }
+      }
+    }
+  });
+</script>
+
+{% endblock js %}

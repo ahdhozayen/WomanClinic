@@ -1,0 +1,44 @@
+{% extends 'master.html'%}
+{% load static %}
+{% load i18n %}
+{% load l10n %}
+{% block body %}
+
+<div class="col-xl-12">
+  <div class="card">
+    <div class="card-header"><strong>{{ page_title }}</strong></div>
+    <!-- /.card-header -->
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered table-hover">
+          <thead>
+            <tr role="row">
+              <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"></th>
+              <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">الاسم العلمي</th>
+              <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">الاسم التجاري</th>
+              <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">البديل الاول</th>
+              <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">البديل الثاني</th>
+              <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"></th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {% for medicine in all_medicines %}
+            <tr>
+              <th scope="row">{{ forloop.counter }}</th>
+              <td>{{medicine.scientific_name}}</td>
+              <td>{{medicine.trade_name}}</td>
+              <td>{{medicine.alternate1}}</td>
+              <td>{{medicine.alternate2}}</td>
+              <td><a href="{% url 'pharmacy:update-medicine' pk=medicine.id %}">{% trans "تعديل" %}</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+      </div>
+      <!-- /.table-responsive -->
+    </div>
+    <!-- /.card-body -->
+  </div>
+  <!-- /.panel -->
+</div>
+{% endblock body %}

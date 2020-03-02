@@ -1,0 +1,115 @@
+{% extends 'master.html'%}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load i18n %}
+{% load l10n %}
+{% block body %}
+
+<section class="panel panel-default">
+  <div class="panel-body">
+    <header class="font-bold pull-left">{{ page_title }}</header>
+    <div class="m-b-sm">
+      <div class="btn-group">
+        <a href="{% url 'patient:create-days-off' patient_id=patient_id  %}" class="btn btn-default">تسجيل اجازات للمريضة</a>
+        <a href="{% url 'surgery:create-patient-surgery' patient_id=patient_id  %}" class="btn btn-default">عمليات نسا</a>
+        <a href="{% url 'patient:all-delivery' pk=patient_id %}" class="btn btn-default">ولادة</a>
+        <a href="{% url 'patient:all-checkup' patient_id=patient_id %}" class="btn btn-default">متابعات المريضة</a>
+      </div>
+      <div class="btn-group">
+        <a href="{% url 'patient:update-patient' pk=patient_id %}" class="btn btn-default">تعديل</a>
+        <a href="{% url 'patient:all-patients' %}" class="btn btn-default">الرجوع</a>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="panel panel-default">
+  <div class="panel-body">
+    <div class="form-group">
+      <div class="form-group">
+        <div class="col-sm-6 pull-right">
+          {{ patient_form.name|as_crispy_field}}
+        </div>
+        <div class="col-sm-6 pull-right">
+          {{ patient_form.address|as_crispy_field}}
+        </div>
+        <div class="col-sm-6 pull-right">
+          {{ patient_form.job|as_crispy_field}}
+        </div>
+        <div class="col-sm-6 pull-right">
+          {{ patient_form.phone|as_crispy_field}}
+        </div>
+        <div class="col-sm-6 pull-right">
+          {{ patient_form.mobile|as_crispy_field}}
+        </div>
+        <div class="col-sm-6 pull-right">
+          {{ patient_form.date_of_birth|as_crispy_field}}
+        </div>
+        <div class="col-sm-3 pull-right">
+          {{ patient_form.insurance_number|as_crispy_field}}
+        </div>
+        <div class="col-sm-3 pull-right">
+          {{ patient_form.entrance_number|as_crispy_field}}
+        </div>
+        <div class="col-sm-3 pull-right">
+          {{ patient_form.hospital_number|as_crispy_field}}
+        </div>
+        <div class="col-sm-3 pull-right">
+          {{ patient_form.patient_number|as_crispy_field}}
+        </div>
+        <div class="col-sm-4 pull-right">
+          {{ patient_form.room|as_crispy_field}}
+        </div>
+        <div class="col-sm-4 pull-right">
+          {{ patient_form.hospital_section|as_crispy_field}}
+        </div>
+        <div class="col-sm-4 pull-right">
+          {{ patient_form.clexane_order_number|as_crispy_field}}
+        </div>
+        <div class="col-sm-4 pull-right">
+          {{ patient_form.consultant_flag|as_crispy_field}}
+        </div>
+        <div class="col-sm-4 pull-right">
+          {{ patient_form.transferred_from|as_crispy_field}}
+        </div>
+        <div class="col-sm-4 pull-right">
+          {{ patient_form.notes|as_crispy_field}}
+        </div>
+        <div class="col-sm-4 pull-right">
+          {{ patient_form.entrance_date|as_crispy_field}}
+        </div>
+        <div class="col-sm-4 pull-right">
+          {{ patient_form.exit_date|as_crispy_field}}
+        </div>
+        <div class="col-sm-4 pull-right">
+          {{ patient_form.patient_type|as_crispy_field}}
+        </div>
+      </div>
+    </div>
+    <section class="panel panel-default">
+      <table class="table table-hover" id="dataTable">
+        <thead style="background-color: #9d9858b3;">
+          <tr role="row">
+            <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">#</th>
+            <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">اسم المرفق</th>
+            <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">المرفقات</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for att in patient_attachments %}
+          <tr>
+            <th scope="row">{{ forloop.counter }}</th>
+            <td>{{att.attachment_name}}</td>
+            <td><a href="{{media_url}}{{att.attachment}}" target="_blank"><img src="{{media_url}}{{att.attachment}}"  alt="" width="150px;" height="150px;"></a></td>
+          </tr>
+          {% endfor %}
+      </table>
+    </section>
+  </div>
+</section>
+<div class="col-12 grid-margin stretch-card">
+  <div class="card">
+    <div class="card-body">
+    </div>
+  </div>
+</div>
+{% endblock body %}

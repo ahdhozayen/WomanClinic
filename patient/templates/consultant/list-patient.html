@@ -1,0 +1,50 @@
+{% extends 'master.html'%}
+{% load static %}
+{% load i18n %}
+{% load l10n %}
+{% block body %}
+
+<div class="col-xl-12">
+  <div class="card">
+    <div class="card-header"><strong>{{ page_title }}</strong></div>
+    <!-- /.card-header -->
+    <div class="card-body">
+      <div class="table-responsive">
+        <table id="consultant_list_tbl" class="table table-striped table-bordered table-hover">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>اسم المريضة</th>
+              <th>رقم المريضة</th>
+              <th>الرقم التأميني</th>
+              <th>تاريخ الميلاد</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for patient in all_patients %}
+            <tr data-index="{{ forloop.counter }}">
+              <td style="">{{ forloop.counter }}</td>
+              <td style=""><a href="{% url 'patient:view-patient' pk=patient.id %}">{{patient.name}}</a></td>
+              <td style="">{{patient.patient_number}}</td>
+              <td style="">{{patient.insurance_number}}</td>
+              <td style="">{{patient.date_of_birth}}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <!-- /.table-responsive -->
+    </div>
+    <!-- /.card-body -->
+  </div>
+  <!-- /.panel -->
+</div>
+{% endblock body %}
+
+{% block js%}
+<script>
+  $(document).ready(function() {
+    $('#consultant_list_tbl').DataTable();
+  });
+</script>
+{% endblock js%}

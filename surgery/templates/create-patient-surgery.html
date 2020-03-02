@@ -1,0 +1,93 @@
+{% extends 'master.html'%}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load i18n %}
+{% load l10n %}
+{% block body %}
+
+<form id="my_form" method="POST" enctype="multipart/form-data">
+  {% csrf_token %}
+  {% include 'messages.html' %}
+
+  <section class="panel panel-default">
+    <div class="panel-body">
+      <header class="font-bold pull-left">{{ page_title }}</header>
+      <div class="doc-buttons pull-right">
+        <button type="submit" class="btn btn-s-md btn-success">حفظ</button>
+        <a href="{% url 'patient:view-patient' pk=patient_id %}" class="btn btn-s-md btn-default">{% trans "الغاء" %}</a>
+      </div>
+    </div>
+  </section>
+  <section class="panel panel-default">
+    <div class="panel-body">
+      <div class="form-row">
+        <div class="col-sm-6 pull-right">
+          {{ patient_surgery_form.surgery_name|as_crispy_field}}
+        </div>
+        <div class="col-sm-6 pull-right">
+          {{ patient_surgery_form.surgery_doctor|as_crispy_field}}
+        </div>
+        <div class="col-sm-6 pull-right">
+          {{ patient_surgery_form.surgery_date|as_crispy_field}}
+        </div>
+        <div class="col-sm-6 pull-right">
+          {{ patient_surgery_form.exit_date|as_crispy_field}}
+        </div>
+        <div class="col-sm-12 pull-right">
+          {{ patient_surgery_form.case_progress|as_crispy_field}}
+        </div>
+        <div class="col-sm-12 pull-right">
+          {{ patient_surgery_form.final_diagnosis|as_crispy_field}}
+        </div>
+        <div class="col-sm-12 pull-right">
+          {{ patient_surgery_form.recomendations|as_crispy_field}}
+        </div>
+      </div>
+      <section class="panel panel-default">
+        <table class="table table-bordered dataTable no-footer" id="dataTable" role="grid" aria-describedby="dataTable_info" style="width: 100%; overflow-x:auto;" width="100%" cellspacing="0">
+          <thead style="background-color: #9d9858b3;">
+            <tr role="row">
+              <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">#</th>
+              <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">طبيعة العملية</th>
+              <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">اسم الجراح</th>
+              <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">تاريخ العملية</th>
+              <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">تاريخ الخروج</th>
+              <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">تطور الحالة</th>
+              <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">التشخيص النهائي</th>
+              <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">توصيات</th>
+              <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"></th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for patient_surgery in list_patient_surgery %}
+            <tr>
+              <th scope="row">{{ forloop.counter }}</th>
+              <td>{{patient_surgery.surgery_name}}</td>
+              <td>{{patient_surgery.surgery_doctor}}</td>
+              <td>{{patient_surgery.surgery_date}}</td>
+              <td>{{patient_surgery.exit_date}}</td>
+              <td>{{patient_surgery.case_progress}}</td>
+              <td>{{patient_surgery.final_diagnosis}}</td>
+              <td>{{patient_surgery.recomendations}}</td>
+              <td>تعديل</td>
+            </tr>
+            {% endfor %}
+        </table>
+      </section>
+    </div>
+  </section>
+  <section class="panel panel-default">
+    <div class="row">
+    </div>
+  </section>
+  <section class="panel panel-default">
+    <div class="panel-body">
+      <header class="font-bold pull-left"></header>
+      <div class="doc-buttons pull-right">
+      </div>
+    </div>
+  </section>
+</form>
+
+
+{% endblock body %}

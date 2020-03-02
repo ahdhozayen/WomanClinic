@@ -1,0 +1,44 @@
+{% extends 'master.html'%}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load i18n %}
+{% load l10n %}
+{% block body %}
+<!-- end Header -->
+<section class="panel panel-default">
+  <div class="table-responsive">
+    <table class="table table-bordered dataTable no-footer" id="dataTable" role="grid" aria-describedby="dataTable_info" style="overflow-x:auto;" width="100%" cellspacing="0">
+      <thead style="background-color: #9d9858b3;">
+        <tr role="row">
+          <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">ترتيب الحمل</th>
+          <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">بيانات الحمل</th>
+          <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">نوع الولادة</th>
+          <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">مكان الولادة</th>
+          <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">تاريخ الولادة</th>
+          <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">نوع التخدير</th>
+          <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">دكتور التخدير</th>
+          <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">abo rh</th>
+          <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">fetal sex</th>
+          <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">lnmp</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for delivery in patient_delivery %}
+        <tr>
+          <th scope="row">{{ forloop.counter }}</th>
+          <td>{{delivery.description}}</td>
+          <td>{% if delivery.type == 'c'%}قيصري {% else %} طبيعي {% endif %}</td>
+          <td>{{delivery.place}}</td>
+          <td>{{delivery.date}}</td>
+          <td>{% if delivery.anesthesia_type=='T' %} Total anesthesia {% elif delivery.anesthesia_type=='H' %} Half anesthesia {% else %} Local anesthesia {% endif %}</td>
+          <td>{{delivery.anesthesia_doc}}</td>
+          <td>{{delivery.abo_rh}}</td>
+          <td>{% if delivery.fetal_sex == 'm'%}ذكر {% elif delivery.fetal_sex == 'f' %} اثني {% else %} توأم{% endif %}</td>
+          <td>{{delivery.lnmp}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+  </div>
+</section>
+
+{% endblock body %}
