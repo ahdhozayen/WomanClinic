@@ -5,6 +5,9 @@
 {% block body %}
 
 <div class="col-xl-12">
+  <p>
+    <a href="{% url 'pharmacy:create-medicine' %}" class="btn btn-s-md btn-success">{% trans "تسجيل دواء جديد" %}</a>
+  </p>
   <div class="card">
     <div class="card-header"><strong>{{ page_title }}</strong></div>
     <!-- /.card-header -->
@@ -13,12 +16,12 @@
         <table class="table table-striped table-bordered table-hover">
           <thead>
             <tr role="row">
-              <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"></th>
-              <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">الاسم العلمي</th>
-              <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">الاسم التجاري</th>
-              <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">البديل الاول</th>
-              <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">البديل الثاني</th>
-              <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"></th>
+              <th></th>
+              <th>الاسم العلمي</th>
+              <th>الاسم التجاري</th>
+              <th>البديل الاول</th>
+              <th>البديل الثاني</th>
+              <th></th>
             </tr>
           </thead>
 

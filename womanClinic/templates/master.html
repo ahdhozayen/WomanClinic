@@ -18,13 +18,10 @@
 
   <!-- Bootstrap Core CSS -->
   <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
-
   <!-- MetisMenu CSS -->
   <link href="{% static 'vendor/metisMenu/metisMenu.min.css' %}" rel="stylesheet">
-
   <!-- Custom CSS -->
   <link href="{% static 'dist/css/sb-admin-2.css' %}" rel="stylesheet">
-
   <!-- Morris Charts CSS -->
   <link href="{% static 'vendor/morrisjs/morris.css' %}" rel="stylesheet">
   <!-- datatable -->
@@ -107,7 +104,7 @@
     </header>
     <div class="d-md-flex">
       {% include 'side_nav.html' %}
-        <!-- /.sidebar-collapse -->
+      <!-- /.sidebar-collapse -->
 
       <div id="page-wrapper" class="p-4">
         <div class="row col-lg-12">
@@ -121,23 +118,20 @@
     </div>
 
   </div>
-  <!-- /#wrapper -->
 
   <!-- jQuery -->
   <script src="{% static '/vendor/jquery/jquery.min.js'%}"></script>
-
   <!-- Bootstrap Core JavaScript -->
   <script src="{% static '/vendor/popper/popper.min.js'%}"></script>
   <script src="{% static '/vendor/bootstrap/js/bootstrap.min.js'%}"></script>
-
   <!-- Metis Menu Plugin JavaScript -->
   <script src="{% static '/vendor/metisMenu/metisMenu.min.js'%}"></script>
-
   <!-- Custom Theme JavaScript -->
   <script src="{% static '/dist/js/sb-admin-2.js'%}"></script>
 
   <!-- dataTable -->
   <script type="text/javascript" src="{% static  'js/datatable-js.js'%}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
   {% block js %}{% endblock js %}
 </body>
 

@@ -14,6 +14,7 @@ urlpatterns =[
     path('delivery/create/list/<int:pk>', views.create_delivery_view, name='all-delivery'),
     path('delivery/update/list/<int:pk>/<int:patient_id>', views.update_delivery_view, name='update-delivery'),
     path('checkup/create/list/<int:patient_id>', views.create_list_check_up_view, name='all-checkup'),
+    path('us/create/<int:check_id>/<int:patient_id>/', views.ultrasound_create_view, name='create-us'),
     path('checkup/view/<int:patient_id>/<int:chk_id>', views.view_list_check_up_view, name='view-checkup'),
     path('checkup/update/<int:patient_id>/<int:chk_id>', views.update_patient_medicine_view, name='update-checkup'),
     path('medicine/create/<int:patient_id>/<int:chk_id>', views.create_patient_medicine_view, name='create-med'),

@@ -5,54 +5,53 @@
 {% load l10n %}
 {% block body %}
 
-<form id="my_form" method="POST" enctype="multipart/form-data">
-  {% csrf_token %}
-  {% include 'messages.html' %}
-  <section class="panel panel-default">
-    <div class="panel-body">
-      <header class="panel-heading font-bold pull-left">{{ page_title }}</header>
-      <div class="doc-buttons pull-right">
-        <button type="submit" class="btn btn-s-md btn-success">حفظ</button>
-        <a href="{% url 'patient:view-patient' pk=patient_id %}" class="btn btn-s-md btn-default">{% trans "الغاء" %}</a>
-      </div>
-    </div>
-  </section>
-  <section class="panel panel-default">
-    <div class="panel-body">
-      <section class="panel panel-default">
-        <table class="table table-bordered dataTable" id="dataTable" role="grid" aria-describedby="dataTable_info" style="width: 100%;" width="100%" cellspacing="0">
-          {{ days_formset.management_form }}
-          {% for form in days_formset %}
-          {{ form.id }}
-          {% if forloop.first %}
-          <thead>
+<div class="col-xl-12">
+  <form id="my_form" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% include 'messages.html' %}
+    <p>
+      <button type="submit" class="btn btn-success">حفظ</button>
+      <a href="{% url 'patient:view-patient' pk=patient_id %}" class="btn btn-secondary">{% trans "الغاء" %}</a>
+    </p>
+    <div class="card">
+      <div class="card-header">{{ page_title }}</div>
+      <div class="card-body">
+        <div class="table-responsive table-bordered">
+          <table class="table" style="width: 100%;" width="100%">
+            {{ days_formset.management_form }}
+            {% for form in days_formset %}
+            {{ form.id }}
+            {% if forloop.first %}
+            <thead style="background-color: #9d9858b3;">
+              <tr>
+                {% for field in form.visible_fields %}
+                <th style="text-align: center;">{{ field.label|capfirst }}</th>
+                {% endfor %}
+              </tr>
+            </thead>
+            {% endif %}
             <tr>
               {% for field in form.visible_fields %}
-              <th>{{ field.label|capfirst }}</th>
+              <td>
+                {# exclude the hidden fields in the form #}
+                {% if forloop.first %}
+                {% for hidden in form.hidden_fields %}
+                {{ hidden }}
+                {% endfor %}
+                {% endif %}
+                {{ field.errors.as_ul }}
+                {{ field|as_crispy_field }}
+              </td>
               {% endfor %}
             </tr>
-          </thead>
-          {% endif %}
-          <tr>
-            {% for field in form.visible_fields %}
-            <td>
-              {# exclude the hidden fields in the form #}
-              {% if forloop.first %}
-              {% for hidden in form.hidden_fields %}
-              {{ hidden }}
-              {% endfor %}
-              {% endif %}
-              {{ field.errors.as_ul }}
-              {{ field|as_crispy_field }}
-            </td>
             {% endfor %}
-          </tr>
-          {% endfor %}
-        </table>
-      </section>
+          </table>
+        </div>
+      </div>
+      <!-- /.card-body -->
     </div>
-  </section>
-</form>
-
+    <!-- /.panel -->
+  </form>
+</div>
 
 {% endblock body %}

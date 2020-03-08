@@ -12,20 +12,22 @@ def list_medicines_view(request):
 
 @login_required(login_url='/login')
 def create_medicine_view(request):
-    medicine_form = Medicine_formset(queryset = Medicine.objects.none())
+    # medicine_form = Medicine_formset(queryset = Medicine.objects.none())
+    medicine_form = MedicineForm()
     if request.method == 'POST':
-        medicine_form = Medicine_formset(request.POST)
+        medicine_form = MedicineForm(request.POST)
         if medicine_form.is_valid():
             med_obj = medicine_form.save(commit=False)
-            for x in med_obj:
-                x.created_by = request.user
-                x.last_update_by = request.user
-                x.save()
+            # for x in med_obj:
+            med_obj.created_by = request.user
+            med_obj.last_update_by = request.user
+            med_obj.save()
+            return redirect('pharmacy:create-medicine')
     medContext = {
                   'page_title':'تسجيل الادوية',
                   'medicine_form':medicine_form,
     }
-    return render(request, 'create-medicine.html', medContext)
+    return render(request, 'create-medicine-form.html', medContext)
 
 @login_required(login_url='/login')
 def update_medicine_view(request, pk):

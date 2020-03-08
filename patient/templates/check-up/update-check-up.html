@@ -5,121 +5,124 @@
 {% load l10n %}
 {% block body %}
 <!-- end Header -->
-<form id="my_form" method="POST">
-  {% csrf_token %}
-  {% include 'messages.html' %}
-  <section class="panel panel-default">
-    <div class="panel-body">
-      <header class="font-bold pull-left">{{ page_title }}</header>
-      <div class="doc-buttons pull-right">
-        <a href="{% url 'patient:all-checkup' patient_id=patient_id.id %}" class="btn btn-s-md btn-default">{% trans "الغاء" %}</a>
+<div class="col-xl-12">
+  <form id="my_form" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% include 'messages.html' %}
+    <p>
+      <button type="submit" class="btn btn-success">حفظ</button>
+      <a href="{% url 'patient:all-checkup' patient_id=patient_id.id %}" class="btn btn-secondary">{% trans "الغاء" %}</a>
+    </p>
+    <div class="card">
+      <div class="card-header">{{ page_title }}</div>
+      <div class="card-body">
+        <div class="row show-grid">
+          <div class="col-md-12">
+            {{ check_up_form.complain|as_crispy_field}}
+          </div>
+          <div class="col-md-3">
+            {{ check_up_form.week_number|as_crispy_field}}
+          </div>
+          <div class="col-md-3">
+            {{ check_up_form.visit_date|as_crispy_field}}
+          </div>
+          <div class="col-md-3">
+            {{ check_up_form.next_visit|as_crispy_field}}
+          </div>
+          <div class="col-md-3">
+            {{ check_up_form.blood_presure|as_crispy_field}}
+          </div>
+          <div class="col-md-3">
+            {{ check_up_form.protine|as_crispy_field}}
+          </div>
+          <div class="col-md-3">
+            {{ check_up_form.rbs|as_crispy_field}}
+          </div>
+          <div class="col-md-3">
+            {{ check_up_form.hemoglobin|as_crispy_field}}
+          </div>
+          <div class="col-md-3">
+            {{ check_up_form.placenta|as_crispy_field}}
+          </div>
+          <div class="col-md-3">
+            {{ check_up_form.water|as_crispy_field}}
+          </div>
+          <div class="col-md-3">
+            {{ check_up_form.fetal_position|as_crispy_field}}
+          </div>
+          <div class="col-md-3">
+            {{ check_up_form.fetal_movement|as_crispy_field}}
+          </div>
+          <div class="col-md-3">
+            {{ check_up_form.fetal_heart_rate|as_crispy_field}}
+          </div>
+          <div class="col-md-3">
+            {{ check_up_form.weight|as_crispy_field}}
+          </div>
+          <div class="col-md-3">
+            {{ check_up_form.exit_nature|as_crispy_field}}
+          </div>
+          <div class="col-md-3">
+            {{ check_up_form.exit_desc|as_crispy_field}}
+          </div>
+          <div class="col-md-3">
+            {{ check_up_form.surgery|as_crispy_field}}
+          </div>
+          <div class="col-md-3">
+            {{ check_up_form.surgery_desc|as_crispy_field}}
+          </div>
+          <div class="col-md-3">
+            {{ check_up_form.clexane_sarf_date|as_crispy_field}}
+          </div>
+          <div class="col-md-6">
+          </div>
+          <div class="col-md-12">
+            {{ check_up_form.mhx|as_crispy_field}}
+          </div>
+          <div class="col-md-12">
+            {{ check_up_form.shx|as_crispy_field}}
+          </div>
+          <div class="col-md-12">
+            {{ check_up_form.allergy_hx|as_crispy_field}}
+          </div>
+        </div>
       </div>
-    </div>
-  </section>
-  <section class="panel panel-default">
-    <div class="panel-body">
-      <div class="form-row">
-        <div class="col-sm-3 pull-right">
-          {{ check_up_form.week_number|as_crispy_field}}
-        </div>
-        <div class="col-sm-3 pull-right">
-          {{ check_up_form.complain|as_crispy_field}}
-        </div>
-        <div class="col-sm-3 pull-right">
-          {{ check_up_form.visit_date|as_crispy_field}}
-        </div>
-        <div class="col-sm-3 pull-right">
-          {{ check_up_form.next_visit|as_crispy_field}}
-        </div>
-        <div class="col-sm-3 pull-right">
-          {{ check_up_form.blood_presure|as_crispy_field}}
-        </div>
-        <div class="col-sm-3 pull-right">
-          {{ check_up_form.protine|as_crispy_field}}
-        </div>
-        <div class="col-sm-3 pull-right">
-          {{ check_up_form.rbs|as_crispy_field}}
-        </div>
-        <div class="col-sm-3 pull-right">
-          {{ check_up_form.hemoglobin|as_crispy_field}}
-        </div>
-        <div class="col-sm-3 pull-right">
-          {{ check_up_form.placenta|as_crispy_field}}
-        </div>
-        <div class="col-sm-3 pull-right">
-          {{ check_up_form.water|as_crispy_field}}
-        </div>
-        <div class="col-sm-3 pull-right">
-          {{ check_up_form.fetal_position|as_crispy_field}}
-        </div>
-        <div class="col-sm-3 pull-right">
-          {{ check_up_form.fetal_movement|as_crispy_field}}
-        </div>
-        <div class="col-sm-3 pull-right">
-          {{ check_up_form.fetal_heart_rate|as_crispy_field}}
-        </div>
-        <div class="col-sm-3 pull-right">
-          {{ check_up_form.weight|as_crispy_field}}
-        </div>
-        <div class="col-sm-3 pull-right">
-          {{ check_up_form.exit_nature|as_crispy_field}}
-        </div>
-        <div class="col-sm-3 pull-right">
-          {{ check_up_form.exit_desc|as_crispy_field}}
-        </div>
-        <div class="col-sm-3 pull-right">
-          {{ check_up_form.surgery|as_crispy_field}}
-        </div>
-        <div class="col-sm-3 pull-right">
-          {{ check_up_form.surgery_desc|as_crispy_field}}
-        </div>
-        <div class="col-sm-3 pull-right">
-          {{ check_up_form.calcsan_sarf_date|as_crispy_field}}
+      <div class="card-body">
+        <div class="table-responsive table-bordered">
+          <table class="table">
+              {{ patient_med.management_form }}
+              {% for form in patient_med %}
+              {{ form.id }}
+              {% if forloop.first %}
+              <thead style="background-color: #9d9858b3;">
+                <tr>
+                  {% for field in form.visible_fields %}
+                  <th style="text-align: center;">{{ field.label|capfirst }}</th>
+                  {% endfor %}
+                </tr>
+              </thead>
+              {% endif %}
+              <tr>
+                {% for field in form.visible_fields %}
+                <td>
+                  {# exclude the hidden fields in the form #}
+                  {% if forloop.first %}
+                  {% for hidden in form.hidden_fields %}
+                  {{ hidden }}
+                  {% endfor %}
+                  {% endif %}
+                  {{ field.errors.as_ul }}
+                  {{ field|as_crispy_field }}
+                </td>
+                {% endfor %}
+              </tr>
+              {% endfor %}
+            </table>
         </div>
       </div>
+      <!-- /.card-body -->
     </div>
-  </section>
-  <section class="panel panel-default">
-    <table class="table table-bordered dataTable" id="dataTable" role="grid" aria-describedby="dataTable_info" style="width: 100%;" width="100%" cellspacing="0">
-      {{ patient_med.management_form }}
-      {% for form in patient_med %}
-      {{ form.id }}
-      {% if forloop.first %}
-      <thead>
-        <tr>
-          {% for field in form.visible_fields %}
-          <th>{{ field.label|capfirst }}</th>
-          {% endfor %}
-        </tr>
-      </thead>
-      {% endif %}
-      <tr>
-        {% for field in form.visible_fields %}
-        <td>
-          {# exclude the hidden fields in the form #}
-          {% if forloop.first %}
-          {% for hidden in form.hidden_fields %}
-          {{ hidden }}
-          {% endfor %}
-          {% endif %}
-          {{ field.errors.as_ul }}
-          {{ field|as_crispy_field }}
-        </td>
-        {% endfor %}
-      </tr>
-      {% endfor %}
-    </table>
-  </section>
-  <section class="panel panel-default">
-    <div class="row">
-    </div>
-  </section>
-  <section class="panel panel-default">
-    <div class="panel-body">
-      <header class="font-bold pull-left"></header>
-      <div class="doc-buttons pull-right">
-      </div>
-    </div>
-  </section>
-</form>
+    <!-- /.panel -->
+  </form>
+</div>
 {% endblock body %}

@@ -58,4 +58,4 @@ class Patient_Surgery(models.Model):
     last_update_date = models.DateField(auto_now=False, auto_now_add=True)
 
     def __str__(self):
-        return self.patient.name
+        return self.surgery_name+" "+self.patient.name

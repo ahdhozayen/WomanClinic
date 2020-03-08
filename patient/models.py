@@ -21,14 +21,13 @@ class Patient(models.Model):
     patient_number = models.PositiveIntegerField(verbose_name='رقم المريضة')
     room = models.CharField(max_length=70, verbose_name='الغرفة')
     hospital_section = models.CharField(max_length=70,blank=True, null=True, verbose_name='القسم')
-    consultant_flag = models.BooleanField(verbose_name='استشاري')
     transferred_from = models.CharField(max_length=70, blank=True, null=True,choices=transferred_list ,verbose_name='المريضة محولة من')
     notes = models.CharField(max_length=250, blank=True, null=True,verbose_name='ملاحظات')
     # ****************************************************************************
     clexane_order_number = models.CharField(max_length=20, blank=True, null=True, verbose_name='رقم قرار صرف الكلكسان')
     entrance_date = models.DateField(auto_now=False, blank=True, null=True, verbose_name='تاريخ دخول المستشفي')
-    exit_date = models.DateField(auto_now=False, blank=True, null=True, verbose_name='تارخ الخروج')
-    patient_type_list = [('CHECK_UP','متابعة'), ('CONSULTANT','استشاري'), ('OPERATION','عمليات'), ('DELIVERY_CHECK','متابعة ولادة'), ('DAYS_OFF','اجازات')]
+    exit_date = models.DateField(auto_now=False, blank=True, null=True, verbose_name='تاريخ الخروج')
+    patient_type_list = [('CHECK_UP','متابعة'), ('CONSULTANT','استشاري'), ('OPERATION','عمليات نسا'), ('DELIVER','ولادة')]
     patient_type = models.CharField(max_length=50, choices=patient_type_list, blank=True, null=True, verbose_name='طبيعة المريضة')
     # ****************************************************************************
     start_date  = models.DateField(auto_now=False, auto_now_add=False, default=date.today, verbose_name=_('Start Date'))
@@ -64,9 +63,9 @@ class Delivery(models.Model):
     blood_type_list = [('A+', 'A+'), ('A-', 'A-'),('B+', 'B+'), ('B-', 'B-'),
                        ('O+', 'O+'), ('O-', 'O-'),('AB+', 'AB+'), ('AB-', 'AB-'),]
     fetal_sex_list = [('m','ذكر'),('f','انثي'),('t','توأم')]
-    anesthesia_type_list = [('T','Total anesthesia'),('H','Half anesthesia'),('L','Local anesthesia')]
+    anesthesia_type_list = [('S','Spinal anesthesia'),('G','General anesthesia')]
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE, blank=True, null=True, verbose_name='المريضة')
-    description = models.CharField(max_length=250,blank=True, null=True, verbose_name='بيانات عن الحمل')
+    description = models.CharField(max_length=250,blank=True, null=True, verbose_name='ملاحظات الولادة')
     type = models.CharField(max_length=30, blank=True, null=True,choices=delivery_type_list, verbose_name='نوع الولادة')
     place = models.CharField(max_length=100,blank=True, null=True, verbose_name='مكان الولادة')
     date = models.DateField(auto_now=False, auto_now_add=False, blank=True, null=True, default=date.today, verbose_name='تاريخ الولادة')
@@ -90,11 +89,12 @@ class Check_Up(models.Model):
                         ('scape','هروب')]
     surgery_list = [('curettage_cleaning','كحت و تنظيف'),
                         ('cervical_stitch','غرزة بعنق الرحم'),
-                        ('ectopic_pregnancy','حمل خارج الرحم')]
+                        ('ectopic_pregnancy','حمل خارج الرحم'),
+                        ('CS','ولادة قيصري'),]
     delivery = models.ForeignKey(Delivery, on_delete=models.CASCADE, blank=True, null=True, verbose_name='الولادة')
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE, blank=True, null=True, verbose_name='المريضة')
     week_number = models.CharField(max_length=3, verbose_name='اسبوع الحمل')
-    complain = models.CharField(max_length=200, verbose_name='المتابعة')
+    complain = models.CharField(max_length=200, verbose_name='شكوي المريضة')
     visit_date = models.DateField(auto_now=False, auto_now_add=False, blank=True, null=True, verbose_name='تاريخ الزيارة')
     next_visit = models.DateField(auto_now=False, auto_now_add=False, blank=True, null=True, verbose_name='تاريخ الزيارة القادم')
     blood_presure = models.CharField(max_length=6, default='120/80', verbose_name='ضغط الدم')
@@ -106,13 +106,19 @@ class Check_Up(models.Model):
     fetal_position = models.CharField(max_length=10, blank=True, null=True, verbose_name='وضعية الجنين')
     fetal_movement = models.CharField(max_length=10, blank=True, null=True, verbose_name='حركة الجنين')
     fetal_heart_rate = models.CharField(max_length=10, blank=True, null=True, verbose_name='ضربات قلب الجنين')
-    weight = models.PositiveIntegerField(blank=True, null=True, verbose_name='الوزن')
+    weight = models.PositiveIntegerField(blank=True, null=True, verbose_name='وزن الجنين')
     exit_nature = models.CharField(max_length=50,  choices=exit_nature_list, blank=True, null=True, verbose_name='نوعية الخروج')
     exit_desc = models.CharField(max_length=200, blank=True, null=True, verbose_name='علي مسئولية من')
     surgery = models.CharField(max_length=50,  choices=surgery_list, blank=True, null=True, verbose_name='عمليات')
     surgery_desc = models.CharField(max_length=200, blank=True, null=True, verbose_name='شرح عمليات')
-    clexane_sarf_date  = models.DateField(auto_now=False, auto_now_add=False, verbose_name=_('تاريخ صرف الكلكسان'))
-    # ###############################################################################################################
+    clexane_sarf_date  = models.DateField(auto_now=False, blank=True, null=True, auto_now_add=False, verbose_name=_('تاريخ صرف الكلكسان'))
+    mhx = models.TextField(max_length=255,blank=True, null=True, verbose_name='MHx')
+    shx = models.TextField(max_length=255,blank=True, null=True, verbose_name='SHx')
+    allergy_hx = models.TextField(max_length=255,blank=True, null=True, verbose_name='Allergy Hx')
+    g = models.PositiveIntegerField(blank=True, null=True, verbose_name='G')
+    p = models.PositiveIntegerField(blank=True, null=True, verbose_name='P')
+    pre = models.PositiveIntegerField(blank=True, null=True, verbose_name='Pre')
+    ################################################################################################################
     start_date  = models.DateField(auto_now=False, auto_now_add=False, default=date.today, verbose_name=_('Start Date'))
     end_date    = models.DateField(auto_now=False, auto_now_add=False, blank=True, null=True, verbose_name=_('End Date'))
     created_by  = models.ForeignKey(settings.AUTH_USER_MODEL, blank=False, on_delete=models.CASCADE, related_name="check_up_created_by")
@@ -168,3 +174,15 @@ class Patient_Days_Off(models.Model):
 
     def __str__(self):
         return self.patient.name+' '+self.num_of_days
+
+class Ultrasound(models.Model):
+    check_up = models.ForeignKey(Check_Up,blank=True, null=True, on_delete=models.CASCADE, verbose_name='المتابعة')
+    prognosis = models.TextField(max_length=250, verbose_name=_('التشخيص'))
+    visit_date = models.DateField(auto_now=False, auto_now_add=False, default=date.today ,verbose_name=_('تاريخ الزيارة'))
+    created_by  = models.ForeignKey(settings.AUTH_USER_MODEL, blank=False, on_delete=models.CASCADE, related_name="ultrasound_created_by")
+    creation_date = models.DateField(auto_now=True, auto_now_add=False)
+    last_update_by = models.ForeignKey(settings.AUTH_USER_MODEL, blank=False, on_delete=models.CASCADE, related_name="ultrasound_last_updated_by")
+    last_update_date = models.DateField(auto_now=False, auto_now_add=True)
+
+    def __str__(self):
+        return self.prognosis

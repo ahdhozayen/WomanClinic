@@ -5,67 +5,60 @@
 {% load l10n %}
 {% block body %}
 
-<form id="my_form" method="POST" enctype="multipart/form-data">
-  {% csrf_token %}
-  {% include 'messages.html' %}
-
-  <section class="panel panel-default">
-    <div class="panel-body">
-      <header class="panel-heading font-bold pull-left">{{ page_title }}</header>
-      <div class="doc-buttons pull-right">
-        <button type="submit" class="btn btn-s-md btn-success">حفظ</button>
-        <a href="{% url 'surgery:list-surgery-types' %}" class="btn btn-s-md btn-default">{% trans "الغاء" %}</a>
+<div class="col-xl-12">
+  <form id="my_form" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% include 'messages.html' %}
+    <p>
+      <button type="submit" class="btn btn-success">حفظ</button>
+      <a href="{% url 'surgery:list-surgery-types' %}" class="btn btn-secondary">{% trans "الغاء" %}</a>
+    </p>
+    <div class="card">
+      <div class="card-header">{{ page_title }}</div>
+      <div class="card-body">
+        {{ master_form.surgery_name|as_crispy_field}}
       </div>
-    </div>
-  </section>
-  <section class="panel panel-default">
-    <div class="panel-body">
-      <div class="form-row">
-        <div class="col-sm-6 pull-right">
-          {{ master_form.surgery_name|as_crispy_field}}
+      <div class="card-body">
+        <div class="table-responsive table-bordered">
+          <table class="table" id="dataTable" role="grid" aria-describedby="dataTable_info" width="50%" cellspacing="0">
+            {{ detail_fromset.management_form }}
+            {% for form in detail_fromset %}
+            {{ form.id }}
+            {% if forloop.first %}
+            <thead style="background-color: #9d9858b3;">
+              <tr>
+                {% for field in form.visible_fields %}
+                <th></th>
+                <th style="text-align: center;">{{ field.label|capfirst }}</th>
+                {% endfor %}
+              </tr>
+            </thead>
+            {% endif %}
+            {% for field in form.visible_fields %}
+            <tr>
+              <td>#</td>
+              <td>
+                <!-- # exclude the hidden fields in the form # -->
+                {% if forloop.first %}
+                {% for hidden in form.hidden_fields %}
+                {{ hidden }}
+                {% endfor %}
+                {% endif %}
+                {{ field.errors.as_ul }}
+                {{ field|as_crispy_field }}
+              </td>
+            </tr>
+            {% endfor %}
+            {% endfor %}
+          </table>
         </div>
       </div>
-    </div>
-  </section>
 
-  <section class="panel panel-default">
-    <div class="panel-body">
-      <section class="panel panel-default" style="width:50%">
-        <table class="table table-bordered dataTable" id="dataTable" role="grid" aria-describedby="dataTable_info" width="50%" cellspacing="0">
-          {{ detail_fromset.management_form }}
-          {% for form in detail_fromset %}
-          {{ form.id }}
-          {% if forloop.first %}
-          <thead>
-            <tr>
-              {% for field in form.visible_fields %}
-              <th></th>
-              <th>{{ field.label|capfirst }}</th>
-              {% endfor %}
-            </tr>
-          </thead>
-          {% endif %}
-          {% for field in form.visible_fields %}
-          <tr>
-            <td>#</td>
-            <td>
-              <!-- # exclude the hidden fields in the form # -->
-              {% if forloop.first %}
-              {% for hidden in form.hidden_fields %}
-              {{ hidden }}
-              {% endfor %}
-              {% endif %}
-              {{ field.errors.as_ul }}
-              {{ field|as_crispy_field }}
-            </td>
-          </tr>
-          {% endfor %}
-          {% endfor %}
-        </table>
-      </section>
+      <!-- /.card-body -->
     </div>
-  </section>
-</form>
+    <!-- /.panel -->
+  </form>
+</div>
 
 
 {% endblock body %}

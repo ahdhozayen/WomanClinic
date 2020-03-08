@@ -5,89 +5,87 @@
 {% load l10n %}
 {% block body %}
 <!-- end Header -->
-<form id="my_form" method="POST">
-  {% csrf_token %}
-  {% include 'messages.html' %}
-  <section class="panel panel-default">
-    <div class="panel-body">
-      <header class="font-bold pull-left">{{ page_title }}</header>
-      <div class="doc-buttons pull-right">
-        <button type="submit" class="btn btn-s-md btn-success">حفظ</button>
-        <a href="{% url 'patient:view-patient' pk=patient_id %}" class="btn btn-s-md btn-default">{% trans "الغاء" %}</a>
-      </div>
-    </div>
-  </section>
-  <section class="panel panel-default">
-    <div class="panel-body">
-      <div class="form-row">
-        <div class="col-sm-12 pull-right">
-          {{ delivery_form.description|as_crispy_field}}
-        </div>
-        <div class="col-sm-4 pull-right">
-          {{ delivery_form.type|as_crispy_field}}
-        </div>
-        <div class="col-sm-4 pull-right">
-          {{ delivery_form.place|as_crispy_field}}
-        </div>
-        <div class="col-sm-4 pull-right">
-          {{ delivery_form.date|as_crispy_field}}
-        </div>
-        <div class="col-sm-4 pull-right">
-          {{ delivery_form.fetal_sex|as_crispy_field}}
-        </div>
-        <div class="col-sm-4 pull-right">
-          {{ delivery_form.anesthesia_type|as_crispy_field}}
-        </div>
-        <div class="col-sm-4 pull-right">
-          {{ delivery_form.anesthesia_doc|as_crispy_field}}
-        </div>
-        <div class="col-sm-4 pull-right">
-          {{ delivery_form.abo_rh|as_crispy_field}}
-        </div>
-        <div class="col-sm-4 pull-right">
-          {{ delivery_form.lnmp|as_crispy_field}}
+<div class="col-xl-12">
+  <form id="my_form" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% include 'messages.html' %}
+    <p>
+      <button type="submit" class="btn btn-success">حفظ</button>
+      <a href="{% url 'patient:view-patient' pk=patient_id %}" class="btn btn-secondary">{% trans "الغاء" %}</a>
+    </p>
+    <div class="card">
+      <div class="card-header">{{ page_title }}</div>
+      <div class="card-body">
+        <div class="row show-grid">
+          <div class="col-md-12">
+            {{ delivery_form.description|as_crispy_field}}
+          </div>
+          <div class="col-md-3">
+            {{ delivery_form.type|as_crispy_field}}
+          </div>
+          <div class="col-md-3">
+            {{ delivery_form.place|as_crispy_field}}
+          </div>
+          <div class="col-md-3">
+            {{ delivery_form.date|as_crispy_field}}
+          </div>
+          <div class="col-md-3">
+            {{ delivery_form.fetal_sex|as_crispy_field}}
+          </div>
+          <div class="col-md-3">
+            {{ delivery_form.anesthesia_type|as_crispy_field}}
+          </div>
+          <div class="col-md-3">
+            {{ delivery_form.anesthesia_doc|as_crispy_field}}
+          </div>
+          <div class="col-md-3">
+            {{ delivery_form.abo_rh|as_crispy_field}}
+          </div>
+          <div class="col-md-3">
+            {{ delivery_form.lnmp|as_crispy_field}}
+          </div>
         </div>
       </div>
+      <div class="card-body">
+        <div class="table-responsive table-bordered">
+          <table class="table" id="dataTable">
+            <thead style="background-color: #9d9858b3;">
+              <tr role="row">
+                <th style="text-align:center;">ترتيب الحمل</th>
+                <th style="text-align:center;" >بيانات الحمل</th>
+                <th style="text-align:center;">نوع الولادة</th>
+                <th style="text-align:center;">مكان الولادة</th>
+                <th style="text-align:center;">تاريخ الولادة</th>
+                <th style="text-align:center;">نوع التخدير</th>
+                <th style="text-align:center;">دكتور التخدير</th>
+                <th style="text-align:center;">abo rh</th>
+                <th style="text-align:center;">fetal sex</th>
+                <th style="text-align:center;">lnmp</th>
+                <th style="text-align:center;">تعديل</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for delivery in patient_delivery %}
+              <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>{{delivery.description}}</td>
+                <td>{% if delivery.type == 'c'%}قيصري {% else %} طبيعي {% endif %}</td>
+                <td>{{delivery.place}}</td>
+                <td>{{delivery.date}}</td>
+                <td>{% if delivery.anesthesia_type == 'T' %} Total anesthesia {% elif delivery.anesthesia_type == 'H' %} Half anesthesia {% else %} Local anesthesia {% endif %}</td>
+                <td>{{delivery.anesthesia_doc}}</td>
+                <td>{{delivery.abo_rh}}</td>
+                <td>{% if delivery.fetal_sex == 'm'%}ذكر {% elif delivery.fetal_sex == 'f' %} اثني {% else %} توأم{% endif %}</td>
+                <td>{{delivery.lnmp}}</td>
+                <td><a href="{% url 'patient:update-delivery' pk=delivery.id patient_id=delivery.patient_id %}">تعديل</a></td>
+              </tr>
+              {% endfor %}
+          </table>
+        </div>
+      </div>
+      <!-- /.card-body -->
     </div>
-  </section>
-  <section class="panel panel-default">
-    <div class="table-responsive">
-      <table class="table table-bordered dataTable no-footer" id="dataTable" role="grid" aria-describedby="dataTable_info" style="width: 100%; overflow-x:auto;" width="100%" cellspacing="0">
-        <thead style="background-color: #9d9858b3;">
-          <tr role="row">
-            <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">ترتيب الحمل</th>
-            <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">بيانات الحمل</th>
-            <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">نوع الولادة</th>
-            <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">مكان الولادة</th>
-            <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">تاريخ الولادة</th>
-            <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">نوع التخدير</th>
-            <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">دكتور التخدير</th>
-            <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">abo rh</th>
-            <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">fetal sex</th>
-            <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">lnmp</th>
-            <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"></th>
-            <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">حذف</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for delivery in patient_delivery %}
-          <tr>
-            <th scope="row">{{ forloop.counter }}</th>
-            <td>{{delivery.description}}</td>
-            <td>{% if delivery.type == 'c'%}قيصري {% else %} طبيعي {% endif %}</td>
-            <td>{{delivery.place}}</td>
-            <td>{{delivery.date}}</td>
-            <td>{% if delivery.anesthesia_type == 'T' %} Total anesthesia {% elif delivery.anesthesia_type == 'H' %} Half anesthesia {% else %} Local anesthesia {% endif %}</td>
-            <td>{{delivery.anesthesia_doc}}</td>
-            <td>{{delivery.abo_rh}}</td>
-            <td>{% if delivery.fetal_sex == 'm'%}ذكر {% elif delivery.fetal_sex == 'f' %} اثني {% else %} توأم{% endif %}</td>
-            <td>{{delivery.lnmp}}</td>
-            <td></td>
-            <td><a href="{% url 'patient:update-delivery' pk=delivery.id patient_id=delivery.patient_id %}">تعديل</a></td>
-          </tr>
-          {% endfor %}
-      </table>
-    </div>
-  </section>
-</form>
+    <!-- /.panel -->
+  </form>
+</div>
 {% endblock body %}

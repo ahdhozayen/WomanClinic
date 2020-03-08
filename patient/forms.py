@@ -1,7 +1,8 @@
 from django import forms
 from crispy_forms.helper import FormHelper
 from patient.models import (Patient,Delivery,Check_Up,
-                            Patient_Files,Gynecology, Patient_Medicine, Patient_Days_Off)
+                            Patient_Files,Gynecology, Patient_Medicine,
+                            Patient_Days_Off, Ultrasound)
 
 common_items_to_execlude = (
                             'start_date','end_date',
@@ -81,6 +82,20 @@ class Check_Up_Form(forms.ModelForm):
         model = Check_Up
         fields = '__all__'
         exclude = common_items_to_execlude
+        widgets = {
+            'mhx': forms.Textarea(attrs={
+                                                'rows': 2,'cols': 40,
+                                                'style': 'height: 8em;',
+                                                'class': 'form-control parsley-validated'}),
+            'shx': forms.Textarea(attrs={
+                                                'rows': 2,'cols': 40,
+                                                'style': 'height: 8em;',
+                                                'class': 'form-control parsley-validated'}),
+            'allergy_hx': forms.Textarea(attrs={
+                                                'rows': 2,'cols': 40,
+                                                'style': 'height: 8em;',
+                                                'class': 'form-control parsley-validated'}),
+        }
 
     def __init__(self, *args, **kwargs):
         form_type = kwargs.pop('form_type')
@@ -126,3 +141,14 @@ class Patient_Days_Off_Form(forms.ModelForm):
         self.helper.form_show_labels = False
 
 Patient_Days_Off_formset = forms.modelformset_factory(Patient_Days_Off , form=Patient_Days_Off_Form, extra=5, can_delete=False)
+
+class Ultrasound_Form(forms.ModelForm):
+    class Meta:
+        model = Ultrasound
+        fields = '__all__'
+        exclude = common_items_to_execlude
+
+    def __init__(self, *args, **kwargs):
+        super(Ultrasound_Form, self).__init__(*args, **kwargs)
+        self.helper = FormHelper(self)
+        self.helper.form_show_labels = True

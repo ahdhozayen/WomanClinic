@@ -5,83 +5,77 @@
 {% load l10n %}
 {% block body %}
 
-<form id="my_form" method="POST" enctype="multipart/form-data">
-  {% csrf_token %}
-  {% include 'messages.html' %}
-
-  <section class="panel panel-default">
-    <div class="panel-body">
-      <header class="font-bold pull-left">{{ page_title }}</header>
-      <div class="doc-buttons pull-right">
-        <button type="submit" class="btn btn-s-md btn-success">حفظ</button>
-        <a href="{% url 'patient:all-patients' %}" class="btn btn-s-md btn-default">{% trans "الغاء" %}</a>
-      </div>
-    </div>
-  </section>
-  <section class="panel panel-default">
-    <div class="panel-body">
-      <div class="form-row">
-        <div class="col-sm-6 pull-right">
-          {{ patient_form.name|as_crispy_field}}
-        </div>
-        <div class="col-sm-6 pull-right">
-          {{ patient_form.address|as_crispy_field}}
-        </div>
-        <div class="col-sm-6 pull-right">
-          {{ patient_form.job|as_crispy_field}}
-        </div>
-        <div class="col-sm-6 pull-right">
-          {{ patient_form.phone|as_crispy_field}}
-        </div>
-        <div class="col-sm-6 pull-right">
-          {{ patient_form.mobile|as_crispy_field}}
-        </div>
-        <div class="col-sm-6 pull-right">
-          {{ patient_form.date_of_birth|as_crispy_field}}
-        </div>
-
-        <div class="col-sm-3 pull-right">
-          {{ patient_form.insurance_number|as_crispy_field}}
-        </div>
-        <div class="col-sm-3 pull-right">
-          {{ patient_form.entrance_number|as_crispy_field}}
-        </div>
-        <div class="col-sm-3 pull-right">
-          {{ patient_form.hospital_number|as_crispy_field}}
-        </div>
-        <div class="col-sm-3 pull-right">
-          {{ patient_form.patient_number|as_crispy_field}}
-        </div>
-        <div class="col-sm-4 pull-right">
-          {{ patient_form.room|as_crispy_field}}
-        </div>
-        <div class="col-sm-4 pull-right">
-          {{ patient_form.hospital_section|as_crispy_field}}
-        </div>
-        <div class="col-sm-4 pull-right">
-          {{ patient_form.clexane_order_number|as_crispy_field}}
-        </div>
-        <div class="col-sm-4 pull-right">
-          {{ patient_form.consultant_flag|as_crispy_field}}
-        </div>
-        <div class="col-sm-4 pull-right">
-          {{ patient_form.transferred_from|as_crispy_field}}
-        </div>
-        <div class="col-sm-4 pull-right">
-          {{ patient_form.notes|as_crispy_field}}
-        </div>
-        <div class="col-sm-4 pull-right">
-          {{ patient_form.entrance_date|as_crispy_field}}
-        </div>
-        <div class="col-sm-4 pull-right">
-          {{ patient_form.exit_date|as_crispy_field}}
-        </div>
-        <div class="col-sm-4 pull-right">
-          {{ patient_form.patient_type|as_crispy_field}}
+<div class="col-xl-12">
+  <form id="my_form" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% include 'messages.html' %}
+    <p>
+      <button type="submit" class="btn btn-success">حفظ</button>
+      <a href="{% url 'patient:create-patient' %}" class="btn btn-secondary">{% trans "الغاء" %}</a>
+    </p>
+    <div class="card">
+      <div class="card-header">{{ page_title }}</div>
+      <div class="card-body">
+        <div class="row show-grid">
+          <div class="col-md-6">
+            {{ patient_form.name|as_crispy_field}}
+          </div>
+          <div class="col-md-6">
+            {{ patient_form.address|as_crispy_field}}
+          </div>
+          <div class="col-md-4">
+            {{ patient_form.job|as_crispy_field}}
+          </div>
+          <div class="col-md-4">
+            {{ patient_form.phone|as_crispy_field}}
+          </div>
+          <div class="col-md-4">
+            {{ patient_form.mobile|as_crispy_field}}
+          </div>
+          <div class="col-md-4">
+            {{ patient_form.date_of_birth|as_crispy_field}}
+          </div>
+          <div class="col-md-4">
+            {{ patient_form.insurance_number|as_crispy_field}}
+          </div>
+          <div class="col-md-4">
+            {{ patient_form.entrance_number|as_crispy_field}}
+          </div>
+          <div class="col-md-4">
+            {{ patient_form.hospital_number|as_crispy_field}}
+          </div>
+          <div class="col-md-4">
+            {{ patient_form.patient_number|as_crispy_field}}
+          </div>
+          <div class="col-md-4">
+            {{ patient_form.room|as_crispy_field}}
+          </div>
+          <div class="col-md-4">
+            {{ patient_form.hospital_section|as_crispy_field}}
+          </div>
+          <div class="col-md-4">
+            {{ patient_form.clexane_order_number|as_crispy_field}}
+          </div>
+          <div class="col-md-4">
+            {{ patient_form.patient_type|as_crispy_field}}
+          </div>
+          <div class="col-md-4">
+            {{ patient_form.transferred_from|as_crispy_field}}
+          </div>
+          <div class="col-md-4">
+            {{ patient_form.entrance_date|as_crispy_field}}
+          </div>
+          <div class="col-md-4">
+            {{ patient_form.exit_date|as_crispy_field}}
+          </div>
+          <div class="col-md-12">
+            {{ patient_form.notes|as_crispy_field}}
+          </div>
         </div>
       </div>
-      <section class="panel panel-default">
-        <table class="table table-bordered dataTable" id="dataTable" role="grid" aria-describedby="dataTable_info" style="width: 100%;" width="100%" cellspacing="0">
+      <div class="card-body">
+        <div class="table-responsive table-bordered">
+          <table class="table" id="dataTable">
           {{ patient_attachments.management_form }}
           {% for form in patient_attachments %}
           {{ form.id }}
@@ -89,7 +83,7 @@
           <thead style="background-color: #9d9858b3;">
             <tr>
               {% for field in form.visible_fields %}
-              <th>{{ field.label|capfirst }}</th>
+              <th style="text-align:center;">{{ field.label|capfirst }}</th>
               {% endfor %}
             </tr>
           </thead>
@@ -110,10 +104,13 @@
           </tr>
           {% endfor %}
         </table>
-      </section>
+        </div>
+      </div>
+      <!-- /.card-body -->
     </div>
-  </section>
-</form>
+    <!-- /.panel -->
+  </form>
+</div>
 
 
 {% endblock body %}

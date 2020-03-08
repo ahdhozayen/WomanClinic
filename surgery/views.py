@@ -9,7 +9,7 @@ from surgery.models import Surgery_Master, Surgery_Steps, Patient_Surgery, Surge
 def list_surgery_view(request):
     all_surgery = Surgery_Master.objects.all()
     surgeryContext = {
-                      'page_title':'',
+                      'page_title':'قائمة الجراحات',
                       'all_surgery':all_surgery
     }
     return render(request, 'list-surgery.html', surgeryContext)
@@ -35,7 +35,7 @@ def create_surgery_view(request):
                     obj.last_update_by = request.user
                     obj.save()
     surgeryContext = {
-        "page_title": '',
+        "page_title": 'اضافة عملية جديدة',
         'master_form': master_form,
         'detail_fromset': detail_fromset,
     }
@@ -88,7 +88,7 @@ def create_patient_surgery_view(request, patient_id):
 def list_surgery_doctor_view(request):
     all_doctors = Surgery_Doctor.objects.all()
     surgeryContext = {
-                      'page_title':'',
+                      'page_title':'قائمة الاطباء',
                       'all_doctors':all_doctors
     }
     return render(request, 'list-doctors.html', surgeryContext)

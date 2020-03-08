@@ -5,27 +5,23 @@
 {% load l10n %}
 {% block body %}
 
-<form id="my_form" method="POST" enctype="multipart/form-data">
-  {% csrf_token %}
-  {% include 'messages.html' %}
-
-  <section class="panel panel-default">
-    <div class="panel-body">
-      <header class="panel-heading font-bold pull-left">{{ page_title }}</header>
-      <div class="doc-buttons pull-right">
-        <button type="submit" class="btn btn-s-md btn-success">حفظ</button>
-        <a href="{% url 'pharmacy:all-medicines' %}" class="btn btn-s-md btn-default">{% trans "الغاء" %}</a>
-      </div>
-    </div>
-  </section>
-  <section class="panel panel-default">
-    <div class="panel-body">
-      <section class="panel panel-default">
+<div class="col-xl-12">
+  <p>
+    <button type="submit" class="btn btn-success">حفظ</button>
+    <a href="{% url 'pharmacy:all-medicines' %}" ><button type="button" class="btn btn-default">{% trans "الغاء" %}</button></a>
+  </p>
+  <div class="card">
+    <div class="card-header"><strong>{{ page_title }}</strong></div>
+    <!-- /.card-header -->
+    <div class="card-body">
+      <form id="my_form" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% include 'messages.html' %}
         {{medicine_form|crispy}}
-      </section>
+      </form>
     </div>
-  </section>
-</form>
-
-
+    <!-- /.card-body -->
+  </div>
+  <!-- /.panel -->
+</div>
 {% endblock body %}

@@ -5,6 +5,9 @@
 {% block body %}
 
 <div class="col-xl-12">
+  <p>
+    <a href="{% url 'patient:create-gyno' %}" class="btn btn-s-md btn-success">{% trans "تسجيل تشخيص" %}</a>
+  </p>
   <div class="card">
     <div class="card-header"><strong>{{ page_title }}</strong></div>
     <!-- /.card-header -->

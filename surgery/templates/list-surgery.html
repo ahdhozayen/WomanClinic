@@ -5,6 +5,9 @@
 {% block body %}
 
 <div class="col-xl-12">
+  <p>
+    <a href="{% url 'surgery:create-surgery' %}" class="btn btn-success">{% trans "تسجيل عملية جديدة" %}</a>
+  </p>
   <div class="card">
     <div class="card-header"><strong>{{ page_title }}</strong></div>
     <!-- /.card-header -->
@@ -35,6 +38,5 @@
     </div>
     <!-- /.card-body -->
   </div>
-  <!-- /.panel -->
 </div>
 {% endblock body %}

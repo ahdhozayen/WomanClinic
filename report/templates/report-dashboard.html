@@ -3,101 +3,136 @@
 {% load i18n %}
 {% load l10n %}
 {% block body %}
-<section class="panel panel-default">
-  <div class="panel-body">
-    <header class="panel-heading font-bold pull-left">{{ page_title }}</header>
-  </div>
-</section>
-<!-- end Header -->
 
-<section class="panel panel-default">
-  <div class="table-responsive">
-    <section class="panel panel-default">
-      <div class="row m-l-none m-r-none bg-light lter">
-        <div class="col-sm-6 col-md-4 padder-v b-r b-light">
-          <span class="fa-stack fa-2x pull-left m-r-sm">
-            <i class="fa fa-circle fa-stack-2x text-info"></i>
-            <i class="fa fa-male fa-stack-1x text-white"></i>
-          </span>
-          <a class="clear" href="{% url 'report:rep-all-patients' %}">
-            <span class="h3 block m-t-xs">
-              <strong>{{patient_count}}</strong>
-            </span>
-            <small class="text-muted text-uc">اجمالي عدد المريضات</small>
-          </a>
-        </div>
-        <div class="col-sm-6 col-md-4 padder-v b-r b-light">
-          <span class="fa-stack fa-2x pull-left m-r-sm">
-            <i class="fa fa-circle fa-stack-2x text-warning"></i>
-            <i class="fa fa-user-md fa-stack-1x text-white"></i>
-          </span>
-          <a class="clear" href="{% url 'report:total-patients-details' %}">
-            <span class="h3 block m-t-xs">
-              <strong id="bugs">{{patients_consult_count}}</strong>
-            </span>
-            <small class="text-muted text-uc">اجمالي مريضات الأستشاري</small>
-          </a>
-        </div>
-        <div class="col-sm-6 col-md-4 padder-v b-r b-light">
-          <span class="fa-stack fa-2x pull-left m-r-sm">
-            <i class="fa fa-circle fa-stack-2x text-danger"></i>
-            <!-- <i class="fa fa-fire-extinguisher fa-stack-1x text-white"></i> -->
-            <i class="fa fa-medkit fa-stack-1x text-white"></i>
-          </span>
-          <a class="clear" href="#">
-            <span class="h3 block m-t-xs">
-              <strong id="firers">{{patients_clexane_count}}</strong>
-            </span>
-            <small class="text-muted text-uc">اجمالي مريضات الكلكسان</small>
-          </a>
-        </div>
-      </div>
-    </section>
-    <section class="panel panel-default">
-      <div class="table-responsive">
-        <section class="panel panel-default">
-          <canvas id="myChart"></canvas>
-        </section>
-      </div>
-    </section>
+<div id="page-wrapper" class="p-4" style="min-height: 671px;">
+  <div class="row">
+    <div class="col-lg-12">
+      <h1 class="page-header">{{ page_title }}</h1>
+    </div>
+    <!-- /.col-lg-12 -->
   </div>
-</section>
+  <!-- /.row -->
+  <div class="row">
+    <div class="col-xl-4 col-lg-6">
+      <div class="card card-primary card-inverse">
+        <div class="card-header card-primary">
+          <div class="row">
+            <div class="col-3">
+              <i class="fa fa-female fa-5x"></i>
+            </div>
+            <div class="col-9 text-left">
+              <div class="huge">{{patient_count}}</div>
+              <div>اجمالي مريضات المتابعة</div>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer card-default">
+          <a href="{% url 'report:rep-all-patients' %}">
+            <span class="float-sm-left">عرض</span>
+            <span class="float-sm-right"><i class="fa fa-arrow-circle-right"></i></span>
+            <div class="clearfix"></div>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-4 col-lg-6">
+      <div class="card card-green card-inverse">
+        <div class="card-header card-green">
+          <div class="row">
+            <div class="col-3">
+              <i class="fa fa-user-md fa-5x"></i>
+            </div>
+            <div class="col-9 text-left">
+              <div class="huge">{{patients_consult_count}}</div>
+              <div>اجمالي مريضات الأستشاري</div>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer card-green">
+          <a href="{% url 'report:rep-cons-patients' %}">
+            <span class="float-sm-left">عرض</span>
+            <span class="float-sm-right"><i class="fa fa-arrow-circle-right"></i></span>
+            <div class="clearfix"></div>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-4 col-lg-6">
+      <div class="card card-yellow card-inverse">
+        <div class="card-header card-yellow">
+          <div class="row">
+            <div class="col-3">
+              <i class="fa fa-medkit fa-5x"></i>
+            </div>
+            <div class="col-9 text-left">
+              <div class="huge">{{patients_clexane_count}}</div>
+              <div>اجمالي مريضات الكلكسان</div>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer card-yellow">
+          <a href="{% url 'report:rep-clexane-patients'%}">
+            <span class="float-sm-left">عرض</span>
+            <span class="float-sm-right"><i class="fa fa-arrow-circle-right"></i></span>
+            <div class="clearfix"></div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-6">
+  <canvas id="patients-entrance-chart" data-url="{% url 'report:patients-entrance-chart' %}"></canvas>
+</div>
+  <!-- /.row -->
+</div>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+<script>
+  $(function() {
+
+    var $populationChart = $("#patients-entrance-chart");
+    $.ajax({
+      url: $populationChart.data("url"),
+      success: function(data) {
+
+        var ctx = $populationChart[0].getContext("2d");
+
+        new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: data.labels,
+            datasets: [{
+              label: 'المريضات',
+              backgroundColor: 'blue',
+              data: data.qs1
+            }]
+          },
+          options: {
+            responsive: true,
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        min: .5,
+                    }
+                }]
+            },
+            legend: {
+              position: 'top',
+            },
+            title: {
+              display: true,
+              text: 'احصائيةعدد المريضات الشهري'
+            }
+          }
+        });
+
+      }
+    });
+
+  });
+</script>
 
 {% endblock body %}
 {% block js %}
-<script>
-  var endpoint = '/report/patient/api/'
-  var char_data = []
-  var char_labels = []
-  $.ajax({
-    method: "GET",
-    url: endpoint,
-    success: function(repContext) {
-      char_labels = {{labels}}
-      char_data = {{chart_data}}
-      var ctx = document.getElementById('myChart').getContext('2d');
-      var myChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-          labels: char_labels,
-          datasets: [{
-            barPercentage: 0.5,
-            label: 'بيانات المريضات',
-            data: char_data,
-          }]
-        }
-      })
-      options: {
-        scales: {
-          yAxes: [{
-            ticks: {
-              beginAtZero: true
-            }
-          }]
-        }
-      }
-    }
-  });
-</script>
 
 {% endblock js %}

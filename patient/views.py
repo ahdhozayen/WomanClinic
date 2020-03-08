@@ -4,11 +4,13 @@ from django.shortcuts import render, get_object_or_404, get_list_or_404, redirec
 from django.contrib.auth.decorators import login_required
 from datetime import date
 from django.contrib import messages
-from patient.models import Patient, Patient_Files, Delivery, Check_Up, Gynecology, Patient_Medicine, Patient_Days_Off
+from patient.models import (Patient, Patient_Files, Delivery, Check_Up,
+                            Gynecology, Patient_Medicine, Patient_Days_Off, Ultrasound)
 from patient.forms import (PatientForm, Patient_Files_formset,
                            DeliveryForm, Delivery_Check_Up_formset,
                            Gynecology_formset, GynecologyForm,
-                           Check_Up_Form, Patient_Medicine_formset, Patient_Days_Off_formset)
+                           Check_Up_Form, Patient_Medicine_formset,
+                           Patient_Days_Off_formset, Ultrasound_Form)
 
 
 @login_required(login_url='/login')
@@ -35,7 +37,7 @@ def create_patient_view(request):
                 x.created_by = request.user
                 x.last_update_by = request.user
                 x.save()
-            return redirect('patient:all-delivery', pk=master_obj.id)
+            return redirect('patient:all-checkup', patient_id=master_obj.id)
         else:
             if patient_form.errors:
                 messages.error(request, patient_form.errors)
@@ -106,18 +108,20 @@ def list_gyno_view(request):
 
 @login_required(login_url='/login')
 def create_gyno_view(request):
-    gyno_formset = Gynecology_formset(queryset = Gynecology.objects.none())
+    gyno_formset = GynecologyForm()
+    # gyno_formset = Gynecology_formset(queryset = Gynecology.objects.none())
     if request.method == 'POST':
-        gyno_formset = Gynecology_formset(request.POST)
+        gyno_formset = GynecologyForm(request.POST)
         if gyno_formset.is_valid():
             gyno_obj = gyno_formset.save(commit=False)
-            for x in gyno_obj:
-                x.created_by = request.user
-                x.last_update_by = request.user
-                x.save()
+            # for x in gyno_obj:
+            gyno_obj.created_by = request.user
+            gyno_obj.last_update_by = request.user
+            gyno_obj.save()
+            return redirect("patient:create-gyno")
     gynoContext = {
                      'page_title':'تشخيص امراض النسا',
-                     'gyno_formset':gyno_formset,
+                     'gyno_form':gyno_formset,
     }
     return render(request, 'gyno/create-gyno.html', gynoContext)
 
@@ -128,12 +132,16 @@ def update_gyno_view(request, pk):
     if request.method == 'POST':
         gyno_form = GynecologyForm(request.POST)
         if gyno_form.is_valid():
-            gyno_form.save()
+            gyno_obj = gyno_formset.save(commit=False)
+            # for x in gyno_obj:
+            gyno_obj.created_by = request.user
+            gyno_obj.last_update_by = request.user
+            gyno_obj.save()
     gynoContext = {
                      'page_title':'تعديل {}'.format(required_gyno.diagnosis_en),
                      'gyno_form':gyno_form,
     }
-    return render(request, 'gyno/update-gyno.html', gynoContext)
+    return render(request, 'gyno/create-gyno.html', gynoContext)
 
 @login_required(login_url='/login')
 def list_delivery_view(request, pk):
@@ -192,18 +200,17 @@ def update_delivery_view(request, pk, patient_id):
 @login_required(login_url='/login')
 def create_list_check_up_view(request, patient_id):
     list_checkups = Check_Up.objects.filter(patient=patient_id)
-    latest_delivery = Delivery.objects.filter(patient=patient_id).latest('date')
+    # latest_delivery = Delivery.objects.filter(patient=patient_id).latest('date')
     check_up_form = Check_Up_Form(form_type='create')
     if request.method == 'POST':
         check_up_form = Check_Up_Form(request.POST,form_type='create')
         if check_up_form.is_valid():
             master_obj = check_up_form.save(commit=False)
-            master_obj.delivery = latest_delivery
-            master_obj.patient_id = pk
+            # master_obj.delivery.id = 0
+            master_obj.patient_id = patient_id
             master_obj.created_by = request.user
             master_obj.last_update_by = request.user
             master_obj.save()
-            check_up_form = Check_Up_Form(form_type='list')
     checkContext = {
                     'page_title':'شاشة المتابعة',
                     'patient_id':patient_id,
@@ -211,6 +218,31 @@ def create_list_check_up_view(request, patient_id):
                     'check_up_form':check_up_form,
     }
     return render(request, 'check-up/create-check-up.html', checkContext)
+
+
+def ultrasound_create_view(request, check_id, patient_id):
+    us_form = Ultrasound_Form()
+    required_check = Check_Up.objects.get(id =check_id)
+    list_us = Ultrasound.objects.filter(check_up=check_id)
+    if request.method == 'POST':
+        us_form = Ultrasound_Form(request.POST)
+        if us_form.is_valid():
+            us_object = us_form.save(commit=False)
+            us_object.check_up = required_check
+            us_object.created_by = request.user
+            us_object.last_update_by = request.user
+            us_object.save()
+            messages.success(request, 'تـــم التسجيل بنجــاح')
+            return redirect('patient:all-checkup', patient_id=patient_id)
+        else:
+            messages.error(request, us_form.errors)
+    ultraSoundContext = {
+                         'page_title':'تسجيل قراءة السونار للمتابعة {}'.format(required_check),
+                         'patient_id':patient_id,
+                         'us_form':us_form,
+                         'list_us':list_us,
+    }
+    return render(request, 'check-up/create-ultrasound.html', ultraSoundContext)
 
 @login_required(login_url='/login')
 def view_list_check_up_view(request, chk_id, patient_id):
@@ -286,7 +318,7 @@ def update_patient_medicine_view(request, patient_id, chk_id):
 
 @login_required(login_url='/login')
 def list_patient_consultant_view(request):
-    all_patients = Patient.objects.filter(transferred_from__isnull = False)
+    all_patients = Patient.objects.filter(transferred_from ='consultant')
     consultantContext={
                        'page_title':'متابعة الاستشاري',
                        'all_patients':all_patients,
