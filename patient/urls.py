@@ -20,4 +20,6 @@ urlpatterns =[
     path('medicine/create/<int:patient_id>/<int:chk_id>', views.create_patient_medicine_view, name='create-med'),
     path('cons/list/', views.list_patient_consultant_view, name='all-con-patients'),
     path('create/days-off/<int:patient_id>', views.create_patient_days_off_view, name='create-days-off'),
+    path('create/diabete/<int:patient_id>', views.create_diabetes_view, name='create-diabetes'),
+    path('chart/diabete/<int:patient_id>', views.patient_diabete_chart, name='patients-diabetes-chart'),
 ]

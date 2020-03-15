@@ -1,0 +1,130 @@
+{% extends 'master.html'%}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load i18n %}
+{% load l10n %}
+{% block body %}
+
+<div class="col-xl-12">
+  <p>
+    <div class="btn-group">
+      <a href="{% url 'report:patient-report' patient_id=patient_id.id %}" class="btn btn-success">الرجوع</a>
+    </div>
+  </p>
+  <!-- patiebt info -->
+  <div class="card">
+    <div class="card-header">{{ page_title }}</div>
+    <div class="card-body">
+      <div class="row show-grid">
+        <div class="col-md-6">
+          <strong><label>اسبوع الحمل : </label></strong>
+          {{ required_checkup.week_number}}
+        </div>
+        <div class="col-md-6">
+          <strong><label>شكوي المريضة : </label></strong>
+          {{ required_checkup.complain}}
+        </div>
+        <div class="col-md-6">
+          <strong><label>تاريخ الزيارة : </label></strong>
+          {{ required_checkup.visit_date}}
+        </div>
+        <div class="col-md-6">
+          <strong><label>الزيارة القادمة : </label></strong>
+          {{ required_checkup.next_visit}}
+        </div>
+        <div class="col-md-6">
+          <strong><label>ضغط الدم : </label></strong>
+          {{ required_checkup.blood_presure}}
+        </div>
+        <div class="col-md-6">
+          <strong><label>بروتين : </label></strong>
+          {{ required_checkup.protine}}
+        </div>
+        <div class="col-md-6">
+          <strong><label>RBS : </label></strong>
+          {{ required_checkup.rbs}}
+        </div>
+        <div class="col-md-6">
+          <strong><label>Hb% : </label></strong>
+          {{ required_checkup.hemoglobin}}
+        </div>
+        <div class="col-md-6">
+          <strong><label>المشيمة : </label></strong>
+          {{ required_checkup.placenta}}
+        </div>
+        <div class="col-md-6">
+          <strong><label>نسبة المياه : </label></strong>
+          {{ required_checkup.water}}
+        </div>
+        <div class="col-md-6">
+          <strong><label>وضعية الجنين : </label></strong>
+          {{ required_checkup.fetal_position}}
+        </div>
+        <div class="col-md-6">
+          <strong><label>حركة الجنين : </label></strong>
+          {{ required_checkup.fetal_movement}}
+        </div>
+        <div class="col-md-6">
+          <strong><label>ضربات قلب الجنين : </label></strong>
+          {{ required_checkup.fetal_heart_rate}}
+        </div>
+        <div class="col-md-6">
+          <strong><label>وزن الجنين : </label></strong>
+          {{ required_checkup.weight}}
+        </div>
+        <div class="col-md-6">
+          <strong><label>طبيعة خروج المريضة : </label></strong>
+          {{ required_checkup.exit_nature}}
+        </div>
+        <div class="col-md-6">
+          <strong><label>وصف الخروج : </label></strong>
+          {{ required_checkup.exit_desc}}
+        </div>
+        <div class="col-md-6">
+          <strong><label>عمليات جراحية : </label></strong>
+          {{ required_checkup.surgery}}
+        </div>
+        <div class="col-md-6">
+          <strong><label>الوصف : </label></strong>
+          {{ required_checkup.surgery_desc}}
+        </div>
+        <div class="col-md-6">
+          <strong><label>تاريخ صرف الكلكسان : </label></strong>
+          {{ required_checkup.clexane_sarf_date}}
+        </div>
+        <div class="col-md-6">
+        </div>
+        <div class="col-md-12">
+          <strong><label>mhx : </label></strong>
+          {{ required_checkup.mhx}}
+        </div>
+        <div class="col-md-12">
+          <strong><label>shx : </label></strong>
+          {{ required_checkup.shx}}
+        </div>
+        <div class="col-md-12">
+          <strong><label>Allergy hx : </label></strong>
+          {{ required_checkup.allergy_hx}}
+        </div>
+        <div class="col-md-12">
+          <strong><label>g : </label></strong>
+          {{ required_checkup.g}}
+        </div>
+        <div class="col-md-12">
+          <strong><label>p : </label></strong>
+          {{ required_checkup.p}}
+        </div>
+        <div class="col-md-12">
+          <strong><label>Pre : </label></strong>
+          {{ required_checkup.pre}}
+        </div>
+      </div>
+    </div>
+    <!-- /.card-body -->
+  </div>
+  <!-- end of patient info -->
+
+  <!-- /.panel -->
+</div>
+
+{% endblock body %}

@@ -1,9 +1,11 @@
 from django.shortcuts import render, get_object_or_404, get_list_or_404, redirect
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from datetime import date
-from surgery.forms import (Surgery_Inline, Surgery_Master_Form,
-                           Patient_Surgery_Form, Surgery_Doctor_Form, doctor_Inline)
-from surgery.models import Surgery_Master, Surgery_Steps, Patient_Surgery, Surgery_Doctor
+from patient.models import Patient
+from surgery.forms import (Surgery_Inline, Surgery_Master_Form, Patient_Surgery_Form,
+                           Surgery_Doctor_Form, doctor_Inline,After_Surgery_Form)
+from surgery.models import Surgery_Master, Surgery_Steps, Patient_Surgery, Surgery_Doctor,After_Surgery
 
 @login_required(login_url='/login')
 def list_surgery_view(request):
@@ -67,15 +69,19 @@ def update_surgery_view(request, pk):
 @login_required(login_url='/login')
 def create_patient_surgery_view(request, patient_id):
     list_patient_surgery = Patient_Surgery.objects.filter(patient=patient_id)
+    required_patient = get_object_or_404(Patient, id=patient_id)
     patient_surgery_form = Patient_Surgery_Form()
     if request.method == 'POST':
         patient_surgery_form = Patient_Surgery_Form(request.POST)
         if patient_surgery_form.is_valid():
             master_obj = patient_surgery_form.save(commit=False)
-            master_obj.patient = patient_id
+            master_obj.patient = required_patient
             master_obj.created_by = request.user
             master_obj.last_update_by = request.user
             master_obj.save()
+            messages.success(request, 'تـــم التسجيل بنجــاح')
+        else:
+            messages.error(request, patient_surgery_form.errors)
     surgeryPatientContext = {
         "page_title": 'عمليات النسا',
         'patient_id':patient_id,
@@ -106,8 +112,33 @@ def create_surgery_doctor_view(request):
                 x.last_update_by = request.user
                 x.save()
             return redirect('surgery:list-surgery-doctors')
+            messages.success(request, 'تـــم التسجيل بنجــاح')
+        else:
+            messages.error(request, doctor_form.errors)
     surgeryContext = {
                       'page_title':'اضافة دكتور جديد',
                       'doctor_form':doctor_form
     }
     return render(request, 'create-doctor.html', surgeryContext)
+
+def create_after_surgery_view(request, surgery_id_v):
+    after_surg_form = After_Surgery_Form()
+    all_follow_ups = After_Surgery.objects.filter()
+    if request.method == 'POST':
+        after_surg_form = After_Surgery_Form(request.POST)
+        if after_surg_form.is_valid():
+            after_obj = after_surg_form.save(commit=False)
+            after_obj.surgery = surgery_id_v
+            after_obj.created_by = request.user
+            after_obj.last_update_by = request.user
+            after_obj.save()
+            # return redirect('surgery:list-surgery-doctors')
+            messages.success(request, 'تـــم التسجيل بنجــاح')
+        else:
+            messages.error(request, doctor_form.errors)
+    surgeryContext = {
+                      'page_title':'تسجيل متابعة مابعد العملية',
+                      'after_surg_form':after_surg_form,
+                      'all_follow_ups':all_follow_ups
+    }
+    return render(request, 'create-after-surgery.html', surgeryContext)

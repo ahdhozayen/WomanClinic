@@ -15,10 +15,12 @@
         <a href="{% url 'surgery:create-patient-surgery' patient_id=patient_id  %}" class="btn btn-outline-primary">عمليات نسا</a>
         <a href="{% url 'patient:all-delivery' pk=patient_id %}" class="btn btn-outline-primary">ولادة</a>
         <a href="{% url 'patient:all-checkup' patient_id=patient_id %}" class="btn btn-outline-primary">متابعات المريضة</a>
+        <a href="{% url 'patient:create-diabetes' patient_id=patient_id %}" class="btn btn-outline-primary">تسجيل قراءات الضغط و السكر</a>
+        <a href="#" data-toggle="modal" data-target="#exampleModal" class="btn btn-outline-primary">تسجيل خروج للمريضة</a>
       </div>
       <div class="btn-group">
-        <a href="{% url 'patient:update-patient' pk=patient_id %}" class="btn btn-outline-warning">تعديل</a>
-        <a href="{% url 'patient:all-patients' %}" class="btn btn-outline-warning">الرجوع</a>
+        <a href="{% url 'patient:update-patient' pk=patient_id %}" class="btn btn-outline-primary">تعديل</a>
+        <a href="{% url 'patient:all-patients' %}" class="btn btn-outline-primary">الرجوع</a>
       </div>
     </p>
     <div class="card">
@@ -70,9 +72,7 @@
           <div class="col-md-4">
             {{ patient_form.transferred_from|as_crispy_field}}
           </div>
-          <div class="col-md-4">
-            {{ patient_form.notes|as_crispy_field}}
-          </div>
+          
           <div class="col-md-4">
             {{ patient_form.entrance_date|as_crispy_field}}
           </div>
@@ -86,7 +86,7 @@
       <div class="card-body">
         <div class="table-responsive table-bordered">
           <table class="table" id="dataTable">
-            <thead style="background-color: #9d9858b3;">
+            <thead style="background-color: #89acbdb3;">
               <tr role="row">
                 <th style="text-align:center;">#</th>
                 <th style="text-align:center;">اسم المرفق</th>
@@ -107,6 +107,29 @@
       <!-- /.card-body -->
     </div>
     <!-- /.panel -->
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+          <form method='POST'>
+            <div class="modal-body">
+                {{exit_form|crispy}}
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary"> Save</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </form>
+      </div>
+    </div>
+    </div>
+
   </form>
 </div>
 

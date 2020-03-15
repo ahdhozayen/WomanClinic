@@ -65,12 +65,6 @@
           <div class="col-md-4">
             {{ patient_form.entrance_date|as_crispy_field}}
           </div>
-          <div class="col-md-4">
-            {{ patient_form.exit_date|as_crispy_field}}
-          </div>
-          <div class="col-md-12">
-            {{ patient_form.notes|as_crispy_field}}
-          </div>
         </div>
       </div>
       <div class="card-body">
@@ -80,7 +74,7 @@
           {% for form in patient_attachments %}
           {{ form.id }}
           {% if forloop.first %}
-          <thead style="background-color: #9d9858b3;">
+          <thead style="background-color: #89acbdb3;">
             <tr>
               {% for field in form.visible_fields %}
               <th style="text-align:center;">{{ field.label|capfirst }}</th>

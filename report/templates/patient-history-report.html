@@ -8,9 +8,10 @@
 <div class="col-xl-12">
   <p>
     <div class="btn-group">
-      <a href="{% url 'report:rep-all-patients' %}" class="btn btn-warning">الرجوع</a>
+      <a href="{% url 'report:rep-all-patients' %}" class="btn btn-success">الرجوع</a>
     </div>
   </p>
+  <!-- patiebt info -->
   <div class="card">
     <div class="card-header">{{ page_title }}</div>
     <div class="card-body">
@@ -84,6 +85,20 @@
           {{ required_patient.notes}}
         </div>
         <div class="col-md-4">
+          <strong><label>طبيعة المريضة : </label></strong>
+          {% if required_patient.patient_type == 'CHECK_UP' %}
+          متابعة
+          {% elif required_patient.patient_type == 'CONSULTANT' %}
+          أستشاري
+          {% elif required_patient.patient_type == 'OPERATION' %}
+          عمليات
+          {% elif required_patient.patient_type == 'DELIVER' %}
+          ولادة
+          {% else %}
+          --
+          {% endif %}
+        </div>
+        <div class="col-md-4">
           <strong><label>تاريخ دخول المريضة : </label></strong>
           {{ required_patient.entrance_date}}
         </div>
@@ -91,32 +106,68 @@
           <strong><label>تاريخ الخروج : </label></strong>
           {{ required_patient.exit_date}}
         </div>
-        <div class="col-md-4">
-          <strong><label>طبيعة المريضة : </label></strong>
-          {{ required_patient.patient_type}}
-        </div>
       </div>
     </div>
-
-
     <!-- /.card-body -->
   </div>
+  <!-- end of patient info -->
+
+  <!-- patient patient_check_ups -->
   <div class="card">
     <div class="card-header">
-      <p>روشة الادوية</p>
+      <strong>
+      <p>المتابعة الدورية</p>
+      </strong>
     </div>
     <div class="card-body">
       <div class="card-body">
         <div class="table-responsive table-bordered">
           <table class="table">
-            <thead style="background-color: #4c6381b3;">
+            <thead style="background-color: #89acbdb3;">
               <tr role="row">
-                <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">#</th>
-                <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">متابعة الاسبوع</th>
-                <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">الدواء</th>
-                <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">تاريخ الصرف</th>
-                <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">الجرعة</th>
-                <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">ملاحظات</th>
+                <th style="text-align:center;">#</th>
+                <th style="text-align:center;">شكوي المريضة</th>
+                <th style="text-align:center;">اسبوع الحمل</th>
+                <th style="text-align:center;">تاريخ الزيارة</th>
+                <th style="text-align:center;"></th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for check in patient_check_ups %}
+              <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>{{check.complain}}</td>
+                <td>{{check.week_number}}</td>
+                <td>{{check.visit_date}}</td>
+                <td><a href="{% url 'report:patient_check_up_report' checkup_id=check.id %}">عرض باقي بيانات المتابعة</a></td>
+              </tr>
+              {% endfor %}
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end of patient_check_ups -->
+
+  <!-- patient medicine -->
+  <div class="card">
+    <div class="card-header">
+      <strong>
+      <p>روشة الادوية</p>
+      </strong>
+    </div>
+    <div class="card-body">
+      <div class="card-body">
+        <div class="table-responsive table-bordered">
+          <table class="table">
+            <thead style="background-color: #89acbdb3;">
+              <tr role="row">
+                <th style="text-align:center;">#</th>
+                <th style="text-align:center;">متابعة الاسبوع</th>
+                <th style="text-align:center;">الدواء</th>
+                <th style="text-align:center;">تاريخ الصرف</th>
+                <th style="text-align:center;">الجرعة</th>
+                <th style="text-align:center;">ملاحظات</th>
               </tr>
             </thead>
             <tbody>
@@ -134,23 +185,26 @@
         </div>
       </div>
     </div>
-
   </div>
+  <!-- end of patient medicine -->
+  <!-- patient days off -->
   <div class="card">
     <div class="card-header">
+      <strong>
       <p>اجازات المريضة</p>
+      </strong>
     </div>
     <div class="card-body">
       <div class="card-body">
         <div class="table-responsive table-bordered">
           <table class="table table-hover">
-            <thead style="background-color: #4c6381b3;">
+            <thead style="background-color: #89acbdb3;">
               <tr role="row">
-                <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">#</th>
-                <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">تاريخ بداية الاجازة</th>
-                <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">تاريخ نهاية الاجازة</th>
-                <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">عدد ايام الاجازة</th>
-                <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">ملاحظات</th>
+                <th style="text-align:center;">#</th>
+                <th style="text-align:center;">تاريخ بداية الاجازة</th>
+                <th style="text-align:center;">تاريخ نهاية الاجازة</th>
+                <th style="text-align:center;">عدد ايام الاجازة</th>
+                <th style="text-align:center;">ملاحظات</th>
               </tr>
             </thead>
             <tbody>
@@ -168,6 +222,117 @@
       </div>
     </div>
   </div>
+  <!-- end of patient days off -->
+  <!-- patient patient_us -->
+  <div class="card">
+    <div class="card-header">
+      <strong>
+      <p>Ultrasound</p>
+      </strong>
+    </div>
+    <div class="card-body">
+      <div class="card-body">
+        <div class="table-responsive table-bordered">
+          <table class="table table-hover">
+            <thead style="background-color: #89acbdb3;">
+              <tr role="row">
+                <th style="text-align:center;">#</th>
+                <th style="text-align:center;">نتيجة الفحص</th>
+                <th style="text-align:center;">تاريخ الفحص</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for check in patient_us %}
+              <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>{{check.prognosis}}</td>
+                <td>{{check.visit_date}}</td>
+              </tr>
+              {% endfor %}
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end of patient_us -->
+  <!-- patient patient_surgery -->
+  <div class="card">
+    <div class="card-header">
+      <strong>
+      <p>عمليات النسا</p>
+      </strong>
+    </div>
+    <div class="card-body">
+      <div class="card-body">
+        <div class="table-responsive table-bordered">
+          <table class="table table-hover">
+            <thead style="background-color: #89acbdb3;">
+              <tr role="row">
+                <th style="text-align:center;">#</th>
+                <th style="text-align:center;">العملية</th>
+                <th style="text-align:center;">الجراح</th>
+                <th style="text-align:center;">تاريخ اجراء العملية</th>
+                <th style="text-align:center;">تاريخ الخروج</th>
+                <th style="text-align:center;">تطور الحالة</th>
+                <th style="text-align:center;">التشخيص النهائي</th>
+                <th style="text-align:center;">توصيات</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for check in patient_surgery %}
+              <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>{{check.surgery_name}}</td>
+                <td>{{check.surgery_doctor}}</td>
+                <td>{{check.surgery_date}}</td>
+                <td>{{check.exit_date}}</td>
+                <td>{{check.case_progress}}</td>
+                <td>{{check.final_diagnosis}}</td>
+                <td>{{check.recomendations}}</td>
+              </tr>
+              {% endfor %}
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end of patient_surgery -->
+  <!-- patient patient_diabete -->
+  <div class="card">
+    <div class="card-header">
+      <strong>
+      <p>متابعة دورية</p>
+      </strong>
+    </div>
+    <div class="card-body">
+      <div class="card-body">
+        <div class="table-responsive table-bordered">
+          <table class="table table-hover">
+            <thead style="background-color: #89acbdb3;">
+              <tr role="row">
+                <th style="text-align:center;">#</th>
+                <th style="text-align:center;">سكر الدم</th>
+                <th style="text-align:center;">ضغط الدم</th>
+                <th style="text-align:center;">درجة الحرارة</th>
+                <th style="text-align:center;">تاريخ القراءة</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for check in patient_diabete %}
+              <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>{{check.bs}}</td>
+                <td>{{check.bp}}</td>
+                <td>{{check.temp}}</td>
+                <td>{{check.reading_date}}</td>
+              </tr>
+              {% endfor %}
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end of patient_diabete -->
   <!-- /.panel -->
 </div>
 

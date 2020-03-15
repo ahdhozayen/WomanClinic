@@ -3,14 +3,17 @@ from django.conf import settings
 from django.shortcuts import render, get_object_or_404, get_list_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from datetime import date
+from django.http import JsonResponse
 from django.contrib import messages
 from patient.models import (Patient, Patient_Files, Delivery, Check_Up,
-                            Gynecology, Patient_Medicine, Patient_Days_Off, Ultrasound)
+                            Gynecology, Patient_Medicine, Patient_Days_Off,
+                            Ultrasound, Diabetes, Patient_Exit)
 from patient.forms import (PatientForm, Patient_Files_formset,
                            DeliveryForm, Delivery_Check_Up_formset,
                            Gynecology_formset, GynecologyForm,
                            Check_Up_Form, Patient_Medicine_formset,
-                           Patient_Days_Off_formset, Ultrasound_Form)
+                           Patient_Days_Off_formset, Ultrasound_Form,
+                           Diabetes_Form, Patient_Exit_Form)
 
 
 @login_required(login_url='/login')
@@ -37,7 +40,12 @@ def create_patient_view(request):
                 x.created_by = request.user
                 x.last_update_by = request.user
                 x.save()
-            return redirect('patient:all-checkup', patient_id=master_obj.id)
+            if master_obj.patient_type == 'DELIVER' :
+                return redirect('patient:all-delivery', pk=master_obj.id)
+            elif master_obj.patient_type == 'OPERATION'  :
+                return redirect('surgery:create-patient-surgery', patient_id=master_obj.id)
+            else :
+                return redirect('patient:all-checkup', patient_id=master_obj.id)
         else:
             if patient_form.errors:
                 messages.error(request, patient_form.errors)
@@ -53,16 +61,27 @@ def create_patient_view(request):
 
 @login_required(login_url='/login')
 def view_patient_view(request, pk):
-    required_patient = Patient.objects.get(pk=pk)
+    required_patient = get_object_or_404(Patient, pk=pk)
     patient_form = PatientForm(form_type='view', instance=required_patient)
     patient_attachments = Patient_Files.objects.filter(patient = pk)
     # patient_attachments = Patient_Files_formset(instance=required_patient)
+    exit_form = Patient_Exit_Form()
+    if request.method == 'POST':
+        exit_form = Patient_Exit_Form(request.POST)
+        if exit_form.is_valid():
+            exit_obj = exit_form.save(commit=False)
+            exit_obj.patient = required_patient
+            exit_obj.created_by = request.user
+            exit_obj.last_update_by = request.user
+            exit_obj.save()
+            return redirect('patient:view-patient', pk=pk)
     createContext = {
                      'page_title':'شاشة المتابعة الرئيسية',
                      'patient_id':pk,
                      'patient_form':patient_form,
                      'patient_attachments':patient_attachments,
                      'media_url':settings.MEDIA_URL,
+                     'exit_form':exit_form
     }
     return render(request, 'view-patient.html', createContext)
 
@@ -272,6 +291,7 @@ def update_list_check_up_view(request, chk_id, pk):
             # master_obj.created_by = request.user
             master_obj.last_update_by = request.user
             master_obj.save()
+            messages.success(request, 'تـــم التسجيل بنجــاح')
             check_up_form = Check_Up_Form(form_type='update',)
     checkContext = {
                     'page_title':'تعديل بيانات متابعة المريضة {}'.format(required_patient),
@@ -294,6 +314,8 @@ def create_patient_medicine_view(request, patient_id, chk_id):
                 x.created_by = request.user
                 x.last_update_by = request.user
                 x.save()
+                messages.success(request, 'تـــم التسجيل بنجــاح')
+
     medContext = {
                     'page_title':'صرف ادوية ',
                     'patient_id':required_patient,
@@ -338,9 +360,49 @@ def create_patient_days_off_view(request, patient_id):
                 x.created_by = request.user
                 x.last_update_by = request.user
                 x.save()
+                messages.success(request, 'تـــم التسجيل بنجــاح')
+
     offContext = {
                   'page_title':' تسجيل اجازات لـ {}'.format(required_patient),
                   'days_formset':days_formset,
                   'patient_id':patient_id,
     }
     return render(request, 'create-days-off.html', offContext)
+
+@login_required(login_url='/login')
+def create_diabetes_view(request, patient_id):
+    required_patient = Patient.objects.get(id = patient_id)
+    list_diabetes = Diabetes.objects.filter(patient=patient_id)
+    diabete_form = Diabetes_Form()
+    if request.method == 'POST':
+        diabete_form = Diabetes_Form(request.POST)
+        if diabete_form.is_valid():
+            diabete_obj = diabete_form.save(commit=False)
+            diabete_obj.patient = required_patient
+            diabete_obj.created_by = request.user
+            diabete_obj.last_update_by = request.user
+            diabete_obj.save()
+            messages.success(request, 'تـــم التسجيل بنجــاح')
+            return redirect('patient:create-diabetes', patient_id=patient_id)
+    diabeteContext = {
+                  'page_title':'تسجيل قرءات السكر و الضغط للمريضة {}'.format(required_patient),
+                 'required_patient':required_patient,
+                 'list_diabetes':list_diabetes,
+                 'diabete_form':diabete_form
+    }
+    return render(request, 'diabetes.html', diabeteContext)
+
+@login_required(login_url='/login')
+def patient_diabete_chart(request, patient_id):
+    labels = []
+    reads = []
+    chart_diabetes = Diabetes.objects.filter(patient=patient_id)
+    for x in chart_diabetes:
+        labels.append(x.reading_date.month)
+        reads.append(x.bs)
+
+    data = {
+        'labels': labels,
+        'reads': reads,
+    }
+    return JsonResponse(data)

@@ -2,7 +2,7 @@ from django import forms
 from crispy_forms.helper import FormHelper
 from patient.models import (Patient,Delivery,Check_Up,
                             Patient_Files,Gynecology, Patient_Medicine,
-                            Patient_Days_Off, Ultrasound)
+                            Patient_Days_Off, Ultrasound, Diabetes, Patient_Exit)
 
 common_items_to_execlude = (
                             'start_date','end_date',
@@ -24,6 +24,16 @@ class PatientForm(forms.ModelForm):
         if form_type=='view':
             for field in self.fields:
                 self.fields[field].widget.attrs['disabled'] = True
+
+class Patient_Exit_Form(forms.ModelForm):
+    class Meta:
+        model = Patient_Exit
+        fields = ('exit_date', 'exit_note')
+        exclude = common_items_to_execlude
+    def __init__(self, *args, **kwargs):
+        super(Patient_Exit_Form, self).__init__(*args, **kwargs)
+        self.helper = FormHelper(self)
+        self.helper.form_show_labels = True
 
 class Patient_FilesForm(forms.ModelForm):
     class Meta:
@@ -62,7 +72,7 @@ class CheckUpForm(forms.ModelForm):
         self.helper = FormHelper(self)
         self.helper.form_show_labels = False
 
-Delivery_Check_Up_formset = forms.inlineformset_factory(Delivery, Check_Up , form=CheckUpForm)
+Delivery_Check_Up_formset = forms.inlineformset_factory(Patient, Check_Up , form=CheckUpForm)
 
 class GynecologyForm(forms.ModelForm):
     class Meta:
@@ -102,7 +112,7 @@ class Check_Up_Form(forms.ModelForm):
         super(Check_Up_Form, self).__init__(*args, **kwargs)
         self.helper = FormHelper(self)
         self.helper.form_show_labels = True
-        self.fields['delivery'].queryset = Delivery.objects.filter().order_by('creation_date')
+        # self.fields['delivery'].queryset = Delivery.objects.filter().order_by('creation_date')
         if form_type=='view':
             for field in self.fields:
                 self.fields[field].widget.attrs['disabled'] = True
@@ -150,5 +160,16 @@ class Ultrasound_Form(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(Ultrasound_Form, self).__init__(*args, **kwargs)
+        self.helper = FormHelper(self)
+        self.helper.form_show_labels = True
+
+class Diabetes_Form(forms.ModelForm):
+    class Meta:
+        model = Diabetes
+        fields = ('bs','bp','reading_date', 'temp')
+        exclude = common_items_to_execlude
+
+    def __init__(self, *args, **kwargs):
+        super(Diabetes_Form, self).__init__(*args, **kwargs)
         self.helper = FormHelper(self)
         self.helper.form_show_labels = True

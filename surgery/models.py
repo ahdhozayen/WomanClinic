@@ -42,7 +42,7 @@ class Surgery_Doctor(models.Model):
         return self.doctor_name
 
 class Patient_Surgery(models.Model):
-    patient = models.ForeignKey(Patient, on_delete=models.CASCADE, verbose_name='اسم المريضة')
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE, blank=True, null=True, verbose_name='اسم المريضة')
     surgery_name = models.ForeignKey(Surgery_Master, on_delete=models.CASCADE, verbose_name='نوع العملية')
     surgery_doctor = models.ForeignKey(Surgery_Doctor, on_delete=models.CASCADE, verbose_name='اسم الجراح')
     surgery_date  = models.DateField(auto_now=False, auto_now_add=False, default=date.today, verbose_name='تاريخ اجراء العملية')
@@ -59,3 +59,13 @@ class Patient_Surgery(models.Model):
 
     def __str__(self):
         return self.surgery_name+" "+self.patient.name
+
+class After_Surgery(models.Model):
+    surgery = models.ForeignKey(Patient_Surgery, on_delete=models.CASCADE, blank=True, null=True, verbose_name='العملية')
+    after_surgery_notes = models.TextField(blank=True, null=True,verbose_name='تطور الحالة')
+    after_surgery_recomendations = models.TextField(blank=True, null=True,verbose_name='توصيات')
+    follow_up_date  = models.DateField(auto_now=False, auto_now_add=False, default=date.today, verbose_name=_('تاريخ المتابعة'))
+    created_by  = models.ForeignKey(settings.AUTH_USER_MODEL, blank=False, on_delete=models.CASCADE, related_name="after_surgery_created_by")
+    creation_date = models.DateField(auto_now=True, auto_now_add=False)
+    last_update_by = models.ForeignKey(settings.AUTH_USER_MODEL, blank=False, on_delete=models.CASCADE, related_name="after_surgery_updated_by")
+    last_update_date = models.DateField(auto_now=False, auto_now_add=True)

@@ -1,0 +1,61 @@
+{% extends 'master.html'%}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load i18n %}
+{% load l10n %}
+{% block body %}
+
+<div class="col-xl-12">
+  <form id="my_form" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% include 'messages.html' %}
+    <p>
+      <button type="submit" class="btn btn-success">حفظ</button>
+      <a href="{% url 'patient:all-checkup' patient_id=patient_id %}" class="btn btn-secondary">{% trans "الغاء" %}</a>
+      <a href="{% url 'patient:all-checkup' patient_id=
+       %}" class="btn btn-secondary">{% trans "تسجيل ملاحظات مابعد العملية" %}</a>
+    </p>
+    <div class="card">
+      <div class="card-header">{{ page_title }}</div>
+      <div class="card-body">
+        <div class="row show-grid">
+          <div class="col-md-12">
+            {{ after_surg_form.after_surgery_notes|as_crispy_field}}
+          </div>
+          <div class="col-md-4">
+            {{ after_surg_form.after_surgery_recomendations|as_crispy_field}}
+          </div>
+          <div class="col-md-8">
+          </div>
+        </div>
+      </div>
+      <!-- /.card-body -->
+    </div>
+    <!-- /.panel -->
+  </form>
+  <div class="card">
+    <div class="card-body">
+      <table class="table" id="dataTable">
+        <thead style="background-color: #89acbdb3;">
+          <tr role="row">
+            <th style="text-align:center;">#</th>
+            <th style="text-align:center;">تقدم الحالة</th>
+            <th style="text-align:center;">التوصيات</th>
+            <th style="text-align:center;">التاريخ</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for follow in all_follow_ups %}
+          <tr>
+            <th scope="row">{{ forloop.counter }}</th>
+            <td>{{follow.after_surgery_notes}}</td>
+            <td>{{follow.after_surgery_recomendations}}</td>
+            <td>{{follow.follow_up_date}}</td>
+          </tr>
+          {% endfor %}
+      </table>
+    </div>
+  </div>
+</div>
+
+{% endblock body %}

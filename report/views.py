@@ -3,7 +3,9 @@ from datetime import date
 from django.db.models import Count
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
-from patient.models import Patient, Delivery, Check_Up, Gynecology, Patient_Medicine, Patient_Days_Off
+from patient.models import (Patient, Delivery, Check_Up, Gynecology,
+                            Patient_Medicine, Patient_Days_Off,Ultrasound, Diabetes )
+from surgery.models import Patient_Surgery
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import authentication, permissions
@@ -43,15 +45,27 @@ def list_all_patients_view(request):
 def view_patient_history_view(request, patient_id):
     # patient info
     required_patient = get_object_or_404(Patient, id = patient_id)
-    # patient medicine
+    # patient check up
     patient_check_ups = Check_Up.objects.filter(patient = patient_id)
+    # patient medicine
     patient_medicine = Patient_Medicine.objects.filter(check_up__in = patient_check_ups)
-    # patient days off
+    # patient ultrasound
+    patient_us = Ultrasound.objects.filter(check_up__patient = patient_id)
+    # patient delivery
     patient_days_off = Patient_Days_Off.objects.filter(patient = patient_id)
+    # patient surgeries
+    patient_surgery = Patient_Surgery.objects.filter(patient = patient_id)
+    # patient diabetes
+    patient_diabete = Diabetes.objects.filter(patient = patient_id)
+
     context={'page_title':'تقرير عام عن المريضة  {}'.format(required_patient),
              'required_patient':required_patient,
+             'patient_check_ups':patient_check_ups,
              'patient_medicine':patient_medicine,
+             'patient_us':patient_us,
              'patient_days_off':patient_days_off,
+             'patient_surgery':patient_surgery,
+             'patient_diabete':patient_diabete,
              }
     return render(request, 'patient-history-report.html', context=context)
 
@@ -95,15 +109,14 @@ def list_surgery_patients_view(request):
              }
     return render(request, 'list-patients.html', context=context)
 
-# def pie_chart(request):
-#     labels = []
-#     data = []
-#     queryset = Patient.objects.filter()
-#     for x in queryset:
-#         labels.append(x.entrance_date.month)
-#         data.append(x.name)
-#     print(data)
-#     return render(request, 'pie_chart.html', {'labels': labels,'data': data,})
+@login_required(login_url='/login')
+def patient_checkup_report_view(request, checkup_id):
+    required_checkup = get_object_or_404(Check_Up, id=checkup_id)
+    context={'page_title':'تقرير متابعة الاسبوع رقم {0} للمريضة {1} '.format(required_checkup.week_number, required_checkup.patient.name),
+             'required_checkup':required_checkup,
+             'patient_id':required_checkup.patient
+             }
+    return render(request, 'checkup-report.html', context)
 
 @login_required(login_url='/login')
 def patients_entrance_chart(request):
@@ -116,12 +129,40 @@ def patients_entrance_chart(request):
     for entry in queryset:
         labels.append(entry['entrance_date'])
         qs1.append(entry['num_of_entrance_patient'])
-
     for exit in queryset2:
-        qs2.append(exit['num_of_exit_patient']*3)
-
+        qs2.append(exit['num_of_exit_patient'])
     return JsonResponse(data={
         'labels': labels,
         'qs1': qs1,
         'qs2': qs2
+    })
+
+@login_required(login_url='/login')
+def delivery_type_chart(request):
+    labels = []
+    ds_type = []
+    queryset = Delivery.objects.values('type').annotate(Count('type'))
+    for delivery in queryset:
+        if delivery['type'] == 'c':
+            labels.append('قيصري')
+        else:
+            labels.append('طبيغي')
+        ds_type.append(delivery['type__count'])
+    return JsonResponse(data={
+        'labels': labels,
+        'ds_type': ds_type
+    })
+
+
+@login_required(login_url='/login')
+def surgery_type_chart(request):
+    labels = []
+    ds_type = []
+    queryset = Patient_Surgery.objects.values('surgery_name__surgery_name').annotate(Count('surgery_name'))
+    for surgery in queryset:
+        labels.append(surgery['surgery_name__surgery_name'])
+        ds_type.append(surgery['surgery_name__count'])
+    return JsonResponse(data={
+        'labels': labels,
+        'ds_type': ds_type
     })

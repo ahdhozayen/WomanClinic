@@ -22,13 +22,13 @@ class Patient(models.Model):
     room = models.CharField(max_length=70, verbose_name='الغرفة')
     hospital_section = models.CharField(max_length=70,blank=True, null=True, verbose_name='القسم')
     transferred_from = models.CharField(max_length=70, blank=True, null=True,choices=transferred_list ,verbose_name='المريضة محولة من')
-    notes = models.CharField(max_length=250, blank=True, null=True,verbose_name='ملاحظات')
     # ****************************************************************************
     clexane_order_number = models.CharField(max_length=20, blank=True, null=True, verbose_name='رقم قرار صرف الكلكسان')
     entrance_date = models.DateField(auto_now=False, blank=True, null=True, verbose_name='تاريخ دخول المستشفي')
-    exit_date = models.DateField(auto_now=False, blank=True, null=True, verbose_name='تاريخ الخروج')
     patient_type_list = [('CHECK_UP','متابعة'), ('CONSULTANT','استشاري'), ('OPERATION','عمليات نسا'), ('DELIVER','ولادة')]
     patient_type = models.CharField(max_length=50, choices=patient_type_list, blank=True, null=True, verbose_name='طبيعة المريضة')
+    exit_date = models.DateField(auto_now=False, blank=True, null=True, verbose_name='تاريخ الخروج')
+    exit_note = models.TextField(max_length=250, blank=True, null=True,verbose_name=_('ملاحظات الخروج'))
     # ****************************************************************************
     start_date  = models.DateField(auto_now=False, auto_now_add=False, default=date.today, verbose_name=_('Start Date'))
     end_date    = models.DateField(auto_now=False, auto_now_add=False, blank=True, null=True, verbose_name=_('End Date'))
@@ -39,6 +39,21 @@ class Patient(models.Model):
 
     def __str__(self):
         return self.name
+
+class Patient_Exit(models.Model):
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE, blank=True, null=True)
+    exit_date = models.DateField(auto_now=False, blank=True, null=True, verbose_name='تاريخ الخروج')
+    exit_note = models.TextField(max_length=250, blank=True, null=True, verbose_name=_('ملاحظات الخروج'))
+    created_by  = models.ForeignKey(settings.AUTH_USER_MODEL, blank=False, on_delete=models.CASCADE, related_name="exit_created_by")
+    creation_date = models.DateField(auto_now=True, auto_now_add=False)
+    last_update_by = models.ForeignKey(settings.AUTH_USER_MODEL, blank=False, on_delete=models.CASCADE, related_name="exit_last_updated_by")
+    last_update_date = models.DateField(auto_now=False, auto_now_add=True)
+
+    def save(self):
+        patient_obj = Patient.objects.get(pk=self.patient.id)
+        patient_obj.exit_date = self.exit_date
+        patient_obj.save()
+        super().save()
 
 def path_and_rename(instance, filename):
     # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
@@ -91,7 +106,7 @@ class Check_Up(models.Model):
                         ('cervical_stitch','غرزة بعنق الرحم'),
                         ('ectopic_pregnancy','حمل خارج الرحم'),
                         ('CS','ولادة قيصري'),]
-    delivery = models.ForeignKey(Delivery, on_delete=models.CASCADE, blank=True, null=True, verbose_name='الولادة')
+    # delivery = models.ForeignKey(Delivery, on_delete=models.CASCADE, blank=True, null=True, verbose_name='الولادة')
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE, blank=True, null=True, verbose_name='المريضة')
     week_number = models.CharField(max_length=3, verbose_name='اسبوع الحمل')
     complain = models.CharField(max_length=200, verbose_name='شكوي المريضة')
@@ -186,3 +201,14 @@ class Ultrasound(models.Model):
 
     def __str__(self):
         return self.prognosis
+
+class Diabetes(models.Model):
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE, related_name='patient_diabetes', verbose_name=_('المريضة'))
+    bs = models.PositiveIntegerField(verbose_name=_('قياس السكر'))
+    bp = models.CharField(max_length=10, verbose_name=_('قياس الضغط'))
+    temp = models.PositiveIntegerField(default=37, verbose_name=_('درجة الحرارة'))
+    reading_date = models.DateTimeField(auto_now=False, auto_now_add=False, default=datetime.now() ,verbose_name=_('تاريخ القراءة'))
+    created_by  = models.ForeignKey(settings.AUTH_USER_MODEL, blank=False, on_delete=models.CASCADE, related_name="diabetes_created_by")
+    creation_date = models.DateField(auto_now=True, auto_now_add=False)
+    last_update_by = models.ForeignKey(settings.AUTH_USER_MODEL, blank=False, on_delete=models.CASCADE, related_name="diabetes_last_updated_by")
+    last_update_date = models.DateField(auto_now=False, auto_now_add=True)

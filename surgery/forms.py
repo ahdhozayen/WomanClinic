@@ -58,3 +58,13 @@ doctor_Inline = forms.modelformset_factory(models.Surgery_Doctor,
                                              extra=8,
                                              form=Surgery_Steps_Form,
                                              can_delete=False)
+
+class After_Surgery_Form(forms.ModelForm):
+    class Meta:
+        model = models.After_Surgery
+        fileds = ('after_surgery_notes','after_surgery_recomendations')
+        exclude = common_items_to_execlude
+    def __init__(self, *args, **kwargs):
+        super(After_Surgery_Form, self).__init__(*args, **kwargs)
+        self.helper = FormHelper(self)
+        self.helper.form_show_labels = True

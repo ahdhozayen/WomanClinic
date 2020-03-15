@@ -18,6 +18,7 @@
               <th>#</th>
               <th>اسم المريضة</th>
               <th>رقم المريضة</th>
+              <th>طبيعة المريضة</th>
               <th>الرقم التأميني</th>
               <th>تاريخ الميلاد</th>
             </tr>
@@ -28,6 +29,19 @@
               <td style="">{{ forloop.counter }}</td>
               <td style=""><a href="{% url 'patient:view-patient' pk=patient.id %}">{{patient.name}}</a></td>
               <td style="">{{patient.patient_number}}</td>
+              <td style="">
+                {% if patient.patient_type == 'CHECK_UP' %}
+                متابعة
+                {% elif patient.patient_type == 'CONSULTANT' %}
+                أستشاري
+                {% elif patient.patient_type == 'OPERATION' %}
+                عمليات
+                {% elif patient.patient_type == 'DELIVER' %}
+                ولادة
+                {% else %}
+                --
+                {% endif %}
+              </td>
               <td style="">{{patient.insurance_number}}</td>
               <td style="">{{patient.date_of_birth}}</td>
             </tr>
