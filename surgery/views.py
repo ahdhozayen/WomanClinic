@@ -36,16 +36,17 @@ def create_surgery_view(request):
                     obj.created_by = request.user
                     obj.last_update_by = request.user
                     obj.save()
+                    return redirect('surgery:list-surgery-types')
     surgeryContext = {
         "page_title": 'اضافة عملية جديدة',
         'master_form': master_form,
         'detail_fromset': detail_fromset,
     }
     return render(request, 'create-surgery.html', surgeryContext)
-
+#dina
 @login_required(login_url='/login')
 def update_surgery_view(request, pk):
-    required_surgery = get_object_or_404(Surgery, pk=pk)
+    required_surgery = get_object_or_404(Surgery_Master, pk=pk)
     surgery_master_form = Surgery_Master_Form(instance=required_surgery)
     surgery_det_form = Surgery_Inline(instance=required_surgery)
     if request.method == 'POST':
@@ -58,13 +59,25 @@ def update_surgery_view(request, pk):
                 obj.created_by = request.user
                 obj.last_update_by = request.user
                 obj.save()
+            return redirect('surgery:list-surgery-types')
 
     surgeryContext = {
         "page_title": 'تعديل بيانات عملية {}'.format(required_surgery),
-        'surgery_master_form': surgery_master_form,
-        'surgery_det_form': surgery_det_form
+        'master_form': surgery_master_form,
+        'detail_fromset': surgery_det_form
     }
     return render(request, 'create-surgery.html', surgeryContext)
+#dina
+@login_required(login_url='/login')
+def delete_surgery_view(request, pk):
+    required_surgery = get_object_or_404(Surgery_Master, pk=pk)
+    required_surgery.delete()
+    return redirect('surgery:list-surgery-types')
+
+@login_required(login_url='/login')
+def view_surgery_view(request, pk):
+    required_surgery = get_object_or_404(Surgery_Master, pk=pk)
+    return render(request, 'view-surgery.html', {'surgery':required_surgery})
 
 @login_required(login_url='/login')
 def create_patient_surgery_view(request, patient_id):

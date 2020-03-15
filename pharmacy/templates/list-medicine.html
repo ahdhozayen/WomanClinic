@@ -9,9 +9,12 @@
     <a href="{% url 'pharmacy:create-medicine' %}" class="btn btn-s-md btn-success">{% trans "تسجيل دواء جديد" %}</a>
   </p>
   <div class="card">
-    <div class="card-header"><strong>{{ page_title }}</strong></div>
+    <div class="card-header"><strong>{{ page_title }}</strong>
+
+    </div>
     <!-- /.card-header -->
     <div class="card-body">
+      <a href="{% url 'pharmacy:create-medicine' %}" class="btn btn-success">Create a New Medicine</a>
       <div class="table-responsive">
         <table class="table table-striped table-bordered table-hover">
           <thead>
