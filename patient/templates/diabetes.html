@@ -21,7 +21,10 @@
             {{ diabete_form.bs|as_crispy_field}}
           </div>
           <div class="col-md-3">
-            {{ diabete_form.bp|as_crispy_field}}
+            {{ diabete_form.bp_up|as_crispy_field}}
+          </div>
+          <div class="col-md-3">
+            {{ diabete_form.bp_down|as_crispy_field}}
           </div>
           <div class="col-md-3">
             {{ diabete_form.temp|as_crispy_field}}
@@ -45,7 +48,7 @@
                 <th style="text-align:center;">#</th>
                 <th style="text-align:center;">التاريخ</th>
                 <th style="text-align:center;">سكر الدم</th>
-                <th style="text-align:center;">ضغط الدم</th>
+                <th colspan="2" style="text-align:center;">ضغط الدم</th>
                 <th style="text-align:center;">درجة الحرارة</th>
               </tr>
             </thead>
@@ -55,7 +58,8 @@
                 <th scope="row">{{ forloop.counter }}</th>
                 <td>{{check.reading_date}}</td>
                 <td>{{check.bs}}</td>
-                <td>{{check.bp}}</td>
+                <td>{{check.bp_up}}</td>
+                <td>{{check.bp_down}}</td>
                 <td>{{check.temp}}</td>
               </tr>
               {% endfor %}
@@ -92,25 +96,49 @@
               label: 'سكر المريضة',
               backgroundColor: 'red',
               borderColor: 'red',
-              data: data.reads,
+              data: data.bs,
               fill:false,
-            }],
+            },{
+              label: 'SBP',
+              backgroundColor: 'blue',
+              borderColor: 'blue',
+              data: data.bp_up,
+              fill:false,
+            },{
+              label: 'DBP',
+              backgroundColor: 'orange',
+              borderColor: 'orange',
+              data: data.bp_down,
+              fill:false,
+            }
+          ],
           },
           options: {
             responsive: true,
             scales: {
-              yAxes: [{
-                stacked: true
-              }]
-            },
+					xAxes: [{
+						display: true,
+						scaleLabel: {
+							display: true,
+							labelString: 'Month'
+						}
+					}],
+					yAxes: [{
+						display: true,
+						scaleLabel: {
+							display: true,
+							labelString: 'Value'
+						}
+					}]
+				},
             legend: {
               position: 'top',
             },
             title: {
               display: true,
-              text: 'رسم بياني لسكر المريضة'
+              text: 'رسم بياني للمتابعة الدورية للمريضة'
             }
-          }
+         }
         });
       }
     });

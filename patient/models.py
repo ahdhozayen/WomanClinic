@@ -15,6 +15,12 @@ class Patient(models.Model):
     mobile = models.CharField(max_length=255, blank=True, null=True, verbose_name='المحمول')
     date_of_birth = models.DateField(auto_now=False, auto_now_add=False, blank=True, null=True, verbose_name='تاريخ الميلاد')
     job = models.CharField(max_length=30, verbose_name='الوظيفة')
+    husband_name = models.CharField(max_length=255, blank=True, null=True, verbose_name='اسم الزوج')
+    husband_phone = models.CharField(max_length=255, blank=True, null=True, verbose_name='هاتف الزوج')
+    # ******************************************************
+    g = models.PositiveIntegerField(blank=True, null=True, verbose_name='G')
+    p = models.PositiveIntegerField(blank=True, null=True, verbose_name='P')
+    pre = models.PositiveIntegerField(blank=True, null=True, verbose_name='Pre')
     insurance_number = models.PositiveIntegerField(verbose_name='الرقم التأميني')
     entrance_number = models.PositiveIntegerField(verbose_name='رقم الدخول')
     hospital_number = models.PositiveIntegerField(verbose_name='رقم المستشفي الموحد')
@@ -22,13 +28,11 @@ class Patient(models.Model):
     room = models.CharField(max_length=70, verbose_name='الغرفة')
     hospital_section = models.CharField(max_length=70,blank=True, null=True, verbose_name='القسم')
     transferred_from = models.CharField(max_length=70, blank=True, null=True,choices=transferred_list ,verbose_name='المريضة محولة من')
-    # ****************************************************************************
     clexane_order_number = models.CharField(max_length=20, blank=True, null=True, verbose_name='رقم قرار صرف الكلكسان')
     entrance_date = models.DateField(auto_now=False, blank=True, null=True, verbose_name='تاريخ دخول المستشفي')
     patient_type_list = [('CHECK_UP','متابعة'), ('CONSULTANT','استشاري'), ('OPERATION','عمليات نسا'), ('DELIVER','ولادة')]
     patient_type = models.CharField(max_length=50, choices=patient_type_list, blank=True, null=True, verbose_name='طبيعة المريضة')
     exit_date = models.DateField(auto_now=False, blank=True, null=True, verbose_name='تاريخ الخروج')
-    exit_note = models.TextField(max_length=250, blank=True, null=True,verbose_name=_('ملاحظات الخروج'))
     # ****************************************************************************
     start_date  = models.DateField(auto_now=False, auto_now_add=False, default=date.today, verbose_name=_('Start Date'))
     end_date    = models.DateField(auto_now=False, auto_now_add=False, blank=True, null=True, verbose_name=_('End Date'))
@@ -54,6 +58,39 @@ class Patient_Exit(models.Model):
         patient_obj.exit_date = self.exit_date
         patient_obj.save()
         super().save()
+
+class Past_Medical_History(models.Model):
+    patient = models.OneToOneField(Patient, on_delete=models.CASCADE, blank=True, null=True)
+    diabetes= models.CharField(max_length=255, blank=True, null=True, verbose_name='diabetes')
+    pulmonar= models.CharField(max_length=255, blank=True, null=True, verbose_name='pulmonar')
+    hypertension= models.CharField(max_length=255, blank=True, null=True, verbose_name='hypertension')
+    allergies= models.CharField(max_length=255, blank=True, null=True, verbose_name='allergies')
+    heart_disease= models.CharField(max_length=255, blank=True, null=True, verbose_name='heart_disease')
+    breast= models.CharField(max_length=255, blank=True, null=True, verbose_name='breast')
+    autoimmun_disorder= models.CharField(max_length=255, blank=True, null=True, verbose_name='autoimmun_disorder')
+    abnormal_pap= models.CharField(max_length=255, blank=True, null=True, verbose_name='abnormal_pap')
+    kidney_disease= models.CharField(max_length=255, blank=True, null=True, verbose_name='kidney_disease')
+    uterine= models.CharField(max_length=255, blank=True, null=True, verbose_name='uterine')
+    psychiatric= models.CharField(max_length=255, blank=True, null=True, verbose_name='psychiatric')
+    infertility= models.CharField(max_length=255, blank=True, null=True, verbose_name='infertility')
+    neurologic= models.CharField(max_length=255, blank=True, null=True, verbose_name='neurologic')
+    rfh= models.CharField(max_length=255, blank=True, null=True, verbose_name='rfh')
+    hld= models.CharField(max_length=255, blank=True, null=True, verbose_name='hld')
+    gyns= models.CharField(max_length=255, blank=True, null=True, verbose_name='gyns')
+    varicosities= models.CharField(max_length=255, blank=True, null=True, verbose_name='varicosities')
+    operation= models.CharField(max_length=255, blank=True, null=True, verbose_name='operation')
+    thyroid_dysfunction= models.CharField(max_length=255, blank=True, null=True, verbose_name='thyroid_dysfunction')
+    anesthetic= models.CharField(max_length=255, blank=True, null=True, verbose_name='anesthetic')
+    trauma= models.CharField(max_length=255, blank=True, null=True, verbose_name='trauma')
+    hobt= models.CharField(max_length=255, blank=True, null=True, verbose_name='hobt')
+    othr= models.CharField(max_length=255, blank=True, null=True, verbose_name='other')
+    created_by  = models.ForeignKey(settings.AUTH_USER_MODEL, blank=False, on_delete=models.CASCADE, related_name="medical_history_created_by")
+    creation_date = models.DateField(auto_now=True, auto_now_add=False)
+    last_update_by = models.ForeignKey(settings.AUTH_USER_MODEL, blank=False, on_delete=models.CASCADE, related_name="medical_history_last_updated_by")
+    last_update_date = models.DateField(auto_now=False, auto_now_add=True)
+
+    def __str__(self):
+        return self.patient.name
 
 def path_and_rename(instance, filename):
     # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
@@ -106,22 +143,21 @@ class Check_Up(models.Model):
                         ('cervical_stitch','غرزة بعنق الرحم'),
                         ('ectopic_pregnancy','حمل خارج الرحم'),
                         ('CS','ولادة قيصري'),]
-    # delivery = models.ForeignKey(Delivery, on_delete=models.CASCADE, blank=True, null=True, verbose_name='الولادة')
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE, blank=True, null=True, verbose_name='المريضة')
-    week_number = models.CharField(max_length=3, verbose_name='اسبوع الحمل')
-    complain = models.CharField(max_length=200, verbose_name='شكوي المريضة')
+    week_number = models.CharField(max_length=3, blank=True, null=True,verbose_name='اسبوع الحمل')
+    complain = models.CharField(max_length=200, blank=True, null=True,verbose_name='شكوي المريضة')
     visit_date = models.DateField(auto_now=False, auto_now_add=False, blank=True, null=True, verbose_name='تاريخ الزيارة')
     next_visit = models.DateField(auto_now=False, auto_now_add=False, blank=True, null=True, verbose_name='تاريخ الزيارة القادم')
     blood_presure = models.CharField(max_length=6, default='120/80', verbose_name='ضغط الدم')
     protine = models.CharField(max_length=3, blank=True, null=True, verbose_name='البروتين')
     rbs = models.CharField(max_length=6, blank=True, null=True, verbose_name='rbs')
-    hemoglobin = models.CharField(max_length=6, blank=True, null=True, verbose_name='Hb%')
-    placenta = models.CharField(max_length=6, blank=True, null=True, verbose_name='المشيمة')
+    hemoglobin = models.CharField(max_length=10, blank=True, null=True, verbose_name='Hb%')
+    placenta = models.CharField(max_length=10, blank=True, null=True, verbose_name='ارتفاع المشيمة')
     water = models.CharField(max_length=6, blank=True, null=True, verbose_name='نسبة المياة')
     fetal_position = models.CharField(max_length=10, blank=True, null=True, verbose_name='وضعية الجنين')
     fetal_movement = models.CharField(max_length=10, blank=True, null=True, verbose_name='حركة الجنين')
     fetal_heart_rate = models.CharField(max_length=10, blank=True, null=True, verbose_name='ضربات قلب الجنين')
-    weight = models.PositiveIntegerField(blank=True, null=True, verbose_name='وزن الجنين')
+    weight = models.PositiveIntegerField(blank=True, null=True, verbose_name='الوزن')
     exit_nature = models.CharField(max_length=50,  choices=exit_nature_list, blank=True, null=True, verbose_name='نوعية الخروج')
     exit_desc = models.CharField(max_length=200, blank=True, null=True, verbose_name='علي مسئولية من')
     surgery = models.CharField(max_length=50,  choices=surgery_list, blank=True, null=True, verbose_name='عمليات')
@@ -130,9 +166,6 @@ class Check_Up(models.Model):
     mhx = models.TextField(max_length=255,blank=True, null=True, verbose_name='MHx')
     shx = models.TextField(max_length=255,blank=True, null=True, verbose_name='SHx')
     allergy_hx = models.TextField(max_length=255,blank=True, null=True, verbose_name='Allergy Hx')
-    g = models.PositiveIntegerField(blank=True, null=True, verbose_name='G')
-    p = models.PositiveIntegerField(blank=True, null=True, verbose_name='P')
-    pre = models.PositiveIntegerField(blank=True, null=True, verbose_name='Pre')
     ################################################################################################################
     start_date  = models.DateField(auto_now=False, auto_now_add=False, default=date.today, verbose_name=_('Start Date'))
     end_date    = models.DateField(auto_now=False, auto_now_add=False, blank=True, null=True, verbose_name=_('End Date'))
@@ -205,7 +238,8 @@ class Ultrasound(models.Model):
 class Diabetes(models.Model):
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE, related_name='patient_diabetes', verbose_name=_('المريضة'))
     bs = models.PositiveIntegerField(verbose_name=_('قياس السكر'))
-    bp = models.CharField(max_length=10, verbose_name=_('قياس الضغط'))
+    bp_up = models.PositiveIntegerField(default=120, verbose_name=_('BP Up'))
+    bp_down = models.PositiveIntegerField(default=80, verbose_name=_('BP Down'))
     temp = models.PositiveIntegerField(default=37, verbose_name=_('درجة الحرارة'))
     reading_date = models.DateTimeField(auto_now=False, auto_now_add=False, default=datetime.now() ,verbose_name=_('تاريخ القراءة'))
     created_by  = models.ForeignKey(settings.AUTH_USER_MODEL, blank=False, on_delete=models.CASCADE, related_name="diabetes_created_by")

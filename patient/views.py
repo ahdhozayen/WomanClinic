@@ -7,13 +7,13 @@ from django.http import JsonResponse
 from django.contrib import messages
 from patient.models import (Patient, Patient_Files, Delivery, Check_Up,
                             Gynecology, Patient_Medicine, Patient_Days_Off,
-                            Ultrasound, Diabetes, Patient_Exit)
+                            Ultrasound, Diabetes, Patient_Exit, Past_Medical_History)
 from patient.forms import (PatientForm, Patient_Files_formset,
                            DeliveryForm, Delivery_Check_Up_formset,
                            Gynecology_formset, GynecologyForm,
                            Check_Up_Form, Patient_Medicine_formset,
                            Patient_Days_Off_formset, Ultrasound_Form,
-                           Diabetes_Form, Patient_Exit_Form)
+                           Diabetes_Form, Patient_Exit_Form, Past_Medical_History_Form)
 
 
 @login_required(login_url='/login')
@@ -25,10 +25,12 @@ def list_patients_view(request):
 def create_patient_view(request):
     patient_form = PatientForm(form_type='create',)
     patient_attachments = Patient_Files_formset()
+    patient_past_med = Past_Medical_History_Form(form_type='create',)
     if request.method == 'POST':
         patient_form = PatientForm(request.POST, form_type='create')
         patient_attachments = Patient_Files_formset(request.POST, request.FILES)
-        if patient_form.is_valid() and patient_attachments.is_valid():
+        patient_past_med = Past_Medical_History_Form(request.POST, form_type='create')
+        if patient_form.is_valid() and patient_attachments.is_valid() and patient_past_med.is_valid():
             master_obj = patient_form.save(commit=False)
             master_obj.hospital_id = request.user.clinic_id
             master_obj.created_by = request.user
@@ -40,11 +42,19 @@ def create_patient_view(request):
                 x.created_by = request.user
                 x.last_update_by = request.user
                 x.save()
+            past_med_obj = patient_past_med.save(commit=False)
+            past_med_obj.patient = master_obj
+            past_med_obj.created_by = request.user
+            past_med_obj.last_update_by = request.user
+            past_med_obj.save()
             if master_obj.patient_type == 'DELIVER' :
+                messages.success(request, 'تم الحفظ بنجاح')
                 return redirect('patient:all-delivery', pk=master_obj.id)
             elif master_obj.patient_type == 'OPERATION'  :
+                messages.success(request, 'تم الحفظ بنجاح')
                 return redirect('surgery:create-patient-surgery', patient_id=master_obj.id)
             else :
+                messages.success(request, 'تم الحفظ بنجاح')
                 return redirect('patient:all-checkup', patient_id=master_obj.id)
         else:
             if patient_form.errors:
@@ -52,10 +62,13 @@ def create_patient_view(request):
             elif patient_attachments.errors:
                 for error in patient_attachments.errors:
                     messages.error(request, error)
+            elif patient_past_med.errors:
+                messages.error(request, patient_past_med.errors)
     createContext = {
                      'page_title':'تسجيل مريضة جديدة',
                      'patient_form':patient_form,
                      'patient_attachments':patient_attachments,
+                     'patient_past_med':patient_past_med,
     }
     return render(request, 'create-patient.html', createContext)
 
@@ -64,6 +77,8 @@ def view_patient_view(request, pk):
     required_patient = get_object_or_404(Patient, pk=pk)
     patient_form = PatientForm(form_type='view', instance=required_patient)
     patient_attachments = Patient_Files.objects.filter(patient = pk)
+    required_patient_past_med = Past_Medical_History.objects.filter(patient = pk).first()
+    patient_past_med = Past_Medical_History_Form(form_type='view', instance=required_patient_past_med)
     # patient_attachments = Patient_Files_formset(instance=required_patient)
     exit_form = Patient_Exit_Form()
     if request.method == 'POST':
@@ -80,6 +95,7 @@ def view_patient_view(request, pk):
                      'patient_id':pk,
                      'patient_form':patient_form,
                      'patient_attachments':patient_attachments,
+                     'patient_past_med':patient_past_med,
                      'media_url':settings.MEDIA_URL,
                      'exit_form':exit_form
     }
@@ -89,32 +105,40 @@ def view_patient_view(request, pk):
 def update_patient_view(request, pk):
     required_patient = Patient.objects.get(pk=pk)
     patient_form = PatientForm(form_type='update', instance=required_patient)
+    required_patient_past_med = Past_Medical_History.objects.filter(patient = pk).first()
+    patient_past_med = Past_Medical_History_Form(form_type='update', instance=required_patient_past_med)
     patient_attachments = Patient_Files_formset(instance=required_patient)
     if request.method == 'POST':
         patient_form = PatientForm(request.POST, form_type='update', instance=required_patient)
+        patient_past_med = Past_Medical_History_Form(request.POST, form_type='update', instance=required_patient)
         patient_attachments = Patient_Files_formset(request.POST, request.FILES, instance=required_patient)
-        if patient_form.is_valid() and patient_attachments.is_valid():
+        if patient_form.is_valid() and patient_attachments.is_valid() and patient_past_med.is_valid():
             master_obj = patient_form.save(commit=False)
-            # master_obj.created_by = request.user
+            master_obj.created_by = request.user
             master_obj.last_update_by = request.user
             master_obj.save()
             patient_attachments = Patient_Files_formset(request.POST, request.FILES, instance=master_obj)
             detail_obj = patient_attachments.save(commit=False)
             for x in detail_obj:
-                # initial_name = x.attachment.name
-                # new_name = str(x.patient.id)+'-'+str(x.patient.insurance_number)+'-'+x.attachment.name
                 x.created_by = request.user
                 x.last_update_by = request.user
                 x.save()
+            past_med_obj = patient_past_med.save(commit=False)
+            past_med_obj.patient = master_obj
+            past_med_obj.created_by = request.user
+            past_med_obj.last_update_by = request.user
+            past_med_obj.save()
+            messages.success(request, 'تم الحفظ بنجاح')
+            return redirect('patient:view-patient', pk=master_obj.id)
         else:
-            if patient_form.errors:
-                messages.error(request, patient_form.errors)
-            elif patient_attachments.errors:
-                for error in patient_attachments.errors:
-                    messages.error(request, error)
+            messages.error(request, patient_form.errors)
+            messages.error(request, patient_past_med.errors)
+            for error in patient_attachments.errors:
+                messages.error(request, error)
     createContext = {
                      'page_title':'تعديل المريضة {}'.format(required_patient),
                      'patient_form':patient_form,
+                     'patient_past_med':patient_past_med,
                      'patient_id':pk,
                      'patient_attachments':patient_attachments,
     }
@@ -395,14 +419,19 @@ def create_diabetes_view(request, patient_id):
 @login_required(login_url='/login')
 def patient_diabete_chart(request, patient_id):
     labels = []
-    reads = []
+    bs = []
+    bp_up = []
+    bp_down = []
     chart_diabetes = Diabetes.objects.filter(patient=patient_id)
     for x in chart_diabetes:
         labels.append(x.reading_date.month)
-        reads.append(x.bs)
-
+        bs.append(x.bs)
+        bp_up.append(x.bp_up)
+        bp_down.append(x.bp_down)
     data = {
         'labels': labels,
-        'reads': reads,
+        'bs': bs,
+        'bp_up': bp_up,
+        'bp_down' : bp_down
     }
     return JsonResponse(data)

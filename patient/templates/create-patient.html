@@ -14,7 +14,7 @@
       <a href="{% url 'patient:create-patient' %}" class="btn btn-secondary">{% trans "الغاء" %}</a>
     </p>
     <div class="card">
-      <div class="card-header">{{ page_title }}</div>
+      <div class="card-header"><strong>{{ page_title }}</strong></div>
       <div class="card-body">
         <div class="row show-grid">
           <div class="col-md-6">
@@ -36,6 +36,25 @@
             {{ patient_form.date_of_birth|as_crispy_field}}
           </div>
           <div class="col-md-4">
+            {{ patient_form.husband_name|as_crispy_field}}
+          </div>
+          <div class="col-md-4">
+            {{ patient_form.husband_phone|as_crispy_field}}
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="row show-grid">
+          <div class="col-md-4">
+            {{ patient_form.g|as_crispy_field}}
+          </div>
+          <div class="col-md-4">
+            {{ patient_form.p|as_crispy_field}}
+          </div>
+          <div class="col-md-4">
+            {{ patient_form.pre|as_crispy_field}}
+          </div>
+          <div class="col-md-4">
             {{ patient_form.insurance_number|as_crispy_field}}
           </div>
           <div class="col-md-4">
@@ -53,55 +72,138 @@
           <div class="col-md-4">
             {{ patient_form.hospital_section|as_crispy_field}}
           </div>
-          <div class="col-md-4">
-            {{ patient_form.clexane_order_number|as_crispy_field}}
-          </div>
-          <div class="col-md-4">
+          <div class="col-md-3">
             {{ patient_form.patient_type|as_crispy_field}}
           </div>
-          <div class="col-md-4">
+          <div class="col-md-3">
             {{ patient_form.transferred_from|as_crispy_field}}
           </div>
-          <div class="col-md-4">
+          <div class="col-md-3">
+            {{ patient_form.clexane_order_number|as_crispy_field}}
+          </div>
+          <div class="col-md-3">
             {{ patient_form.entrance_date|as_crispy_field}}
           </div>
+
         </div>
       </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><strong>التاريخ الطبي للمريضة</strong></div>
+      <div class="card-body">
+        <div class="row show-grid">
+          <div class="col-md-3">
+            {{ patient_past_med.diabetes|as_crispy_field}}
+          </div>
+          <div class="col-md-3">
+            {{ patient_past_med.pulmonar|as_crispy_field}}
+          </div>
+          <div class="col-md-3">
+            {{ patient_past_med.hypertension|as_crispy_field}}
+          </div>
+          <div class="col-md-3">
+            {{ patient_past_med.allergies|as_crispy_field}}
+          </div>
+          <div class="col-md-3">
+            {{ patient_past_med.heart_disease|as_crispy_field}}
+          </div>
+          <div class="col-md-3">
+            {{ patient_past_med.breast|as_crispy_field}}
+          </div>
+          <div class="col-md-3">
+            {{ patient_past_med.autoimmun_disorder|as_crispy_field}}
+          </div>
+          <div class="col-md-3">
+            {{ patient_past_med.abnormal_pap|as_crispy_field}}
+          </div>
+          <div class="col-md-3">
+            {{ patient_past_med.kidney_disease|as_crispy_field}}
+          </div>
+          <div class="col-md-3">
+            {{ patient_past_med.uterine|as_crispy_field}}
+          </div>
+          <div class="col-md-3">
+            {{ patient_past_med.psychiatric|as_crispy_field}}
+          </div>
+          <div class="col-md-3">
+            {{ patient_past_med.infertility|as_crispy_field}}
+          </div>
+          <div class="col-md-3">
+            {{ patient_past_med.neurologic|as_crispy_field}}
+          </div>
+          <div class="col-md-3">
+            {{ patient_past_med.rfh|as_crispy_field}}
+          </div>
+          <div class="col-md-3">
+            {{ patient_past_med.hld|as_crispy_field}}
+          </div>
+          <div class="col-md-3">
+            {{ patient_past_med.gyns|as_crispy_field}}
+          </div>
+          <div class="col-md-3">
+            {{ patient_past_med.varicosities|as_crispy_field}}
+          </div>
+          <div class="col-md-3">
+            {{ patient_past_med.operation|as_crispy_field}}
+          </div>
+          <div class="col-md-3">
+            {{ patient_past_med.thyroid_dysfunction|as_crispy_field}}
+          </div>
+          <div class="col-md-3">
+            {{ patient_past_med.anesthetic|as_crispy_field}}
+          </div>
+          <div class="col-md-3">
+            {{ patient_past_med.trauma|as_crispy_field}}
+          </div>
+          <div class="col-md-3">
+            {{ patient_past_med.hobt|as_crispy_field}}
+          </div>
+          <div class="col-md-6">
+            {{ patient_past_med.othr|as_crispy_field}}
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><strong>تحاليل المريضة</strong></div>
       <div class="card-body">
         <div class="table-responsive table-bordered">
           <table class="table" id="dataTable">
-          {{ patient_attachments.management_form }}
-          {% for form in patient_attachments %}
-          {{ form.id }}
-          {% if forloop.first %}
-          <thead style="background-color: #89acbdb3;">
+            {{ patient_attachments.management_form }}
+            {% for form in patient_attachments %}
+            {{ form.id }}
+            {% if forloop.first %}
+            <thead style="background-color: #89acbdb3;">
+              <tr>
+                {% for field in form.visible_fields %}
+                <th style="text-align:center;">{{ field.label|capfirst }}</th>
+                {% endfor %}
+              </tr>
+            </thead>
+            {% endif %}
             <tr>
               {% for field in form.visible_fields %}
-              <th style="text-align:center;">{{ field.label|capfirst }}</th>
+              <td>
+                {# exclude the hidden fields in the form #}
+                {% if forloop.first %}
+                {% for hidden in form.hidden_fields %}
+                {{ hidden }}
+                {% endfor %}
+                {% endif %}
+                {{ field.errors.as_ul }}
+                {{ field|as_crispy_field }}
+              </td>
               {% endfor %}
             </tr>
-          </thead>
-          {% endif %}
-          <tr>
-            {% for field in form.visible_fields %}
-            <td>
-              {# exclude the hidden fields in the form #}
-              {% if forloop.first %}
-              {% for hidden in form.hidden_fields %}
-              {{ hidden }}
-              {% endfor %}
-              {% endif %}
-              {{ field.errors.as_ul }}
-              {{ field|as_crispy_field }}
-            </td>
             {% endfor %}
-          </tr>
-          {% endfor %}
-        </table>
+          </table>
         </div>
       </div>
-      <!-- /.card-body -->
     </div>
+      <!-- /.card-body -->
     <!-- /.panel -->
   </form>
 </div>

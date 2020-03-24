@@ -1,0 +1,20 @@
+{% load i18n %}
+{% load l10n %}
+{% load static %}
+
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="btn-group navbar-right">
+      <button class="btn"><a href="{% url 'patient:create-days-off' patient_id=patient_id  %}">تسجيل اجازات للمريضة</a></button>
+      <button  class="btn"><a href="{% url 'surgery:create-patient-surgery' patient_id=patient_id  %}" class="btn">عمليات نسا</a></button>
+      <button  class="btn"><a href="{% url 'patient:all-delivery' pk=patient_id %}" class="btn">ولادة</a></button>
+      <button  class="btn"><a href="{% url 'patient:all-checkup' patient_id=patient_id %}" class="btn">متابعات المريضة</a></button>
+      <button  class="btn"><a href="{% url 'patient:create-diabetes' patient_id=patient_id %}" class="btn">تسجيل قراءات الضغط و السكر</a></button>
+      <button  class="btn"><a href="#" data-toggle="modal" data-target="#exampleModal" class="btn">تسجيل خروج للمريضة</a></button>
+    </div>
+    <div class="btn-group">
+      <button  class="btn"><a href="{% url 'patient:update-patient' pk=patient_id %}" class="btn">تعديل</a></button>
+      <button  class="btn"><a href="{% url 'patient:all-patients' %}" class="btn">الرجوع</a></button>
+    </div>
+  </div>
+</nav>

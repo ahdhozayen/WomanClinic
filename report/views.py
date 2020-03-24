@@ -3,7 +3,7 @@ from datetime import date
 from django.db.models import Count
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
-from patient.models import (Patient, Delivery, Check_Up, Gynecology,
+from patient.models import (Patient, Delivery, Check_Up, Gynecology,Past_Medical_History,
                             Patient_Medicine, Patient_Days_Off,Ultrasound, Diabetes )
 from surgery.models import Patient_Surgery
 from rest_framework.views import APIView
@@ -45,6 +45,9 @@ def list_all_patients_view(request):
 def view_patient_history_view(request, patient_id):
     # patient info
     required_patient = get_object_or_404(Patient, id = patient_id)
+    patient_past_medical_history = Past_Medical_History.objects.filter(patient= patient_id).first()
+    # patient deliveries
+    patient_delivery = Delivery.objects.filter(patient = patient_id)
     # patient check up
     patient_check_ups = Check_Up.objects.filter(patient = patient_id)
     # patient medicine
@@ -60,6 +63,8 @@ def view_patient_history_view(request, patient_id):
 
     context={'page_title':'تقرير عام عن المريضة  {}'.format(required_patient),
              'required_patient':required_patient,
+             'patient_past_medical_history':patient_past_medical_history,
+             'patient_delivery':patient_delivery,
              'patient_check_ups':patient_check_ups,
              'patient_medicine':patient_medicine,
              'patient_us':patient_us,

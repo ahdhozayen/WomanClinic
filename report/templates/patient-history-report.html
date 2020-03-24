@@ -13,7 +13,7 @@
   </p>
   <!-- patiebt info -->
   <div class="card">
-    <div class="card-header">{{ page_title }}</div>
+    <div class="card-header"><strong>{{ page_title }}</strong></div>
     <div class="card-body">
       <div class="row show-grid">
         <div class="col-md-4">
@@ -106,6 +106,98 @@
           <strong><label>تاريخ الخروج : </label></strong>
           {{ required_patient.exit_date}}
         </div>
+        <div class="col-md-4">
+          <strong><label>diabetes : </label></strong>
+          {{patient_past_medical_history.diabetes }}
+        </div>
+        <div class="col-md-4">
+          <strong><label>pulmonar : </label></strong>
+          {{ patient_past_medical_history.pulmonar}}
+        </div>
+        <div class="col-md-4">
+          <strong><label>hypertension : </label></strong>
+          {{patient_past_medical_history.hypertension }}
+        </div>
+        <div class="col-md-4">
+          <strong><label>allergies : </label></strong>
+          {{patient_past_medical_history.allergies }}
+        </div>
+        <div class="col-md-4">
+          <strong><label>heart_disease : </label></strong>
+          {{ patient_past_medical_history.heart_disease}}
+        </div>
+        <div class="col-md-4">
+          <strong><label>breast : </label></strong>
+          {{patient_past_medical_history.breast }}
+        </div>
+        <div class="col-md-4">
+          <strong><label>autoimmun_disorder : </label></strong>
+          {{patient_past_medical_history.autoimmun_disorder }}
+        </div>
+        <div class="col-md-4">
+          <strong><label>abnormal_pap : </label></strong>
+          {{ patient_past_medical_history.abnormal_pap}}
+        </div>
+        <div class="col-md-4">
+          <strong><label>kidney_disease : </label></strong>
+          {{patient_past_medical_history.kidney_disease }}
+        </div>
+        <div class="col-md-4">
+          <strong><label>uterine : </label></strong>
+          {{patient_past_medical_history.uterine }}
+        </div>
+        <div class="col-md-4">
+          <strong><label>psychiatric : </label></strong>
+          {{ patient_past_medical_history.psychiatric}}
+        </div>
+        <div class="col-md-4">
+          <strong><label>infertility : </label></strong>
+          {{patient_past_medical_history.infertility }}
+        </div>
+        <div class="col-md-4">
+          <strong><label>neurologic : </label></strong>
+          {{ patient_past_medical_history.neurologic}}
+        </div>
+        <div class="col-md-4">
+          <strong><label>rfh : </label></strong>
+          {{ patient_past_medical_history.rfh}}
+        </div>
+        <div class="col-md-4">
+          <strong><label>hld : </label></strong>
+          {{ patient_past_medical_history.hld}}
+        </div>
+        <div class="col-md-4">
+          <strong><label>gyns : </label></strong>
+          {{patient_past_medical_history.gyns }}
+        </div>
+        <div class="col-md-4">
+          <strong><label>varicosities : </label></strong>
+          {{patient_past_medical_history.varicosities }}
+        </div>
+        <div class="col-md-4">
+          <strong><label>operation : </label></strong>
+          {{ patient_past_medical_history.operation}}
+        </div>
+        <div class="col-md-4">
+          <strong><label>thyroid_dysfunction : </label></strong>
+          {{patient_past_medical_history.thyroid_dysfunction }}
+        </div>
+        <div class="col-md-4">
+          <strong><label>anesthetic : </label></strong>
+          {{patient_past_medical_history.anesthetic }}
+        </div>
+        <div class="col-md-4">
+          <strong><label>trauma : </label></strong>
+          {{ patient_past_medical_history.trauma}}
+        </div>
+        <div class="col-md-4">
+          <strong><label>hobt : </label></strong>
+          {{patient_past_medical_history.hobt }}
+        </div>
+        <div class="col-md-8">
+          <strong><label>other : </label></strong>
+          {{ patient_past_medical_history.othr}}
+        </div>
       </div>
     </div>
     <!-- /.card-body -->
@@ -116,12 +208,58 @@
   <div class="card">
     <div class="card-header">
       <strong>
+      <p>ولادات المريضة</p>
+      </strong>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive table-bordered">
+          <table class="table">
+            <thead style="background-color: #89acbdb3;">
+              <tr role="row">
+                <th style="text-align:center;">#</th>
+                <th style="text-align:center;">بيانات الحمل</th>
+                <th style="text-align:center;">نوع الولادة</th>
+                <th style="text-align:center;">مكان الولادة</th>
+                <th style="text-align:center;">تاريخ الولادة</th>
+                <th style="text-align:center;">نوع التخدير</th>
+                <th style="text-align:center;">دكتور التخدير</th>
+                <th style="text-align:center;">abo rh</th>
+                <th style="text-align:center;">fetal sex</th>
+                <th style="text-align:center;">lnmp</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for delivery in patient_delivery %}
+              <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>{{delivery.description}}</td>
+                <td>{% if delivery.type == 'c'%}قيصري {% else %} طبيعي {% endif %}</td>
+                <td>{{delivery.place}}</td>
+                <td>{{delivery.date}}</td>
+                <td>{% if delivery.anesthesia_type == 'T' %} Total anesthesia {% elif delivery.anesthesia_type == 'H' %} Half anesthesia {% else %} Local anesthesia {% endif %}</td>
+                <td>{{delivery.anesthesia_doc}}</td>
+                <td>{{delivery.abo_rh}}</td>
+                <td>{% if delivery.fetal_sex == 'm'%}ذكر {% elif delivery.fetal_sex == 'f' %} اثني {% else %} توأم{% endif %}</td>
+                <td>{{delivery.lnmp}}</td>
+              </tr>
+              {% endfor %}
+          </table>
+        </div>
+    </div>
+  </div>
+  <!-- end of patient_check_ups -->
+
+
+
+  <!-- patient patient_check_ups -->
+  <div class="card">
+    <div class="card-header">
+      <strong>
       <p>المتابعة الدورية</p>
       </strong>
     </div>
     <div class="card-body">
-      <div class="card-body">
-        <div class="table-responsive table-bordered">
+      <div class="table-responsive table-bordered">
           <table class="table">
             <thead style="background-color: #89acbdb3;">
               <tr role="row">
@@ -144,7 +282,6 @@
               {% endfor %}
           </table>
         </div>
-      </div>
     </div>
   </div>
   <!-- end of patient_check_ups -->
@@ -157,8 +294,7 @@
       </strong>
     </div>
     <div class="card-body">
-      <div class="card-body">
-        <div class="table-responsive table-bordered">
+      <div class="table-responsive table-bordered">
           <table class="table">
             <thead style="background-color: #89acbdb3;">
               <tr role="row">
@@ -183,7 +319,6 @@
               {% endfor %}
           </table>
         </div>
-      </div>
     </div>
   </div>
   <!-- end of patient medicine -->
@@ -195,8 +330,7 @@
       </strong>
     </div>
     <div class="card-body">
-      <div class="card-body">
-        <div class="table-responsive table-bordered">
+      <div class="table-responsive table-bordered">
           <table class="table table-hover">
             <thead style="background-color: #89acbdb3;">
               <tr role="row">
@@ -219,7 +353,6 @@
               {% endfor %}
           </table>
         </div>
-      </div>
     </div>
   </div>
   <!-- end of patient days off -->
@@ -231,8 +364,7 @@
       </strong>
     </div>
     <div class="card-body">
-      <div class="card-body">
-        <div class="table-responsive table-bordered">
+      <div class="table-responsive table-bordered">
           <table class="table table-hover">
             <thead style="background-color: #89acbdb3;">
               <tr role="row">
@@ -251,7 +383,6 @@
               {% endfor %}
           </table>
         </div>
-      </div>
     </div>
   </div>
   <!-- end of patient_us -->
@@ -263,8 +394,7 @@
       </strong>
     </div>
     <div class="card-body">
-      <div class="card-body">
-        <div class="table-responsive table-bordered">
+      <div class="table-responsive table-bordered">
           <table class="table table-hover">
             <thead style="background-color: #89acbdb3;">
               <tr role="row">
@@ -293,7 +423,6 @@
               {% endfor %}
           </table>
         </div>
-      </div>
     </div>
   </div>
   <!-- end of patient_surgery -->
@@ -305,8 +434,7 @@
       </strong>
     </div>
     <div class="card-body">
-      <div class="card-body">
-        <div class="table-responsive table-bordered">
+      <div class="table-responsive table-bordered">
           <table class="table table-hover">
             <thead style="background-color: #89acbdb3;">
               <tr role="row">
@@ -329,7 +457,6 @@
               {% endfor %}
           </table>
         </div>
-      </div>
     </div>
   </div>
   <!-- end of patient_diabete -->

@@ -2,11 +2,12 @@ from django import forms
 from crispy_forms.helper import FormHelper
 from patient.models import (Patient,Delivery,Check_Up,
                             Patient_Files,Gynecology, Patient_Medicine,
-                            Patient_Days_Off, Ultrasound, Diabetes, Patient_Exit)
+                            Patient_Days_Off, Ultrasound, Diabetes,
+                             Patient_Exit, Past_Medical_History)
 
 common_items_to_execlude = (
                             'start_date','end_date',
-                            'created_by', 'creation_date',
+                            'created_by', 'creation_date', 'patient',
                             'last_update_by',  'last_update_date', 'hospital',
 )
 
@@ -19,6 +20,21 @@ class PatientForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         form_type = kwargs.pop('form_type')
         super(PatientForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper(self)
+        self.helper.form_show_labels = True
+        if form_type=='view':
+            for field in self.fields:
+                self.fields[field].widget.attrs['disabled'] = True
+
+class Past_Medical_History_Form(forms.ModelForm):
+    class Meta:
+        model = Past_Medical_History
+        fields = '__all__'
+        exclude = ('created_by', 'creation_date', 'patient',
+                    'last_update_by',  'last_update_date',)
+    def __init__(self, *args, **kwargs):
+        form_type = kwargs.pop('form_type')
+        super(Past_Medical_History_Form, self).__init__(*args, **kwargs)
         self.helper = FormHelper(self)
         self.helper.form_show_labels = True
         if form_type=='view':
@@ -166,7 +182,7 @@ class Ultrasound_Form(forms.ModelForm):
 class Diabetes_Form(forms.ModelForm):
     class Meta:
         model = Diabetes
-        fields = ('bs','bp','reading_date', 'temp')
+        fields = ('bs','bp_up','bp_down','reading_date', 'temp')
         exclude = common_items_to_execlude
 
     def __init__(self, *args, **kwargs):
