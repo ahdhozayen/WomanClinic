@@ -14,7 +14,7 @@
       <span class="profile-ava">
         {% trans 'مرحبا' %} &emsp;
       </span>
-      <span class="username">{{user.username|upper}}</span>
+      <span class="username">{{request.user.first_name}} &ensp; {{{{request.user.last_name}}}}</span>
     </a>
     <div class="dropdown-menu dropdown-menu-right dropdown-user">
       <a class="dropdown-item" href="{% url 'home:new-user'%}">
