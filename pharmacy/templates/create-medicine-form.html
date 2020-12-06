@@ -8,10 +8,9 @@
 <div class="col-xl-12">
   <form id="my_form" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
-    {% include 'messages.html' %}
     <p>
       <button value="save" type="submit" class="btn btn-s-md btn-success">حفظ</button>
-      <a href="{% url 'pharmacy:all-medicines' %}" class="btn btn-secondary">{% trans "الغاء" %}</a>
+      <a href="{% url 'pharmacy:all-medicines' %}" class="btn btn-secondary">{% trans "Cancel" %}</a>
     </p>
     <div class="card">
       <div class="card-header">{{ page_title }}</div>

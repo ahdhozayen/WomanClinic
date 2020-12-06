@@ -18,5 +18,8 @@ class MedicineForm(forms.ModelForm):
         super(MedicineForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper(self)
         self.helper.form_show_labels = False
+        for field in self.fields:
+            self.fields[field].widget.attrs['class'] = 'form-control'
+
 
 Medicine_formset = forms.modelformset_factory(Medicine, form=MedicineForm, extra=10)

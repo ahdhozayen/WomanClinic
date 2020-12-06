@@ -2,66 +2,99 @@
 {% load static %}
 {% load i18n %}
 {% load l10n %}
+
 {% block body %}
+<div class="container-fluid">
 
-<div class="col-xl-12">
-  <p>
-  </p>
-  <div class="card">
-    <div class="card-header"><strong>{{ page_title }}</strong></div>
-    <!-- /.card-header -->
-    <div class="card-body">
-      <table class="table-responsive" id="dataTable">
-        <table id="patient_list_tbl" class="table table-striped table-bordered table-hover">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>اسم المريضة</th>
-              <th>رقم المريضة</th>
-              <th>طبيعة المريضة</th>
-              <th>الرقم التأميني</th>
-              <th>تاريخ الميلاد</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for patient in all_patients %}
-            <tr data-index="{{ forloop.counter }}">
-              <td style="">{{ forloop.counter }}</td>
-              <td style=""><a href="{% url 'patient:view-patient' pk=patient.id %}">{{patient.name}}</a></td>
-              <td style="">{{patient.patient_number}}</td>
-              <td style="">
-                {% if patient.patient_type == 'CHECK_UP' %}
-                متابعة
-                {% elif patient.patient_type == 'CONSULTANT' %}
-                أستشاري
-                {% elif patient.patient_type == 'OPERATION' %}
-                عمليات
-                {% elif patient.patient_type == 'DELIVER' %}
-                ولادة
-                {% else %}
-                --
-                {% endif %}
-              </td>
-              <td style="">{{patient.insurance_number}}</td>
-              <td style="">{{patient.date_of_birth}}</td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      </div>
-      <!-- /.table-responsive -->
+  <!-- Title -->
+  <div class="row heading-bg">
+    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+      <h5 class="txt-dark">{{ page_title }}</h5>
     </div>
-    <!-- /.card-body -->
+
   </div>
-  <!-- /.panel -->
+  <!-- /Title -->
+
+  <!-- Row -->
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="panel panel-default card-view">
+        <div class="panel-heading">
+          <div class="pull-left">
+            <h6 class="panel-title txt-dark"></h6>
+          </div>
+          <div class="pull-right">
+            <a href="{% url 'patient:create-patient' %}" class="btn btn-primary btn-anim">
+              <i class="fa fa-wpforms"></i>
+              <span class="btn-text">Add New Patient</span>
+            </a>
+          </div>
+          <div class="clearfix"></div>
+        </div>
+        <div class="panel-wrapper collapse in">
+          <div class="panel-body">
+            <div class="table-wrap">
+              <div class="table-responsive">
+                <div id="datable_1_wrapper" class="dataTables_wrapper">
+                  <table id="listPatientsTbl" class="table table-hover display  pb-30 dataTable">
+                    <thead>
+                      <tr role="row">
+                        <th>{% trans 'Patient Name' %}</th>
+                        <th>{% trans 'Insurance number' %}</th>
+                        <th>{% trans 'Patient number' %}</th>
+                        <th>{% trans 'date of birth' %}</th>
+                        <th>{% trans 'Type' %}</th>
+                      </tr>
+                    </thead>
+                    <tfoot>
+                      <tr>
+                        <th>{% trans 'Patient Name' %}</th>
+                        <th>{% trans 'Insurance number' %}</th>
+                        <th>{% trans 'Patient number' %}</th>
+                        <th>{% trans 'date of birth' %}</th>
+                        <th>{% trans 'Type' %}</th>
+                      </tr>
+                    </tfoot>
+                    <tbody>
+                      {% for patient in all_patients %}
+                      <tr>
+                        <td><a href="{% url 'patient:view-patient' pk=patient.id %}">{{patient.name}}</a></td>
+                        <td>{{patient.insurance_number}}</td>
+                        <td>{{patient.patient_number}}</td>
+                        <td>{{patient.date_of_birth}}</td>
+                        <td style="">
+                          {% if patient.patient_type == 'CHECK_UP' %}
+                          متابعة
+                          {% elif patient.patient_type == 'CONSULTANT' %}
+                          أستشاري
+                          {% elif patient.patient_type == 'OPERATION' %}
+                          عمليات
+                          {% elif patient.patient_type == 'DELIVER' %}
+                          ولادة
+                          {% else %}
+                          --
+                          {% endif %}
+                        </td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /Row -->
+
 </div>
-
 {% endblock body %}
-
-{% block js%}
-<script>
+{% block js %}
+<script type="text/javascript">
   $(document).ready(function() {
-    $('#patient_list_tbl').DataTable();
+    $('#listPatientsTbl').DataTable();
   });
 </script>
-{% endblock js%}
+{% endblock js %}

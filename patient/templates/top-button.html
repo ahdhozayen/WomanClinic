@@ -2,19 +2,33 @@
 {% load l10n %}
 {% load static %}
 
-<nav class="navbar navbar-default navbar-fixed-top">
-  <div class="container">
-    <div class="btn-group navbar-right">
-      <button class="btn"><a href="{% url 'patient:create-days-off' patient_id=patient_id  %}">تسجيل اجازات للمريضة</a></button>
-      <button  class="btn"><a href="{% url 'surgery:create-patient-surgery' patient_id=patient_id  %}" class="btn">عمليات نسا</a></button>
-      <button  class="btn"><a href="{% url 'patient:all-delivery' pk=patient_id %}" class="btn">ولادة</a></button>
-      <button  class="btn"><a href="{% url 'patient:all-checkup' patient_id=patient_id %}" class="btn">متابعات المريضة</a></button>
-      <button  class="btn"><a href="{% url 'patient:create-diabetes' patient_id=patient_id %}" class="btn">تسجيل قراءات الضغط و السكر</a></button>
-      <button  class="btn"><a href="#" data-toggle="modal" data-target="#exampleModal" class="btn">تسجيل خروج للمريضة</a></button>
-    </div>
-    <div class="btn-group">
-      <button  class="btn"><a href="{% url 'patient:update-patient' pk=patient_id %}" class="btn">تعديل</a></button>
-      <button  class="btn"><a href="{% url 'patient:all-patients' %}" class="btn">الرجوع</a></button>
-    </div>
-  </div>
-</nav>
+<div class="btn-group">
+	<div class="dropdown">
+		<!-- Single button -->
+		<button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+		{% trans 'Patient Pages' %}
+		<span class="caret"></span>
+		</button>
+		<ul class="dropdown-menu">
+		<li><a href="{% url 'patient:create-days-off' patient_id=patient_id  %}">{% trans 'Patient Days off' %}</a></li>
+		<li><a href="{% url 'surgery:create-patient-surgery' patient_id=patient_id  %}">{% trans 'Patient surgery' %}</a></li>
+		<li><a href="{% url 'patient:all-delivery' pk=patient_id %}">{% trans 'Patient delivery' %}</a></li>
+    <li><a href="{% url 'patient:all-checkup' patient_id=patient_id %}">{% trans 'Patient Follow-ups' %}</a></li>
+    <li><a href="{% url 'patient:create-diabetes' patient_id=patient_id %}">{% trans 'Patient Diabetes & BP' %}</a></li>
+		<li><a href="#" data-toggle="modal" data-target="#exampleModal">{% trans 'Patient Exits' %}</a></li>
+		</ul>
+	</div>
+</div>
+<div class="btn-group">
+	<div class="dropdown">
+		<!-- Single button -->
+		<button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+		{% trans 'Actions' %}
+		<span class="caret"></span>
+		</button>
+		<ul class="dropdown-menu">
+		<li><a href="{% url 'patient:update-patient' pk=patient_id %}">{% trans 'Update & Edit' %}</a></li>
+		<li><a href="{% url 'patient:all-patients' %}">{% trans 'Cancel & Back' %}</a></li>
+		</ul>
+	</div>
+</div>

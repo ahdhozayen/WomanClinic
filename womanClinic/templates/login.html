@@ -1,76 +1,167 @@
-{% load i18n %}
+<!DOCTYPE html>
 {% load static %}
+{% load i18n %}
 {% load l10n %}
 {% get_current_language as LANGUAGE_CODE %}
 {% get_current_language_bidi as LANGUAGE_BIDI %}
-<!DOCTYPE html>
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="">
-  <meta name="author" content="">
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<title>{% trans 'Toson Hospital' %}</title>
 
-  <title>عيادة النسا {% trans "تسجيل الدخول" %}</title>
+	<!-- Favicon -->
+	<link rel="shortcut icon" href="{% static 'favicon.ico' %}">
+	<link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
 
-  <!-- Bootstrap Core CSS -->
-  <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+	<!-- vector map CSS -->
+	<link href="{% static 'vendors/bower_components/jasny-bootstrap/dist/css/jasny-bootstrap.min.css' %}" rel="stylesheet" type="text/css" />
+	<link href="{% static 'vendors/bower_components/jquery-toast-plugin/dist/jquery.toast.min.css' %}" rel="stylesheet" type="text/css">
 
-  <!-- MetisMenu CSS -->
-  <link href="{% static 'vendor/metisMenu/metisMenu.min.css' %}" rel="stylesheet">
 
-  <!-- Custom CSS -->
-  <link href="{% static 'dist/css/sb-admin-2.css' %}" rel="stylesheet">
-
-  <!-- Morris Charts CSS -->
-  <link href="{% static 'vendor/morrisjs/morris.css' %}" rel="stylesheet">
-
-  <!-- Custom Fonts -->
-  <link href="{% static 'vendor/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
-
+	<!-- Custom CSS -->
+	<link href="{% static 'dist/css/style.css' %}" rel="stylesheet" type="text/css">
 </head>
 
 <body>
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-4 mx-md-auto">
-        <div class="login-panel card">
-          <div class="card-header">
-            <h3 class="card-title">تسجيل الدخول</h3>
-          </div>
-          <div class="card-body">
-            <form method="post">
-              {% csrf_token %}
-              {% include 'messages.html' %}
-              <fieldset>
-                <div class="form-group">
-                  <input class="form-control" placeholder="Username" name="username" type="text" autofocus>
-                </div>
-                <div class="form-group">
-                  <input class="form-control" placeholder="Password" name="password" type="password" value="">
-                </div>
-                <button type="submit" class="btn btn-lg btn-success btn-block">دخول</button>
-              </fieldset>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- jQuery -->
-  <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+	<!--Preloader-->
+	<div class="preloader-it">
+		<div class="la-anim-1"></div>
+	</div>
+	<!--/Preloader-->
+
+	<div class="wrapper pa-0">
+		<header class="sp-header">
+			<div class="sp-logo-wrap pull-left">
+				<a href="#">
+					<img class="brand-img mr-10" src="{% static 'dist/img/logo.png' %}" alt="brand" />
+					<span class="brand-text">{% trans 'Abou Qir Central Hospital' %}</span>
+				</a>
+			</div>
+			<div class="form-group mb-0 pull-right">
+				<span class="inline-block pr-10">{% trans 'Do not have an account?' %}</span>
+				<a class="inline-block btn btn-info  btn-rounded btn-outline" href="signup.html">{% trans 'Sign Up' %}</a>
+			</div>
+			<div class="clearfix"></div>
+		</header>
+
+		<!-- Main Content -->
+		<div class="page-wrapper pa-0 ma-0 auth-page">
+			<div class="container-fluid">
+				<!-- Row -->
+
+				<div class="table-struct full-width full-height">
+					<div class="table-cell vertical-align-middle auth-form-wrap">
+						<div class="auth-form  ml-auto mr-auto no-float">
+							<div class="row">
+									{% include 'message.html' %}
+								<div class="col-sm-12 col-xs-12">
+									<div class="mb-30">
+										<h3 class="text-center txt-dark mb-10">{% trans 'Sign in to ' %}<br>{% trans 'Abou Qir Central Hospital' %}</h3>
+										<h6 class="text-center nonecase-font txt-grey">{% trans 'Enter your details below' %}</h6>
+									</div>
+									<div class="form-wrap">
+										<form method="post">
+											{% csrf_token %}
+											<div class="form-group">
+												<label class="control-label mb-10" for="username">{% trans 'Username' %}</label>
+												<input type="text" class="form-control" required="" name="username" id="username" placeholder="Enter username">
+											</div>
+											<div class="form-group">
+												<label class="pull-left control-label mb-10" for="password">{% trans 'Password' %}</label>
+												<div class="clearfix"></div>
+												<input type="password" class="form-control" required="" name="password" id="password" placeholder="Enter password">
+											</div>
+
+											<div class="form-group text-center">
+												<button type="submit" class="btn btn-info  btn-rounded">{% trans 'sign in' %}</button>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- /Row -->
+			</div>
+
+		</div>
+		<!-- /Main Content -->
+
+	</div>
+	<!-- /#wrapper -->
+
+	<!-- JavaScript -->
+
+	<!-- jQuery -->
+  <script src="{% static 'vendors/bower_components/jquery/dist/jquery.min.js' %}"></script>
 
   <!-- Bootstrap Core JavaScript -->
-  <script src="{% static 'vendor/popper/popper.min.js' %}"></script>
-  <script src="{% static 'vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+  <script src="{% static 'vendors/bower_components/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+	<script src="{% static 'vendors/bower_components/jquery-toast-plugin/dist/jquery.toast.min.js' %}"></script>
 
-  <!-- Metis Menu Plugin JavaScript -->
-  <script src="{% static 'vendor/metisMenu/metisMenu.min.js' %}"></script>
+  <!-- Data table JavaScript -->
+  <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
 
-  <!-- Custom Theme JavaScript -->
-  <script src="{% static 'dist/js/sb-admin-2.js' %}"></script>
+  <!-- Slimscroll JavaScript -->
+  <script src="{% static 'dist/js/jquery.slimscroll.js' %}"></script>
+
+  <!-- simpleWeather JavaScript -->
+  <script src="{% static 'vendors/bower_components/moment/min/moment.min.js' %}"></script>
+  <script src="{% static 'vendors/bower_components/simpleWeather/jquery.simpleWeather.min.js' %}"></script>
+  <script src="{% static 'dist/js/simpleweather-data.js' %}"></script>
+
+  <!-- EChartJS JavaScript -->
+  <script src="{% static 'vendors/bower_components/echarts/dist/echarts-en.min.js' %}"></script>
+  <script src="{% static 'vendors/echarts-liquidfill.min.js' %}"></script>
+
+  <!-- Progressbar Animation JavaScript -->
+  <script src="{% static 'vendors/bower_components/waypoints/lib/jquery.waypoints.min.js' %}"></script>
+  <script src="{% static 'vendors/bower_components/jquery.counterup/jquery.counterup.min.js' %}"></script>
+
+  <!-- Fancy Dropdown JS -->
+  <script src="{% static 'dist/js/dropdown-bootstrap-extended.js' %}"></script>
+
+  <!-- Sparkline JavaScript -->
+  <script src="{% static 'vendors/jquery.sparkline/dist/jquery.sparkline.min.js' %}"></script>
+
+  <!-- Owl JavaScript -->
+  <script src="{% static 'vendors/bower_components/owl.carousel/dist/owl.carousel.min.js' %}"></script>
+
+  <!-- Toast JavaScript -->
+  <script src="{% static 'vendors/bower_components/jquery-toast-plugin/dist/jquery.toast.min.js' %}"></script>
+
+  <!-- Piety JavaScript -->
+  <script src="{% static 'vendors/bower_components/peity/jquery.peity.min.js' %}"></script>
+  <script src="{% static 'dist/js/peity-data.js' %}"></script>
+
+  <!-- Switchery JavaScript -->
+  <script src="{% static 'vendors/bower_components/switchery/dist/switchery.min.js' %}"></script>
+
+  <!-- Init JavaScript -->
+  <script src="{% static 'dist/js/init.js' %}"></script>
+  <script src="{% static 'dist/js/dashboard-data.js' %}"></script>
+	<script src="{% static 'dist/js/toast-data.js' %}"></script>
+
+  {% block js %}
+	<script>
+	$('.tst4').on('click',function(e){
+		$.toast().reset('all');
+		$("body").removeAttr('class');
+		$.toast({
+						heading: 'Opps! somthing wents wrong',
+						text: '{{error_msg}}',
+						position: 'top-right',
+						loaderBg:'#fec107',
+						icon: 'error',
+						hideAfter: 3500
+				});
+		return false;
+		});
+	</script>
+  {% endblock js %}
 </body>
 
 </html>

@@ -3,206 +3,342 @@
 {% load crispy_forms_tags %}
 {% load i18n %}
 {% load l10n %}
-{% block body %}
 
-<div class="col-xl-12">
-  <form id="my_form" method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    {% include 'messages.html' %}
-    {% include 'top-button.html' %}
-    <div class="card">
-      <div class="card-header">{{ page_title }}</div>
-      <div class="card-body">
-        <div class="row show-grid">
-          <div class="col-md-6">
-            {{ patient_form.name|as_crispy_field}}
-          </div>
-          <div class="col-md-6">
-            {{ patient_form.address|as_crispy_field}}
-          </div>
-          <div class="col-md-3">
-            {{ patient_form.job|as_crispy_field}}
-          </div>
-          <div class="col-md-3">
-            {{ patient_form.phone|as_crispy_field}}
-          </div>
-          <div class="col-md-3">
-            {{ patient_form.mobile|as_crispy_field}}
-          </div>
-          <div class="col-md-3">
-            {{ patient_form.date_of_birth|as_crispy_field}}
-          </div>
-          <div class="col-md-3">
-            {{ patient_form.husband_name|as_crispy_field}}
-          </div>
-          <div class="col-md-3">
-            {{ patient_form.husband_phone|as_crispy_field}}
-          </div>
-          <div class="col-md-3">
-            {{ patient_form.g|as_crispy_field}}
-          </div>
-          <div class="col-md-3">
-            {{ patient_form.p|as_crispy_field}}
-          </div>
-          <div class="col-md-3">
-            {{ patient_form.pre|as_crispy_field}}
-          </div>
-          <div class="col-md-3">
-            {{ patient_form.insurance_number|as_crispy_field}}
-          </div>
-          <div class="col-md-3">
-            {{ patient_form.entrance_number|as_crispy_field}}
-          </div>
-          <div class="col-md-3">
-            {{ patient_form.hospital_number|as_crispy_field}}
-          </div>
-          <div class="col-md-3">
-            {{ patient_form.patient_number|as_crispy_field}}
-          </div>
-          <div class="col-md-3">
-            {{ patient_form.room|as_crispy_field}}
-          </div>
-          <div class="col-md-3">
-            {{ patient_form.hospital_section|as_crispy_field}}
-          </div>
-          <div class="col-md-3">
-            {{ patient_form.transferred_from|as_crispy_field}}
-          </div>
-          <div class="col-md-3">
-            {{ patient_form.clexane_order_number|as_crispy_field}}
-          </div>
-          <div class="col-md-3">
-            {{ patient_form.patient_type|as_crispy_field}}
-          </div>
-          <div class="col-md-3">
-            {{ patient_form.entrance_date|as_crispy_field}}
-          </div>
-          <div class="col-md-3">
-            {{ patient_form.exit_date|as_crispy_field}}
-          </div>
-        </div>
+{% block body %}
+<form id="my_form" method="POST" enctype="multipart/form-data" class="form-horizontal">
+  {% csrf_token %}
+  <div class="container-fluid">
+
+    <!-- Title -->
+    <div class="row heading-bg">
+      <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+        <h5 class="txt-dark">{{ page_title }}</h5>
       </div>
-      <div class="card-body">
-        <div class="row show-grid">
-          <div class="col-md-3">
-            {{ patient_past_med.diabetes|as_crispy_field}}
-          </div>
-          <div class="col-md-3">
-            {{ patient_past_med.pulmonar|as_crispy_field}}
-          </div>
-          <div class="col-md-3">
-            {{ patient_past_med.hypertension|as_crispy_field}}
-          </div>
-          <div class="col-md-3">
-            {{ patient_past_med.allergies|as_crispy_field}}
-          </div>
-          <div class="col-md-3">
-            {{ patient_past_med.heart_disease|as_crispy_field}}
-          </div>
-          <div class="col-md-3">
-            {{ patient_past_med.breast|as_crispy_field}}
-          </div>
-          <div class="col-md-3">
-            {{ patient_past_med.autoimmun_disorder|as_crispy_field}}
-          </div>
-          <div class="col-md-3">
-            {{ patient_past_med.abnormal_pap|as_crispy_field}}
-          </div>
-          <div class="col-md-3">
-            {{ patient_past_med.kidney_disease|as_crispy_field}}
-          </div>
-          <div class="col-md-3">
-            {{ patient_past_med.uterine|as_crispy_field}}
-          </div>
-          <div class="col-md-3">
-            {{ patient_past_med.psychiatric|as_crispy_field}}
-          </div>
-          <div class="col-md-3">
-            {{ patient_past_med.infertility|as_crispy_field}}
-          </div>
-          <div class="col-md-3">
-            {{ patient_past_med.neurologic|as_crispy_field}}
-          </div>
-          <div class="col-md-3">
-            {{ patient_past_med.rfh|as_crispy_field}}
-          </div>
-          <div class="col-md-3">
-            {{ patient_past_med.hld|as_crispy_field}}
-          </div>
-          <div class="col-md-3">
-            {{ patient_past_med.gyns|as_crispy_field}}
-          </div>
-          <div class="col-md-3">
-            {{ patient_past_med.varicosities|as_crispy_field}}
-          </div>
-          <div class="col-md-3">
-            {{ patient_past_med.operation|as_crispy_field}}
-          </div>
-          <div class="col-md-3">
-            {{ patient_past_med.thyroid_dysfunction|as_crispy_field}}
-          </div>
-          <div class="col-md-3">
-            {{ patient_past_med.anesthetic|as_crispy_field}}
-          </div>
-          <div class="col-md-3">
-            {{ patient_past_med.trauma|as_crispy_field}}
-          </div>
-          <div class="col-md-3">
-            {{ patient_past_med.hobt|as_crispy_field}}
-          </div>
-          <div class="col-md-6">
-            {{ patient_past_med.othr|as_crispy_field}}
-          </div>
-        </div>
+      <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12 pull-right">
+        {% include 'top-button.html' %}
       </div>
-      <div class="card-body">
-        <div class="table-responsive table-bordered">
-          <table class="table" id="dataTable">
-            <thead style="background-color: #89acbdb3;">
-              <tr role="row">
-                <th style="text-align:center;">#</th>
-                <th style="text-align:center;">اسم المرفق</th>
-                <th style="text-align:center;">المرفقات</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for att in patient_attachments %}
-              <tr>
-                <th scope="row">{{ forloop.counter }}</th>
-                <td>{{att.attachment_name}}</td>
-                <td><a href="{{media_url}}{{att.attachment}}" target="_blank"><img src="{{media_url}}{{att.attachment}}"  alt="" width="100;" height="100;"></a></td>
-              </tr>
-              {% endfor %}
-          </table>
-        </div>
-      </div>
-      <!-- /.card-body -->
     </div>
-    <!-- /.panel -->
-    <!-- Patient Exit Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+    <!-- Row -->
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="panel panel-default card-view">
+          <div class="panel-heading">
+            <div class="pull-left">
+              <h6 class="panel-title txt-dark">{% trans 'Patient Informations Form' %}</h6>
+            </div>
+            <div class="pull-right">
+              <!-- <a href="{% url 'patient:all-patients' %}" class="btn btn-default btn-anim">
+                <i class="fa fa-arrow-circle-left"></i><span class="btn-text">Back to list</span>
+              </a> -->
+            </div>
+            <div class="clearfix"></div>
+          </div>
+          <div class="panel-wrapper collapse in">
+            <div class="panel-body">
+              <div class="form-wrap">
+
+                <div class="form-group">
+                  <label class="control-label col-sm-1" >{{patient_form.name.label }}</label>
+                  <div class="col-sm-5">
+                    {{patient_form.name}}
+                  </div>
+                  <label class="control-label col-sm-1" >{{patient_form.address.label }}</label>
+                  <div class="col-sm-5">
+                    {{patient_form.address}}
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="control-label col-sm-1" >{{patient_form.job.label }}</label>
+                  <div class="col-sm-2">
+                    {{patient_form.job}}
+                  </div>
+                  <label class="control-label col-sm-1" >{{patient_form.phone.label }}</label>
+                  <div class="col-sm-2">
+                    {{patient_form.phone}}
+                  </div>
+                  <label class="control-label col-sm-1">{{patient_form.mobile.label }}</label>
+                  <div class="col-sm-2">
+                    {{patient_form.mobile}}
+                  </div>
+                  <label class="control-label col-sm-1">{{patient_form.date_of_birth.label }}</label>
+                  <div class="col-sm-2">
+                    {{patient_form.date_of_birth}}
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="control-label col-sm-1">{{patient_form.husband_name.label }}</label>
+                  <div class="col-sm-2">
+                    {{patient_form.husband_name}}
+                  </div>
+                  <label class="control-label col-sm-1">{{patient_form.husband_phone.label }}</label>
+                  <div class="col-sm-2">
+                    {{patient_form.husband_phone}}
+                  </div>
+                  <label class="control-label col-sm-1">{{patient_form.insurance_number.label }}</label>
+                  <div class="col-sm-2">
+                    {{patient_form.insurance_number}}
+                  </div>
+                  <label class="control-label col-sm-1">{{patient_form.entrance_number.label }}</label>
+                  <div class="col-sm-2">
+                    {{patient_form.entrance_number}}
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="control-label col-sm-1">{{patient_form.hospital_number.label }}</label>
+                  <div class="col-sm-2">
+                    {{patient_form.hospital_number}}
+                  </div>
+                  <label class="control-label col-sm-1">{{patient_form.patient_number.label }}</label>
+                  <div class="col-sm-2">
+                    {{patient_form.patient_number}}
+                  </div>
+                  <label class="control-label col-sm-1">{{patient_form.room.label }}</label>
+                  <div class="col-sm-2">
+                    {{patient_form.room}}
+                  </div>
+                  <label class="control-label col-sm-1">{{patient_form.hospital_section.label }}</label>
+                  <div class="col-sm-2">
+                    {{patient_form.hospital_section}}
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="control-label col-sm-1">{{patient_form.transferred_from.label }}</label>
+                  <div class="col-sm-2">
+                    {{patient_form.transferred_from}}
+                  </div>
+                  <label class="control-label col-sm-1">{{patient_form.clexane_order_number.label }}</label>
+                  <div class="col-sm-2">
+                    {{patient_form.clexane_order_number}}
+                  </div>
+                  <label class="control-label col-sm-1">{{patient_form.patient_type.label }}</label>
+                  <div class="col-sm-2">
+                    {{patient_form.patient_type}}
+                  </div>
+                  <label class="control-label col-sm-1">{{patient_form.entrance_date.label }}</label>
+                  <div class="col-sm-2">
+                    {{patient_form.entrance_date}}
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="control-label col-sm-1" >{{patient_form.exit_date.label }}</label>
+                  <div class="col-sm-2">
+                    {{patient_form.exit_date}}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="panel panel-default card-view">
+          <div class="panel-heading">
+            <div class="pull-left">
+              <h6 class="panel-title txt-dark">{% trans "Patient medical history" %}</h6>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+          <div class="panel-wrapper collapse in">
+            <div class="panel-body">
+              <div class="form-wrap">
+                <div class="form-group">
+                  <label class="control-label col-sm-1">{{ patient_past_med.diabetes.label}}</label>
+                  <div class="col-sm-1">
+                    {{ patient_past_med.diabetes}}
+                  </div>
+                  <label class="control-label col-sm-1">{{ patient_past_med.pulmonar.label}}</label>
+                  <div class="col-sm-1">
+                    {{ patient_past_med.pulmonar}}
+                  </div>
+                  <label class="control-label col-sm-1">{{ patient_past_med.hypertension.label}}</label>
+                  <div class="col-sm-1">
+                    {{ patient_past_med.hypertension}}
+                  </div>
+                  <label class="control-label col-sm-1">{{ patient_past_med.allergies.label}}</label>
+                  <div class="col-sm-1">
+                    {{ patient_past_med.allergies}}
+                  </div>
+                  <label class="control-label col-sm-1">{{ patient_past_med.heart_disease.label}}</label>
+                  <div class="col-sm-1">
+                    {{ patient_past_med.heart_disease}}
+                  </div>
+                  <label class="control-label col-sm-1">{{ patient_past_med.breast.label}}</label>
+                  <div class="col-sm-1">
+                    {{ patient_past_med.breast}}
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="control-label col-sm-1">{{ patient_past_med.autoimmun_disorder.label}}</label>
+                  <div class="col-sm-1">
+                    {{ patient_past_med.autoimmun_disorder}}
+                  </div>
+                  <label class="control-label col-sm-1">{{ patient_past_med.autoimmun_disorder_value.label}}</label>
+                  <div class="col-sm-1">
+                    {{ patient_past_med.autoimmun_disorder_value}}
+                  </div>
+                  <label class="control-label col-sm-1">{{ patient_past_med.abnormal_pap.label}}</label>
+                  <div class="col-sm-1">
+                    {{ patient_past_med.abnormal_pap}}
+                  </div>
+                  <label class="control-label col-sm-1">{{ patient_past_med.kidney_disease.label}}</label>
+                  <div class="col-sm-1">
+                    {{ patient_past_med.kidney_disease}}
+                  </div>
+                  <label class="control-label col-sm-1">{{ patient_past_med.kidney_disease_value.label}}</label>
+                  <div class="col-sm-1">
+                    {{ patient_past_med.kidney_disease_value}}
+                  </div>
+                  <label class="control-label col-sm-1">{{ patient_past_med.uterine.label}}</label>
+                  <div class="col-sm-1">
+                    {{ patient_past_med.uterine}}
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="control-label col-sm-1">{{ patient_past_med.psychiatric.label}}</label>
+                  <div class="col-sm-1">
+                    {{ patient_past_med.psychiatric}}
+                  </div>
+                  <label class="control-label col-sm-1">{{ patient_past_med.infertility.label}}</label>
+                  <div class="col-sm-1">
+                    {{ patient_past_med.infertility}}
+                  </div>
+                  <label class="control-label col-sm-1">{{ patient_past_med.neurologic.label}}</label>
+                  <div class="col-sm-1">
+                    {{ patient_past_med.neurologic}}
+                  </div>
+                  <label class="control-label col-sm-1">{{ patient_past_med.rfh.label}}</label>
+                  <div class="col-sm-1">
+                    {{ patient_past_med.rfh}}
+                  </div>
+                  <label class="control-label col-sm-1">{{ patient_past_med.hld.label}}</label>
+                  <div class="col-sm-1">
+                    {{ patient_past_med.hld}}
+                  </div>
+                  <label class="control-label col-sm-1">{{ patient_past_med.hld_value.label}}</label>
+                  <div class="col-sm-1">
+                    {{ patient_past_med.hld_value}}
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="control-label col-sm-1">{{ patient_past_med.gyns.label}}</label>
+                  <div class="col-sm-1">
+                    {{ patient_past_med.gyns}}
+                  </div>
+                  <label class="control-label col-sm-1">{{ patient_past_med.varicosities.label}}</label>
+                  <div class="col-sm-1">
+                    {{ patient_past_med.varicosities}}
+                  </div>
+                  <label class="control-label col-sm-1">{{ patient_past_med.operation.label}}</label>
+                  <div class="col-sm-1">
+                    {{ patient_past_med.operation}}
+                  </div>
+                  <label class="control-label col-sm-1">{{ patient_past_med.thyroid_dysfunction.label}}</label>
+                  <div class="col-sm-1">
+                    {{ patient_past_med.thyroid_dysfunction}}
+                  </div>
+                  <label class="control-label col-sm-1">{{ patient_past_med.thyroid_dysfunction_value.label}}</label>
+                  <div class="col-sm-1">
+                    {{ patient_past_med.thyroid_dysfunction_value}}
+                  </div>
+                  <label class="control-label col-sm-1">{{ patient_past_med.anesthetic.label}}</label>
+                  <div class="col-sm-1">
+                    {{ patient_past_med.anesthetic}}
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="control-label col-sm-1">{{ patient_past_med.trauma.label}}</label>
+                  <div class="col-sm-1">
+                    {{ patient_past_med.trauma}}
+                  </div>
+                  <label class="control-label col-sm-1">{{ patient_past_med.history_of_blood_transfusion.label}}</label>
+                  <div class="col-sm-1">
+                    {{ patient_past_med.history_of_blood_transfusion}}
+                  </div>
+                  <label class="control-label col-sm-1">{{ patient_past_med.history_of_blood_transfusion_value.label}}</label>
+                  <div class="col-sm-1">
+                    {{ patient_past_med.history_of_blood_transfusion_value}}
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="control-label col-sm-1">{{ patient_past_med.othr.label}}</label>
+                  <div class="col-sm-11">
+                    {{ patient_past_med.othr}}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="panel panel-default card-view">
+          <div class="panel-heading">
+            <div class="pull-left">
+              <h6 class="panel-title txt-dark">{% trans "Patient Fiels" %}</h6>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+          <div class="panel-wrapper collapse in">
+            <div class="panel-body">
+              <table class="table" id="dataTable">
+                <thead style="background-color: #89acbdb3;">
+                  <tr role="row">
+                    <th style="text-align:center;">#</th>
+                    <th style="text-align:center;">{% trans "Fiels Name" %}</th>
+                    <th style="text-align:center;">{% trans "Attachment" %}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for att in patient_attachments %}
+                  <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td>{{att.attachment_name}}</td>
+                    <td><a href="{{media_url}}{{att.attachment}}" target="_blank"><img src="{{media_url}}{{att.attachment}}" alt="" width="100;" height="100;"></a></td>
+                  </tr>
+                  {% endfor %}
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- /Row -->
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
           <form method='POST'>
             <div class="modal-body">
-                {{exit_form|crispy}}
+              {{exit_form|crispy}}
             </div>
             <div class="modal-footer">
-              <button type="submit" class="btn btn-primary"> Save</button>
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">{% trans 'Yes' %}</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">{% trans 'Close' %}</button>
             </div>
-        </form>
+          </form>
+        </div>
       </div>
     </div>
-    </div>
-
-  </form>
-</div>
-
+</form>
 {% endblock body %}

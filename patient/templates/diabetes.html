@@ -3,71 +3,119 @@
 {% load crispy_forms_tags %}
 {% load i18n %}
 {% load l10n %}
+
 {% block body %}
 
-<div class="col-xl-12">
-  <form id="my_form" method="POST" enctype="multipart/form-data">
+<div class="container-fluid">
+  <!-- Title -->
+  <div class="row heading-bg">
+    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+      <h5 class="txt-dark">{{ page_title }}</h5>
+    </div>
+  </div>
+  <!-- /Title -->
+
+  <!-- Row -->
+  <form id="my_form" method="POST"class="form-horizontal" enctype="multipart/form-data">
     {% csrf_token %}
-    {% include 'messages.html' %}
-    <p>
-      <button type="submit" class="btn btn-success">حفظ</button>
-      <a href="{% url 'patient:view-patient' pk=required_patient.id %}" class="btn btn-secondary">{% trans "الغاء" %}</a>
-    </p>
-    <div class="card">
-      <div class="card-header">{{ page_title }}</div>
-      <div class="card-body">
-        <div class="row show-grid">
-          <div class="col-md-3">
-            {{ diabete_form.bs|as_crispy_field}}
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="panel panel-default card-view">
+          <div class="panel-heading">
+            <div class="pull-left">
+              <h6 class="panel-title txt-dark"></h6>
+            </div>
+            <div class="clearfix"></div>
           </div>
-          <div class="col-md-3">
-            {{ diabete_form.bp_up|as_crispy_field}}
-          </div>
-          <div class="col-md-3">
-            {{ diabete_form.bp_down|as_crispy_field}}
-          </div>
-          <div class="col-md-3">
-            {{ diabete_form.temp|as_crispy_field}}
-          </div>
-          <div class="col-md-3">
-            {{ diabete_form.reading_date|as_crispy_field}}
+          <div class="panel-wrapper collapse in">
+            <div class="panel-body">
+              <div class="form-wrap">
+                <div class="form-group mb-0">
+                  <div class="col-sm-12">
+                    <div class="row">
+                      <div class="col-sm-4">
+                        <label class="control-label mb-10">{{ diabete_form.bs.label }}</label>
+                        {{ diabete_form.bs}}
+                      </div>
+                      <div class="col-sm-4">
+                        <label class="control-label mb-10">{{ diabete_form.bp_up.label }}</label>
+                        {{ diabete_form.bp_up}}
+                      </div>
+                      <div class="col-sm-4">
+                        <label class="control-label mb-10">{{ diabete_form.bp_down.label }}</label>
+                        {{ diabete_form.bp_down}}
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-sm-4">
+                        <label class="control-label mb-10">{{ diabete_form.temp.label }}</label>
+                        {{ diabete_form.temp}}
+                      </div>
+                      <div class="col-sm-4">
+                        <label class="control-label mb-10">{{ diabete_form.reading_date.label }}</label>
+                        {{ diabete_form.reading_date}}
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      <!-- /.card-body -->
     </div>
-    <!-- /.panel -->
+    <div class="pull-right">
+      <button type="submit" class="btn btn-success btn-anim">
+        <i class="fa fa-arrow-circle-left"></i><span class="btn-text">{% trans "Save" %}</span>
+      </button>
+      <a href="{% url 'patient:view-patient' pk=required_patient.id %}" class="btn btn-default btn-anim">
+        <i class="fa fa-arrow-circle-left"></i><span class="btn-text">{% trans "Cancel" %}</span>
+      </a>
+    </div>
   </form>
+  <!-- /Row -->
   <div class="row">
-    <div class="col-lg-6">
-      <div class="card">
-        <div class="card-body">
-          <table class="table" id="dataTable">
-            <thead style="background-color: #89acbdb3;">
-              <tr role="row">
-                <th style="text-align:center;">#</th>
-                <th style="text-align:center;">التاريخ</th>
-                <th style="text-align:center;">سكر الدم</th>
-                <th colspan="2" style="text-align:center;">ضغط الدم</th>
-                <th style="text-align:center;">درجة الحرارة</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for check in list_diabetes %}
-              <tr>
-                <th scope="row">{{ forloop.counter }}</th>
-                <td>{{check.reading_date}}</td>
-                <td>{{check.bs}}</td>
-                <td>{{check.bp_up}}</td>
-                <td>{{check.bp_down}}</td>
-                <td>{{check.temp}}</td>
-              </tr>
-              {% endfor %}
-          </table>
+    <div class="col-md-6">
+      <div class="panel panel-default card-view">
+        <div class="panel-wrapper collapse in">
+          <div class="panel-body">
+            <div class="table-wrap">
+              <div class="table-responsive">
+                <div id="datable_1_wrapper" class="dataTables_wrapper">
+                  <table id="listPatientsTbl" class="table table-hover display  pb-30 dataTable">
+                    <thead>
+                      <tr role="row">
+                        <th style="text-align:center;">{% trans '#' %}</th>
+                        <th style="text-align:center;">{% trans 'Reading date' %}</th>
+                        <th style="text-align:center;">{% trans 'Blood Sugar' %}</th>
+                        <th style="text-align:center;">{% trans 'Blood pressure up' %}</th>
+                        <th style="text-align:center;">{% trans 'Blood pressure down' %}</th>
+                        <th style="text-align:center;">{% trans 'Temperature' %}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for check in list_diabetes %}
+                      <tr>
+                        <th scope="row">{{ forloop.counter }}</th>
+                        <td>{{check.reading_date}}</td>
+                        <td>{{check.bs}}</td>
+                        <td>{{check.bp_up}}</td>
+                        <td>{{check.bp_down}}</td>
+                        <td>{{check.temp}}</td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-    <div class="col-lg-6">
+    <div class="col-md-6">
       <div class="card">
         <div class="card-body">
           <canvas id="patients-diabetes-chart" data-url="{% url 'patient:patients-diabetes-chart' patient_id=required_patient.id %}"></canvas>

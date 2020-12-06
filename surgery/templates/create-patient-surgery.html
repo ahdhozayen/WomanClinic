@@ -3,80 +3,140 @@
 {% load crispy_forms_tags %}
 {% load i18n %}
 {% load l10n %}
+
 {% block body %}
 
-<div class="col-xl-12">
-  <form id="my_form" method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    {% include 'messages.html' %}
-    <p>
-      <button type="submit" class="btn btn-success">حفظ</button>
-      <a href="{% url 'patient:view-patient' pk=patient_id %}" class="btn btn-secondary">{% trans "الغاء" %}</a>
-    </p>
-    <div class="card">
-      <div class="card-header">{{ page_title }}</div>
-      <div class="card-body">
-        <div class="row show-grid">
-          <div class="col-md-6">
-            {{ patient_surgery_form.surgery_name|as_crispy_field}}
-          </div>
-          <div class="col-md-6">
-            {{ patient_surgery_form.surgery_doctor|as_crispy_field}}
-          </div>
-          <div class="col-md-6">
-            {{ patient_surgery_form.surgery_date|as_crispy_field}}
-          </div>
-          <div class="col-md-6">
-            {{ patient_surgery_form.exit_date|as_crispy_field}}
-          </div>
-          <div class="col-md-12">
-            {{ patient_surgery_form.case_progress|as_crispy_field}}
-          </div>
-          <div class="col-md-12">
-            {{ patient_surgery_form.final_diagnosis|as_crispy_field}}
-          </div>
-          <div class="col-md-12">
-            {{ patient_surgery_form.recomendations|as_crispy_field}}
-          </div>
-        </div>
-      </div>
-      <div class="card-body">
-        <div class="table-responsive table-bordered">
-          <table class="table" id="dataTable">
-            <thead style="background-color: #89acbdb3;">
-              <tr role="row">
-                <th style="text-align:center;">#</th>
-                <th style="text-align:center;">طبيعة العملية</th>
-                <th style="text-align:center;">اسم الجراح</th>
-                <th style="text-align:center;">تاريخ العملية</th>
-                <th style="text-align:center;">تاريخ الخروج</th>
-                <th style="text-align:center;">تطور الحالة</th>
-                <th style="text-align:center;">التشخيص النهائي</th>
-                <th style="text-align:center;">توصيات</th>
-                <th style="text-align:center;"></th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for patient_surgery in list_patient_surgery %}
-              <tr>
-                <th scope="row">{{ forloop.counter }}</th>
-                <td>{{patient_surgery.surgery_name}}</td>
-                <td>{{patient_surgery.surgery_doctor}}</td>
-                <td>{{patient_surgery.surgery_date}}</td>
-                <td>{{patient_surgery.exit_date}}</td>
-                <td>{{patient_surgery.case_progress}}</td>
-                <td>{{patient_surgery.final_diagnosis}}</td>
-                <td>{{patient_surgery.recomendations}}</td>
-                <td>تعديل</td>
-              </tr>
-              {% endfor %}
-          </table>
-        </div>
-      </div>
-      <!-- /.card-body -->
+<div class="container-fluid">
+  <!-- Title -->
+  <div class="row heading-bg">
+    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+      <h5 class="txt-dark">{{ page_title }}</h5>
     </div>
-    <!-- /.panel -->
+    
+  </div>
+  <!-- /Title -->
+
+  <!-- Row -->
+  <form id="my_form" method="POST"class="form-horizontal">
+    {% csrf_token %}
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="panel panel-default card-view">
+          <div class="panel-heading">
+            <div class="pull-left">
+              <h6 class="panel-title txt-dark"></h6>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+          <div class="panel-wrapper collapse in">
+            <div class="panel-body">
+              <div class="form-wrap">
+                <div class="form-group mb-0">
+                  <div class="col-sm-12">
+                    <div class="row">
+                      <div class="col-sm-6">
+                        <label class="control-label mb-10">{{ patient_surgery_form.surgery_name.label }}</label>
+                        {{ patient_surgery_form.surgery_name}}
+                      </div>
+                      <div class="col-sm-6">
+                        <label class="control-label mb-10">{{ patient_surgery_form.surgery_doctor.label }}</label>
+                        {{ patient_surgery_form.surgery_doctor}}
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-6">
+                        <label class="control-label mb-10">{{ patient_surgery_form.surgery_date.label }}</label>
+                        {{ patient_surgery_form.surgery_date}}
+                      </div>
+                      <div class="col-sm-6">
+                        <label class="control-label mb-10">{{ patient_surgery_form.exit_date.label }}</label>
+                        {{ patient_surgery_form.exit_date}}
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-6">
+                        <label class="control-label mb-10">{{ patient_surgery_form.case_progress.label }}</label>
+                        {{ patient_surgery_form.case_progress}}
+                      </div>
+                      <div class="col-sm-6">
+                        <label class="control-label mb-10">{{ patient_surgery_form.final_diagnosis.label }}</label>
+                        {{ patient_surgery_form.final_diagnosis}}
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <label class="control-label mb-10">{{ patient_surgery_form.recomendations.label }}</label>
+                        {{ patient_surgery_form.recomendations}}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pull-right">
+      <button type="submit" class="btn btn-success btn-anim">
+        <i class="fa fa-arrow-circle-left"></i><span class="btn-text">{% trans "Save" %}</span>
+      </button>
+      <a href="{% url 'patient:view-patient' pk=patient_id %}" class="btn btn-default btn-anim">
+        <i class="fa fa-arrow-circle-left"></i><span class="btn-text">{% trans "Back to list" %}</span>
+      </a>
+    </div>
   </form>
+  <!-- /Row -->
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="panel panel-default card-view">
+        <div class="panel-wrapper collapse in">
+          <div class="panel-body">
+            <div class="table-wrap">
+              <div class="table-responsive">
+                <div id="datable_1_wrapper" class="dataTables_wrapper">
+                  <table id="listPatientsTbl" class="table table-hover display  pb-30 dataTable">
+                    <thead>
+                      <tr role="row">
+                        <th style="text-align:center;">{% trans '#' %}</th>
+                        <th style="text-align:center;">{% trans 'طبيعة العملية' %}</th>
+                        <th style="text-align:center;">{% trans 'اسم الجراح' %}</th>
+                        <th style="text-align:center;">{% trans 'تاريخ العملية' %}</th>
+                        <th style="text-align:center;">{% trans 'تاريخ الخروج' %}</th>
+                        <th style="text-align:center;">{% trans 'تطور الحالة' %}</th>
+                        <th style="text-align:center;">{% trans 'التشخيص النهائي' %}</th>
+                        <th style="text-align:center;">{% trans 'توصيات' %}</th>
+                        <th style="text-align:center;">{% trans 'Action' %}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for patient_surgery in list_patient_surgery %}
+                      <tr>
+                        <th scope="row">{{ forloop.counter }}</th>
+                        <td>{{patient_surgery.surgery_name}}</td>
+                        <td>{{patient_surgery.surgery_doctor}}</td>
+                        <td>{{patient_surgery.surgery_date}}</td>
+                        <td>{{patient_surgery.exit_date}}</td>
+                        <td>{{patient_surgery.case_progress}}</td>
+                        <td>{{patient_surgery.final_diagnosis}}</td>
+                        <td>{{patient_surgery.recomendations}}</td>
+                        <td class="text-nowrap">
+                          <a href="#" class="mr-25" data-toggle="tooltip" data-original-title="Edit">
+                            <i class="fa fa-pencil text-inverse m-r-10"></i>
+                          </a>
+                        </td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 {% endblock body %}

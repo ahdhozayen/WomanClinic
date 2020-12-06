@@ -6,15 +6,40 @@ from patient.models import Patient
 from surgery.forms import (Surgery_Inline, Surgery_Master_Form, Patient_Surgery_Form,
                            Surgery_Doctor_Form, doctor_Inline,After_Surgery_Form)
 from surgery.models import Surgery_Master, Surgery_Steps, Patient_Surgery, Surgery_Doctor,After_Surgery
+from django.utils.translation import ugettext_lazy as _
+
 
 @login_required(login_url='/login')
 def list_surgery_view(request):
     all_surgery = Surgery_Master.objects.all()
+    master_form = Surgery_Master_Form()
+    detail_fromset = Surgery_Inline()
+    if request.method == 'POST':
+        master_form = Surgery_Master_Form(request.POST)
+        detail_fromset = Surgery_Inline(request.POST)
+        if master_form.is_valid() and detail_fromset.is_valid():
+            master_obj = master_form.save(commit=False)
+            master_obj.created_by = request.user
+            master_obj.last_update_by = request.user
+            master_obj.save()
+            detail_fromset = Surgery_Inline(
+                request.POST, instance=master_obj)
+            if detail_fromset.is_valid():
+                det_obj = detail_fromset.save(commit=False)
+                for obj in det_obj:
+                    obj.created_by = request.user
+                    obj.last_update_by = request.user
+                    obj.save()
+                    return redirect('surgery:list-surgery-types')
     surgeryContext = {
-                      'page_title':'قائمة الجراحات',
-                      'all_surgery':all_surgery
+                      'page_title':_('قائمة الجراحات'),
+                      "page_title_surgery": _('اضافة عملية جديدة'),
+                      'all_surgery':all_surgery,
+                      'master_form': master_form,
+                      'detail_fromset': detail_fromset,
     }
     return render(request, 'list-surgery.html', surgeryContext)
+
 
 @login_required(login_url='/login')
 def create_surgery_view(request):
@@ -43,7 +68,8 @@ def create_surgery_view(request):
         'detail_fromset': detail_fromset,
     }
     return render(request, 'create-surgery.html', surgeryContext)
-#dina
+
+
 @login_required(login_url='/login')
 def update_surgery_view(request, pk):
     required_surgery = get_object_or_404(Surgery_Master, pk=pk)
@@ -67,17 +93,20 @@ def update_surgery_view(request, pk):
         'detail_fromset': surgery_det_form
     }
     return render(request, 'create-surgery.html', surgeryContext)
-#dina
+
+
 @login_required(login_url='/login')
 def delete_surgery_view(request, pk):
     required_surgery = get_object_or_404(Surgery_Master, pk=pk)
     required_surgery.delete()
     return redirect('surgery:list-surgery-types')
 
+
 @login_required(login_url='/login')
 def view_surgery_view(request, pk):
     required_surgery = get_object_or_404(Surgery_Master, pk=pk)
     return render(request, 'view-surgery.html', {'surgery':required_surgery})
+
 
 @login_required(login_url='/login')
 def create_patient_surgery_view(request, patient_id):
@@ -103,14 +132,35 @@ def create_patient_surgery_view(request, patient_id):
     }
     return render(request, 'create-patient-surgery.html', surgeryPatientContext)
 
+
 @login_required(login_url='/login')
 def list_surgery_doctor_view(request):
     all_doctors = Surgery_Doctor.objects.all()
+    doctor_form = Surgery_Doctor_Form()
+    # doctor_form = doctor_Inline(queryset=Surgery_Doctor.objects.none())
+    if request.method == 'POST':
+        # doctor_form = doctor_Inline(request.POST)
+        doctor_form = Surgery_Doctor_Form(request.POST)
+        if doctor_form.is_valid():
+            master_obj = doctor_form.save(commit=False)
+            # for x in master_obj:
+            master_obj.hospital = request.user.clinic
+            master_obj.created_by = request.user
+            master_obj.last_update_by = request.user
+            master_obj.save()
+            return redirect('surgery:list-surgery-doctors')
+            messages.success(request, _('Saved Successfully'))
+        else:
+            print(doctor_form.errors)
+            messages.error(request, doctor_form.errors)
     surgeryContext = {
-                      'page_title':'قائمة الاطباء',
-                      'all_doctors':all_doctors
+                      'page_title':_('Doctors List'),
+                      'all_doctors':all_doctors,
+                      'page_title_doctor':_("Add New Doctor"),
+                      'doctor_form':doctor_form
     }
     return render(request, 'list-doctors.html', surgeryContext)
+
 
 @login_required(login_url='/login')
 def create_surgery_doctor_view(request):

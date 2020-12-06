@@ -3,42 +3,78 @@
 {% load crispy_forms_tags %}
 {% load i18n %}
 {% load l10n %}
-{% block body %}
-<!-- end Header -->
-<section class="panel panel-default">
-  <div class="table-responsive">
-    <table class="table table-bordered dataTable no-footer" id="dataTable" role="grid" aria-describedby="dataTable_info" style="overflow-x:auto;" width="100%" cellspacing="0">
-      <thead style="background-color: #89acbdb3;">
-        <tr role="row">
-          <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">ترتيب الحمل</th>
-          <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">بيانات الحمل</th>
-          <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">نوع الولادة</th>
-          <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">مكان الولادة</th>
-          <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">تاريخ الولادة</th>
-          <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">نوع التخدير</th>
-          <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">دكتور التخدير</th>
-          <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">abo rh</th>
-          <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">fetal sex</th>
-          <th tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1">lnmp</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for delivery in patient_delivery %}
-        <tr>
-          <th scope="row">{{ forloop.counter }}</th>
-          <td>{{delivery.description}}</td>
-          <td>{% if delivery.type == 'c'%}قيصري {% else %} طبيعي {% endif %}</td>
-          <td>{{delivery.place}}</td>
-          <td>{{delivery.date}}</td>
-          <td>{% if delivery.anesthesia_type=='T' %} Total anesthesia {% elif delivery.anesthesia_type=='H' %} Half anesthesia {% else %} Local anesthesia {% endif %}</td>
-          <td>{{delivery.anesthesia_doc}}</td>
-          <td>{{delivery.abo_rh}}</td>
-          <td>{% if delivery.fetal_sex == 'm'%}ذكر {% elif delivery.fetal_sex == 'f' %} اثني {% else %} توأم{% endif %}</td>
-          <td>{{delivery.lnmp}}</td>
-        </tr>
-        {% endfor %}
-    </table>
-  </div>
-</section>
 
+{% block body %}
+<div class="container-fluid">
+
+  <!-- Title -->
+  <div class="row heading-bg">
+    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+      <h5 class="txt-dark">All Patients</h5>
+    </div>
+  </div>
+  <!-- /Title -->
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="panel panel-default card-view">
+        <div class="panel-wrapper collapse in">
+          <div class="panel-body">
+            <div class="table-wrap">
+              <div class="table-responsive">
+                <div id="datable_1_wrapper" class="dataTables_wrapper">
+                  <table id="listPatientsTbl" class="table table-hover display  pb-30 dataTable">
+                    <thead>
+                      <tr role="row">
+                        <th style="text-align:center;">{% trans '#' %}</th>
+                        <th style="text-align:center;">{% trans 'ترتيب الحمل' %}</th>
+                        <th style="text-align:center;">{% trans 'بيانات الحمل' %}</th>
+                        <th style="text-align:center;">{% trans 'نوع الولادة' %}</th>
+                        <th style="text-align:center;">{% trans 'مكان الولادة' %}</th>
+                        <th style="text-align:center;">{% trans 'تاريخ الولادة' %}</th>
+                        <th style="text-align:center;">{% trans 'نوع التخدير' %}</th>
+                        <th style="text-align:center;">{% trans 'دكتور التخدير' %}</th>
+                        <th style="text-align:center;">{% trans 'abo rh' %}</th>
+                        <th style="text-align:center;">{% trans 'fetal sex' %}</th>
+                        <th style="text-align:center;">{% trans 'lnmp' %}</th>
+                        <th style="text-align:center;">{% trans 'Action' %}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for delivery in patient_delivery %}
+                      <tr>
+                        <th scope="row">{{ forloop.counter }}</th>
+                        <td>{{delivery.description}}</td>
+                        <td>{% if delivery.type == 'c'%}قيصري {% else %} طبيعي {% endif %}</td>
+                        <td>{{delivery.place}}</td>
+                        <td>{{delivery.date}}</td>
+                        <td>{% if delivery.anesthesia_type == 'T' %} Total anesthesia {% elif delivery.anesthesia_type == 'H' %} Half anesthesia {% else %} Local anesthesia {% endif %}</td>
+                        <td>{{delivery.anesthesia_doc}}</td>
+                        <td>{{delivery.abo_rh}}</td>
+                        <td>{% if delivery.fetal_sex == 'm'%}ذكر {% elif delivery.fetal_sex == 'f' %} اثني {% else %} توأم{% endif %}</td>
+                        <td>{{delivery.lnmp}}</td>
+                        <td class="text-nowrap">
+                          <a href="{% url 'patient:update-delivery' pk=delivery.id patient_id=delivery.patient_id %}" class="mr-25" data-toggle="tooltip" data-original-title="Edit">
+                            <i class="fa fa-pencil text-inverse m-r-10"></i>
+                          </a>
+                        </td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock body %}
+{% block js %}
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#listPatientsTbl').DataTable();
+  });
+</script>
+{% endblock js %}

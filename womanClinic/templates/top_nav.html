@@ -19,10 +19,10 @@
     <div class="dropdown-menu dropdown-menu-right dropdown-user">
       <a class="dropdown-item" href="{% url 'home:new-user'%}">
         {% if user.is_superuser %}
-        <i class="fa fa-user fa-fw"></i>{% trans "اضافة مستخدم جديد" %}</a>
+        <i class="fa fa-user fa-fw"></i>{% trans "ADD NEW USER" %}</a>
         {% endif %}
       <div class="dropdown-divider"></div>
-      <a class="dropdown-item" data-toggle="modal" data-target="#logoutModal" href="#"><i class="fa fa-sign-out fa-fw"></i>تسجيل الخروج</a>
+      <a class="dropdown-item" data-toggle="modal" data-target="#logoutModal" href="#"><i class="fa fa-sign-out fa-fw"></i>{% trans "LOG OUT" %}</a>
     </div>
   </li>
 </ul>
@@ -38,7 +38,7 @@
       </div>
       <div class="modal-body">{% trans "اذا اردت الخروج من البرنامج اضغط خروج" %}</div>
       <div class="modal-footer">
-        <button class="btn btn-secondary" type="button" data-dismiss="modal">{% trans "الغاء" %}</button>
+        <button class="btn btn-secondary" type="button" data-dismiss="modal">{% trans "Cancel" %}</button>
         <a class="btn btn-info" href="{% url 'home:logout'%}">{% trans "خروج" %}</a>
       </div>
     </div>

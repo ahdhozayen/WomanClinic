@@ -139,7 +139,7 @@ def patients_entrance_chart(request):
     return JsonResponse(data={
         'labels': labels,
         'qs1': qs1,
-        'qs2': qs2
+        'qs2': qs2,
     })
 
 @login_required(login_url='/login')

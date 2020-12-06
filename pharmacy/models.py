@@ -5,10 +5,10 @@ from django.utils.translation import ugettext_lazy as _
 
 
 class Medicine(models.Model):
-    scientific_name =  models.CharField(max_length=80, verbose_name='الاسم العلمي')
-    trade_name =  models.CharField(max_length=80, verbose_name='الاسم التجاري')
-    alternate1 = models.CharField(max_length=80, blank=True, null=True, verbose_name='بديل 1')
-    alternate2 = models.CharField(max_length=80, blank=True, null=True, verbose_name='بديل 2')
+    scientific_name =  models.CharField(max_length=80, verbose_name=_('Scientific Name'))
+    trade_name =  models.CharField(max_length=80, verbose_name=_('Trade Name'))
+    alternate1 = models.CharField(max_length=80, blank=True, null=True, verbose_name=_('Alternate1'))
+    alternate2 = models.CharField(max_length=80, blank=True, null=True, verbose_name=_('Alternate2'))
     start_date  = models.DateField(auto_now=False, auto_now_add=False, default=date.today, verbose_name=_('Start Date'))
     end_date    = models.DateField(auto_now=False, auto_now_add=False, blank=True, null=True, verbose_name=_('End Date'))
     created_by  = models.ForeignKey(settings.AUTH_USER_MODEL, blank=False, on_delete=models.CASCADE, related_name="medicine_created_by")

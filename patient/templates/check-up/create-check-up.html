@@ -3,131 +3,214 @@
 {% load crispy_forms_tags %}
 {% load i18n %}
 {% load l10n %}
+
 {% block body %}
-<!-- end Header -->
-<div class="col-xl-12">
-  <form id="my_form" method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    {% include 'messages.html' %}
-    <p>
-      <button type="submit" class="btn btn-success">حفظ</button>
-      <a href="{% url 'patient:view-patient' pk=patient_id %}" class="btn btn-secondary">{% trans "الغاء" %}</a>
-    </p>
-    <div class="card">
-      <div class="card-header">{{ page_title }}</div>
-      <div class="card-body">
-        <div class="row show-grid">
-          <div class="col-md-12">
-            {{ check_up_form.complain|as_crispy_field}}
-          </div>
-          <div class="col-md-3">
-            {{ check_up_form.week_number|as_crispy_field}}
-          </div>
-          <div class="col-md-3">
-            {{ check_up_form.visit_date|as_crispy_field}}
-          </div>
-          
-          <div class="col-md-3">
-            {{ check_up_form.next_visit|as_crispy_field}}
-          </div>
-          <div class="col-md-3">
-            {{ check_up_form.blood_presure|as_crispy_field}}
-          </div>
-          <div class="col-md-3">
-            {{ check_up_form.protine|as_crispy_field}}
-          </div>
-          <div class="col-md-3">
-            {{ check_up_form.rbs|as_crispy_field}}
-          </div>
-          <div class="col-md-3">
-            {{ check_up_form.hemoglobin|as_crispy_field}}
-          </div>
-          <div class="col-md-3">
-            {{ check_up_form.placenta|as_crispy_field}}
-          </div>
-          <div class="col-md-3">
-            {{ check_up_form.water|as_crispy_field}}
-          </div>
-          <div class="col-md-3">
-            {{ check_up_form.fetal_position|as_crispy_field}}
-          </div>
-          <div class="col-md-3">
-            {{ check_up_form.fetal_movement|as_crispy_field}}
-          </div>
-          <div class="col-md-3">
-            {{ check_up_form.fetal_heart_rate|as_crispy_field}}
-          </div>
-          <div class="col-md-3">
-            {{ check_up_form.weight|as_crispy_field}}
-          </div>
-          <div class="col-md-3">
-            {{ check_up_form.exit_nature|as_crispy_field}}
-          </div>
-          <div class="col-md-3">
-            {{ check_up_form.exit_desc|as_crispy_field}}
-          </div>
-          <div class="col-md-3">
-            {{ check_up_form.surgery|as_crispy_field}}
-          </div>
-          <div class="col-md-3">
-            {{ check_up_form.surgery_desc|as_crispy_field}}
-          </div>
-          <div class="col-md-3">
-            {{ check_up_form.clexane_sarf_date|as_crispy_field}}
-          </div>
-          <div class="col-md-6">
-          </div>
-          <div class="col-md-12">
-            {{ check_up_form.mhx|as_crispy_field}}
-          </div>
-          <div class="col-md-12">
-            {{ check_up_form.shx|as_crispy_field}}
-          </div>
-          <div class="col-md-12">
-            {{ check_up_form.allergy_hx|as_crispy_field}}
-          </div>
-        </div>
-      </div>
-      <div class="card-body">
-        <div class="table-responsive table-bordered">
-          <table class="table" id="dataTable">
-            <thead style="background-color: #89acbdb3;">
-              <tr role="row">
-                <th style="text-align:center;">#</th>
-                <th style="text-align:center;">week_number</th>
-                <th style="text-align:center;">complain</th>
-                <th style="text-align:center;">visit_date</th>
-                <th style="text-align:center;">protine</th>
-                <th style="text-align:center;">exit_nature</th>
-                <th style="text-align:center;">exit_desc</th>
-                <th style="text-align:center;">surgery</th>
-                <th style="text-align:center;">صرف ادوية</th>
-                <th style="text-align:center;"></th>
-                <th style="text-align:center;"></th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for check in list_checkups %}
-              <tr>
-                <th scope="row">{{ forloop.counter }}</th>
-                <td><a href="{% url 'patient:view-checkup' patient_id=check.patient.id chk_id=check.id%}">اسبوع الحمل {{check.week_number}}</a></td>
-                <td>{{check.complain}}</td>
-                <td>{{check.visit_date}}</td>
-                <td>{{check.protine}}</td>
-                <td>{{check.exit_nature}}</td>
-                <td>{{check.exit_desc}}</td>
-                <td>{{check.surgery}}</td>
-                <td> <a href="{% url 'patient:create-us' check_id=check.id patient_id=check.patient.id %}"><button type="button" class="btn btn-secondary">Ultrasound</button></a></td>
-                <td><a href="{% url 'patient:create-med' patient_id=check.patient.id chk_id=check.id %}">صرف دواء</a></td>
-                <td><a href="{% url 'patient:update-checkup' patient_id=check.patient.id chk_id=check.id%}">تعديل</a></td>
-              </tr>
-              {% endfor %}
-          </table>
-        </div>
-      </div>
-      <!-- /.card-body -->
+
+<div class="container-fluid">
+  <!-- Title -->
+  <div class="row heading-bg">
+    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+      <h5 class="txt-dark">{{ page_title }}</h5>
     </div>
-    <!-- /.panel -->
+  </div>
+  <!-- /Title -->
+
+  <!-- Row -->
+  <form id="my_form" method="POST"class="form-horizontal">
+    {% csrf_token %}
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="panel panel-default card-view">
+          <div class="panel-heading">
+            <div class="pull-left">
+              <h6 class="panel-title txt-dark"></h6>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+          <div class="panel-wrapper collapse in">
+            <div class="panel-body">
+              <div class="form-wrap">
+                <div class="form-group mb-0">
+                  <div class="col-sm-12">
+                    <div class="row">
+                      <div class="col-sm-6">
+                        <label class="control-label mb-10">{{ check_up_form.complain.label }}</label>
+                        {{ check_up_form.complain}}
+                      </div>
+                      <div class="col-sm-2">
+                        <label class="control-label mb-10">{{ check_up_form.week_number.label }}</label>
+                        {{ check_up_form.week_number}}
+                      </div>
+                      <div class="col-sm-2">
+                        <label class="control-label mb-10">{{ check_up_form.visit_date.label }}</label>
+                        {{ check_up_form.visit_date}}
+                      </div>
+                      <div class="col-sm-2">
+                        <label class="control-label mb-10">{{ check_up_form.next_visit.label }}</label>
+                        {{ check_up_form.next_visit}}
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-sm-2">
+                        <label class="control-label mb-10">{{ check_up_form.blood_presure.label }}</label>
+                        {{ check_up_form.blood_presure}}
+                      </div>
+                      <div class="col-sm-2">
+                        <label class="control-label mb-10">{{ check_up_form.protine.label }}</label>
+                        {{ check_up_form.protine}}
+                      </div>
+                      <div class="col-sm-2">
+                        <label class="control-label mb-10">{{ check_up_form.rbs.label }}</label>
+                        {{ check_up_form.rbs}}
+                      </div>
+                      <div class="col-sm-2">
+                        <label class="control-label mb-10">{{ check_up_form.hemoglobin.label }}</label>
+                        {{ check_up_form.hemoglobin}}
+                      </div>
+                      <div class="col-sm-2">
+                        <label class="control-label mb-10">{{ check_up_form.placenta.label }}</label>
+                        {{ check_up_form.placenta}}
+                      </div>
+                      <div class="col-sm-2">
+                        <label class="control-label mb-10">{{ check_up_form.water.label }}</label>
+                        {{ check_up_form.water}}
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-sm-2">
+                        <label class="control-label mb-10">{{ check_up_form.fetal_position.label }}</label>
+                        {{ check_up_form.fetal_position}}
+                      </div>
+                      <div class="col-sm-2">
+                        <label class="control-label mb-10">{{ check_up_form.fetal_movement.label }}</label>
+                        {{ check_up_form.fetal_movement}}
+                      </div>
+                      <div class="col-sm-2">
+                        <label class="control-label mb-10">{{ check_up_form.fetal_heart_rate.label }}</label>
+                        {{ check_up_form.fetal_heart_rate}}
+                      </div>
+                      <div class="col-sm-2">
+                        <label class="control-label mb-10">{{ check_up_form.weight.label }}</label>
+                        {{ check_up_form.weight}}
+                      </div>
+                      <div class="col-sm-2">
+                        <label class="control-label mb-10">{{ check_up_form.exit_nature.label }}</label>
+                        {{ check_up_form.exit_nature}}
+                      </div>
+                      <div class="col-sm-2">
+                        <label class="control-label mb-10">{{ check_up_form.exit_desc.label }}</label>
+                        {{ check_up_form.exit_desc}}
+                      </div>
+                    </div>
+
+                    <div class="row">
+
+                      <div class="col-sm-2">
+                        <label class="control-label mb-10">{{ check_up_form.surgery.label }}</label>
+                        {{ check_up_form.surgery}}
+                      </div>
+                      <div class="col-sm-2">
+                        <label class="control-label mb-10">{{ check_up_form.surgery_desc.label }}</label>
+                        {{ check_up_form.surgery_desc}}
+                      </div>
+                      <div class="col-sm-2">
+                        <label class="control-label mb-10">{{ check_up_form.clexane_sarf_date.label }}</label>
+                        {{ check_up_form.clexane_sarf_date}}
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <label class="control-label mb-10">{{ check_up_form.mhx.label }}</label>
+                        {{ check_up_form.mhx}}
+                      </div>
+                      <div class="col-sm-12">
+                        <label class="control-label mb-10">{{ check_up_form.shx.label }}</label>
+                        {{ check_up_form.shx}}
+                      </div>
+                      <div class="col-sm-12">
+                        <label class="control-label mb-10">{{ check_up_form.allergy_hx.label }}</label>
+                        {{ check_up_form.allergy_hx}}
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pull-right">
+      <button type="submit" class="btn btn-success btn-anim">
+        <i class="fa fa-arrow-circle-left"></i><span class="btn-text">{% trans "Save" %}</span>
+      </button>
+      <a href="{% url 'patient:view-patient' pk=patient_id %}" class="btn btn-default btn-anim">
+        <i class="fa fa-arrow-circle-left"></i><span class="btn-text">{% trans "Back to list" %}</span>
+      </a>
+    </div>
   </form>
+  <!-- /Row -->
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="panel panel-default card-view">
+        <div class="panel-wrapper collapse in">
+          <div class="panel-body">
+            <div class="table-wrap">
+              <div class="table-responsive">
+                <div id="datable_1_wrapper" class="dataTables_wrapper">
+                  <table id="listPatientsTbl" class="table table-hover display  pb-30 dataTable">
+                    <thead>
+                      <tr role="row">
+                        <th style="text-align:center;">{% trans '#' %}</th>
+                        <th style="text-align:center;">{% trans 'Week number' %}</th>
+                        <th style="text-align:center;">{% trans 'Complain' %}</th>
+                        <th style="text-align:center;">{% trans 'Visit date' %}</th>
+                        <th style="text-align:center;">{% trans 'Protine' %}</th>
+                        <th style="text-align:center;">{% trans 'Exit nature' %}</th>
+                        <th style="text-align:center;">{% trans 'Exit describtion' %}</th>
+                        <th style="text-align:center;">{% trans 'Surgery' %}</th>
+                        <th style="text-align:center;">{% trans 'Prescription' %}</th>
+                        <th colspan="2" style="text-align:center;">{% trans 'Action' %}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for check in list_checkups %}
+                      <tr>
+                        <th scope="row">{{ forloop.counter }}</th>
+                        <td><a href="{% url 'patient:view-checkup' patient_id=check.patient.id chk_id=check.id%}">{% trans 'Pregnancy week number ' %}{{check.week_number}}</a></td>
+                        <td>{{check.complain}}</td>
+                        <td>{{check.visit_date}}</td>
+                        <td>{{check.protine}}</td>
+                        <td>{{check.exit_nature}}</td>
+                        <td>{{check.exit_desc}}</td>
+                        <td>{{check.surgery}}</td>
+                        <td colspan="2" class="text-nowrap">
+                          <a href="{% url 'patient:create-us' check_id=check.id patient_id=check.patient.id %}" class="mr-25" data-toggle="tooltip" data-original-title="{% trans 'Ultrasound' %}">
+                            <i class="fa fa-pencil text-inverse m-r-10"></i>
+                          </a>
+                          <a href="{% url 'patient:create-med' patient_id=check.patient.id chk_id=check.id %}" class="mr-25" data-toggle="tooltip" data-original-title="{% trans 'Prescription' %}">
+                            <i class="fa fa-pencil text-inverse m-r-10"></i>
+                          </a>
+                          <a href="#{% url 'patient:update-checkup' patient_id=check.patient.id chk_id=check.id%}" class="mr-25" data-toggle="tooltip" data-original-title="Edit">
+                            <i class="fa fa-pencil text-inverse m-r-10"></i>
+                          </a>
+                        </td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
+
 {% endblock body %}

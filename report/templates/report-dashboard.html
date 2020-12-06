@@ -2,106 +2,143 @@
 {% load static %}
 {% load i18n %}
 {% load l10n %}
+
 {% block body %}
-
-<div id="page-wrapper" class="p-4" style="min-height: 671px;">
+<div class="container-fluid pt-25">
+  <!-- Row -->
   <div class="row">
-    <div class="col-lg-12">
-      <h1 class="page-header">{{ page_title }}</h1>
-    </div>
-    <!-- /.col-lg-12 -->
-  </div>
-  <!-- /.row -->
-  <div class="row">
-    <div class="col-xl-4 col-lg-6">
-      <div class="card card-primary card-inverse">
-        <div class="card-header card-primary">
-          <div class="row">
-            <div class="col-3">
-              <i class="fa fa-female fa-5x"></i>
-            </div>
-            <div class="col-9 text-left">
-              <div class="huge">{{patient_count}}</div>
-              <div>اجمالي مريضات المتابعة</div>
+    <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+      <div class="panel panel-default card-view pa-0">
+        <div class="panel-wrapper collapse in">
+          <div class="panel-body pa-0">
+            <div class="sm-data-box">
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col-xs-6 text-center pl-0 pr-0 data-wrap-left">
+                    <span class="txt-dark block counter"><span class="counter-anim">{{patient_count}}</span></span>
+                    <span class="weight-500 uppercase-font block font-13"><a href="{% url 'report:rep-all-patients' %}">{% trans 'TOTAL PATIENTS' %}</a></span>
+                  </div>
+                  <div class="col-xs-6 text-center  pl-0 pr-0 data-wrap-right">
+                    <i class="icon-user-following data-right-rep-icon txt-light-grey"></i>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="card-footer card-default">
-          <a href="{% url 'report:rep-all-patients' %}">
-            <span class="float-sm-left">عرض</span>
-            <span class="float-sm-right"><i class="fa fa-arrow-circle-right"></i></span>
-            <div class="clearfix"></div>
-          </a>
         </div>
       </div>
     </div>
-    <div class="col-xl-4 col-lg-6">
-      <div class="card card-green card-inverse">
-        <div class="card-header card-green">
-          <div class="row">
-            <div class="col-3">
-              <i class="fa fa-user-md fa-5x"></i>
-            </div>
-            <div class="col-9 text-left">
-              <div class="huge">{{patients_consult_count}}</div>
-              <div>اجمالي مريضات الأستشاري</div>
+    <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+      <div class="panel panel-default card-view pa-0">
+        <div class="panel-wrapper collapse in">
+          <div class="panel-body pa-0">
+            <div class="sm-data-box">
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col-xs-6 text-center pl-0 pr-0 data-wrap-left">
+                    <span class="txt-dark block counter"><span class="counter-anim">{{patients_consult_count}}</span></span>
+                    <span class="weight-500 uppercase-font block">
+                      <a href="{% url 'report:rep-cons-patients' %}">{% trans 'CONSULTANT PATIENTS' %}</a></span>
+                  </div>
+                  <div class="col-xs-6 text-center  pl-0 pr-0 data-wrap-right">
+                    <i class="fa fa-female  data-right-rep-icon txt-light-grey"></i>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="card-footer card-green">
-          <a href="{% url 'report:rep-cons-patients' %}">
-            <span class="float-sm-left">عرض</span>
-            <span class="float-sm-right"><i class="fa fa-arrow-circle-right"></i></span>
-            <div class="clearfix"></div>
-          </a>
         </div>
       </div>
     </div>
-    <div class="col-xl-4 col-lg-6">
-      <div class="card card-yellow card-inverse">
-        <div class="card-header card-yellow">
-          <div class="row">
-            <div class="col-3">
-              <i class="fa fa-medkit fa-5x"></i>
-            </div>
-            <div class="col-9 text-left">
-              <div class="huge">{{patients_clexane_count}}</div>
-              <div>اجمالي مريضات الكلكسان</div>
+    <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+      <div class="panel panel-default card-view pa-0">
+        <div class="panel-wrapper collapse in">
+          <div class="panel-body pa-0">
+            <div class="sm-data-box">
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col-xs-6 text-center pl-0 pr-0 data-wrap-left">
+                    <span class="txt-dark block counter"><span class="counter-anim">{{patients_clexane_count}}</span></span>
+                    <span class="weight-500 uppercase-font block"><a href="{% url 'report:rep-clexane-patients'%}">{% trans 'TOTAL CLEXANE PATIENTS' %}</a></span>
+                  </div>
+                  <div class="col-xs-6 text-center  pl-0 pr-0 data-wrap-right">
+                    <i class="fa fa-medkit  data-right-rep-icon txt-light-grey"></i>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="card-footer card-yellow">
-          <a href="{% url 'report:rep-clexane-patients'%}">
-            <span class="float-sm-left">عرض</span>
-            <span class="float-sm-right"><i class="fa fa-arrow-circle-right"></i></span>
-            <div class="clearfix"></div>
-          </a>
         </div>
       </div>
     </div>
   </div>
-  <hr>
-  <div class="row" style="padding-top:50px;">
-    <!-- ******** charts ********** -->
-    <div class="col-xl-6">
-      <canvas id="patients-entrance-chart" data-url="{% url 'report:patients-entrance-chart' %}"></canvas>
-    </div>
-    <div class="col-xl-6">
-      <canvas id="delivery-type-chart" data-url="{% url 'report:delivery-type-chart' %}"></canvas>
-    </div>
-    <!-- ******** end charts ********** -->
-  </div>
-  <hr>
+  <!-- /Row -->
 
-  <div class="row" style="padding-top:50px;">
-    <!-- ******** charts ********** -->
-    <div class="col-xl-6">
-      <canvas id="patients-surgery-chart" data-url="{% url 'report:surgery-type-chart' %}"></canvas>
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="panel panel-default card-view">
+        <div class="panel-heading">
+          <div class="pull-left">
+            <h6 class="panel-title txt-dark"></h6>
+          </div>
+          <div class="clearfix"></div>
+        </div>
+        <div class="panel-wrapper collapse in">
+          <div class="panel-body">
+            <div class="flot-container" style="height:400px">
+              <div id="sales_bars_chart" class="demo-placeholder" style="padding: 0px; position: relative;">
+                <canvas id="patients-entrance-chart" width="767" height="400" style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 767px; height: 400px;" data-url="{% url 'report:patients-entrance-chart' %}"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <!-- ******** end charts ********** -->
+    <div class="col-lg-6">
+      <div class="panel panel-default card-view">
+        <div class="panel-heading">
+          <div class="pull-left">
+            <h6 class="panel-title txt-dark"></h6>
+          </div>
+          <div class="clearfix"></div>
+        </div>
+        <div class="panel-wrapper collapse in">
+          <div class="panel-body">
+            <div class="flot-container" style="height:400px">
+              <div id="sales_bars_chart" class="demo-placeholder" style="padding: 0px; position: relative;">
+                <canvas id="delivery-type-chart" width="767" height="400" style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 767px; height: 400px;" data-url="{% url 'report:delivery-type-chart' %}"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-  <!-- /.row -->
+
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="panel panel-default card-view">
+        <div class="panel-heading">
+          <div class="pull-left">
+            <h6 class="panel-title txt-dark"></h6>
+          </div>
+          <div class="clearfix"></div>
+        </div>
+        <div class="panel-wrapper collapse in">
+          <div class="panel-body">
+            <div class="flot-container" style="height:400px">
+              <div id="sales_bars_chart" class="demo-placeholder" style="padding: 0px; position: relative;">
+                <canvas id="patients-surgery-chart" width="767" height="400" style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 767px; height: 400px;" data-url="{% url 'report:surgery-type-chart' %}"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
 </div>
+
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
 <script>
@@ -148,85 +185,86 @@
 <!-- *************************************************** -->
 <script>
   $(function() {
-   var $populationChart = $("#delivery-type-chart");
-   $.ajax({
-     url: $populationChart.data("url"),
-     success: function(data) {
-       var ctx = $populationChart[0].getContext("2d");
-       new Chart(ctx, {
-         type: 'bar',
-         data: {
-           labels: data.labels,
-           datasets: [{
-             label: 'انواع الولادات',
-             backgroundColor: '#428bca',
-             data: data.ds_type
-           }]
-         },
-         options: {
-           responsive: true,
-           scales: {
-             yAxes: [{
-               ticks: {
-                 min: .5,
-               }
-             }]
-           },
-           legend: {
-             position: 'top',
-           },
-           title: {
-             display: true,
-             text: 'عدد مريضات الولادة الطبيعي و القيصري'
-           }
-         }
-       });
+    var $populationChart = $("#delivery-type-chart");
+    $.ajax({
+      url: $populationChart.data("url"),
+      success: function(data) {
+        var ctx = $populationChart[0].getContext("2d");
+        new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: data.labels,
+            datasets: [{
+              label: 'انواع الولادات',
+              backgroundColor: '#428bca',
+              data: data.ds_type
+            }]
+          },
+          options: {
+            responsive: true,
+            scales: {
+              yAxes: [{
+                ticks: {
+                  min: .5,
+                }
+              }]
+            },
+            legend: {
+              position: 'top',
+            },
+            title: {
+              display: true,
+              text: 'عدد مريضات الولادة الطبيعي و القيصري'
+            }
+          }
+        });
 
-     }
-   });
+      }
+    });
 
- });
+  });
 </script>
 <!-- ************************************************************ -->
 <script>
   $(function() {
-   var $populationChart = $("#patients-surgery-chart");
-   $.ajax({
-     url: $populationChart.data("url"),
-     success: function(data) {
-       var ctx = $populationChart[0].getContext("2d");
-       new Chart(ctx, {
-         type: 'bar',
-         data: {
-           labels: data.labels,
-           datasets: [{
-             label: 'انواع العمليات',
-             backgroundColor: '#428bca',
-             data: data.ds_type
-           }]
-         },
-         options: {
-           responsive: true,
-           scales: {
-             yAxes: [{
-               ticks: {
-                 min: .5,
-               }
-             }]
-           },
-           legend: {
-             position: 'top',
-           },
-           title: {
-             display: true,
-             text: 'احصائية بالعمليات'
-           }
-         }
-       });
+    var $populationChart = $("#patients-surgery-chart");
+    $.ajax({
+      url: $populationChart.data("url"),
+      success: function(data) {
+        var ctx = $populationChart[0].getContext("2d");
+        new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: data.labels,
+            datasets: [{
+              label: 'انواع العمليات',
+              backgroundColor: '#428bca',
+              data: data.ds_type
+            }]
+          },
+          options: {
+            responsive: true,
+            scales: {
+              yAxes: [{
+                ticks: {
+                  min: .5,
+                }
+              }]
+            },
+            legend: {
+              position: 'top',
+            },
+            title: {
+              display: true,
+              text: 'احصائية بالعمليات'
+            }
+          }
+        });
 
-     }
-   });
+      }
+    });
 
- });
+  });
 </script>
+
 {% endblock body %}

@@ -14,12 +14,13 @@ from patient.forms import (PatientForm, Patient_Files_formset,
                            Check_Up_Form, Patient_Medicine_formset,
                            Patient_Days_Off_formset, Ultrasound_Form,
                            Diabetes_Form, Patient_Exit_Form, Past_Medical_History_Form)
+from django.utils.translation import ugettext_lazy as _
 
 
 @login_required(login_url='/login')
 def list_patients_view(request):
     all_patients = Patient.objects.all()
-    return render(request, 'list-patients.html', context={'page_title':'عرض المريضات','all_patients':all_patients})
+    return render(request, 'list-patients.html', context={'page_title':_('All Patients'),'all_patients':all_patients})
 
 @login_required(login_url='/login')
 def create_patient_view(request):
@@ -65,7 +66,7 @@ def create_patient_view(request):
             elif patient_past_med.errors:
                 messages.error(request, patient_past_med.errors)
     createContext = {
-                     'page_title':'تسجيل مريضة جديدة',
+                     'page_title':_('ADD NEW PATIENT'),
                      'patient_form':patient_form,
                      'patient_attachments':patient_attachments,
                      'patient_past_med':patient_past_med,
@@ -91,7 +92,7 @@ def view_patient_view(request, pk):
             exit_obj.save()
             return redirect('patient:view-patient', pk=pk)
     createContext = {
-                     'page_title':'شاشة المتابعة الرئيسية',
+                     'page_title':_('FOLLOW UP MAIN PAGE'),
                      'patient_id':pk,
                      'patient_form':patient_form,
                      'patient_attachments':patient_attachments,
@@ -136,7 +137,7 @@ def update_patient_view(request, pk):
             for error in patient_attachments.errors:
                 messages.error(request, error)
     createContext = {
-                     'page_title':'تعديل المريضة {}'.format(required_patient),
+                     'page_title':_('EDIT PATIENT {}').format(required_patient),
                      'patient_form':patient_form,
                      'patient_past_med':patient_past_med,
                      'patient_id':pk,
@@ -147,7 +148,25 @@ def update_patient_view(request, pk):
 @login_required(login_url='/login')
 def list_gyno_view(request):
     all_gyno = Gynecology.objects.all()
-    return render(request, 'gyno/list-gyno.html',  context={'page_title':'أمراض النسا','all_gyno':all_gyno})
+    gyno_formset = GynecologyForm()
+    if request.method == 'POST':
+        gyno_formset = GynecologyForm(request.POST)
+        if gyno_formset.is_valid():
+            gyno_obj = gyno_formset.save(commit=False)
+            # for x in gyno_obj:
+            gyno_obj.created_by = request.user
+            gyno_obj.last_update_by = request.user
+            gyno_obj.save()
+            return redirect("patient:all-gynos")
+        else:
+            print(gyno_formset.errors)
+    gyno_context={
+             'page_title':_('GYN LIST'),
+             'page_title_gyno':_('GYN DIAGNOSIS'),
+             'all_gyno':all_gyno,
+             'gyno_form':gyno_formset,
+             }
+    return render(request, 'gyno/list-gyno.html', gyno_context)
 
 @login_required(login_url='/login')
 def create_gyno_view(request):
@@ -162,8 +181,10 @@ def create_gyno_view(request):
             gyno_obj.last_update_by = request.user
             gyno_obj.save()
             return redirect("patient:create-gyno")
+        else:
+            print(gyno_formset.errors)
     gynoContext = {
-                     'page_title':'تشخيص امراض النسا',
+                     'page_title_gyno':_('تشخيص امراض النسا'),
                      'gyno_form':gyno_formset,
     }
     return render(request, 'gyno/create-gyno.html', gynoContext)
@@ -181,7 +202,7 @@ def update_gyno_view(request, pk):
             gyno_obj.last_update_by = request.user
             gyno_obj.save()
     gynoContext = {
-                     'page_title':'تعديل {}'.format(required_gyno.diagnosis_en),
+                     'page_title':_('EDIT {}').format(required_gyno.diagnosis_en),
                      'gyno_form':gyno_form,
     }
     return render(request, 'gyno/create-gyno.html', gynoContext)
@@ -189,7 +210,7 @@ def update_gyno_view(request, pk):
 @login_required(login_url='/login')
 def list_delivery_view(request, pk):
     patient_delivery = Delivery.objects.filter(patient=pk)
-    return render(request, 'delivery/list-delivery.html', context={'page_title':'بيانات الولادة','patient_delivery':patient_delivery})
+    return render(request, 'delivery/list-delivery.html', context={'page_title':_('DELIVERY INFORMATIONS'),'patient_delivery':patient_delivery})
 
 @login_required(login_url='/login')
 def create_delivery_view(request, pk):
@@ -209,7 +230,7 @@ def create_delivery_view(request, pk):
             if delivery_form.errors:
                 messages.error(request, patient_form.errors)
     delivery_context = {
-                         'page_title':'شاشة الولادة الرئيسية',
+                         'page_title':_('DELIVERY MAIN PAGE'),
                          'patient_id':pk,
                          'delivery_form':delivery_form,
                          'patient_delivery':patient_delivery,
@@ -233,7 +254,7 @@ def update_delivery_view(request, pk, patient_id):
             delivery_obj.save()
         delivery_form = DeliveryForm()
     delivery_context = {
-                        'page_title':'تعديل بيانات الولادة للمريضة {}'.format(required_patient),
+                        'page_title':_('EDIT DELIVERY INFORMATIONS FOR  {}').format(required_patient),
                         'patient_id':patient_id,
                          'delivery_form':delivery_form,
                          'patient_delivery':patient_delivery,
@@ -255,14 +276,14 @@ def create_list_check_up_view(request, patient_id):
             master_obj.last_update_by = request.user
             master_obj.save()
     checkContext = {
-                    'page_title':'شاشة المتابعة',
+                    'page_title':_('FOLLOW UP PAGE'),
                     'patient_id':patient_id,
                     'list_checkups':list_checkups,
                     'check_up_form':check_up_form,
     }
     return render(request, 'check-up/create-check-up.html', checkContext)
 
-
+@login_required(login_url='/login')
 def ultrasound_create_view(request, check_id, patient_id):
     us_form = Ultrasound_Form()
     required_check = Check_Up.objects.get(id =check_id)
@@ -275,12 +296,12 @@ def ultrasound_create_view(request, check_id, patient_id):
             us_object.created_by = request.user
             us_object.last_update_by = request.user
             us_object.save()
-            messages.success(request, 'تـــم التسجيل بنجــاح')
+            messages.success(request, _('SAVED SUCCESSFULLY'))
             return redirect('patient:all-checkup', patient_id=patient_id)
         else:
             messages.error(request, us_form.errors)
     ultraSoundContext = {
-                         'page_title':'تسجيل قراءة السونار للمتابعة {}'.format(required_check),
+                         'page_title':_('ULTRASOUND READINGS FOR {}').format(required_check),
                          'patient_id':patient_id,
                          'us_form':us_form,
                          'list_us':list_us,
@@ -294,7 +315,7 @@ def view_list_check_up_view(request, chk_id, patient_id):
     required_checkup = get_object_or_404(Check_Up,patient=patient_id, id=chk_id)
     check_up_form = Check_Up_Form(form_type='view', instance=required_checkup)
     checkContext = {
-                    'page_title':'بيانات متابعة الاسبوع {}'.format(chk_id),
+                    'page_title':_('FOLLOW UP WEEK {}').format(chk_id),
                     'patient_id':patient_id,
                     'list_patient_med':list_patient_med,
                     'check_up_form':check_up_form,
@@ -315,10 +336,10 @@ def update_list_check_up_view(request, chk_id, pk):
             # master_obj.created_by = request.user
             master_obj.last_update_by = request.user
             master_obj.save()
-            messages.success(request, 'تـــم التسجيل بنجــاح')
+            messages.success(request, _('SAVED SUCCESSFULLY'))
             check_up_form = Check_Up_Form(form_type='update',)
     checkContext = {
-                    'page_title':'تعديل بيانات متابعة المريضة {}'.format(required_patient),
+                    'page_title':_('EDIT FOLLOW UP FOR {}').format(required_patient),
                     'patient_id':pk,
                     'list_checkups':list_checkups,
                     'check_up_form':check_up_form,
@@ -338,10 +359,10 @@ def create_patient_medicine_view(request, patient_id, chk_id):
                 x.created_by = request.user
                 x.last_update_by = request.user
                 x.save()
-                messages.success(request, 'تـــم التسجيل بنجــاح')
+                messages.success(request, _('SAVED SUCCESSFULLY'))
 
     medContext = {
-                    'page_title':'صرف ادوية ',
+                    'page_title':_('DISPENSING MEDICINES'),
                     'patient_id':required_patient,
                     'patient_med':patient_med,
     }
@@ -354,7 +375,7 @@ def update_patient_medicine_view(request, patient_id, chk_id):
     patient_med = Patient_Medicine_formset(queryset=Patient_Medicine.objects.filter(check_up=chk_id))
     required_patient = Patient.objects.get(id = patient_id)
     medContext = {
-                    'page_title':'تعديل بيانات المتابعة {}'.format(required_checkup),
+                    'page_title':_('EDIT MEDICINES FOR {}').format(required_checkup),
                     'patient_id':required_patient,
                     'patient_med':patient_med,
                     'check_up_form': check_up_form,
@@ -366,7 +387,7 @@ def update_patient_medicine_view(request, patient_id, chk_id):
 def list_patient_consultant_view(request):
     all_patients = Patient.objects.filter(transferred_from ='consultant')
     consultantContext={
-                       'page_title':'متابعة الاستشاري',
+                       'page_title':_('CONSULTANT PATIENTS LIST'),
                        'all_patients':all_patients,
     }
     return render(request, 'consultant/list-patient.html', consultantContext)
@@ -384,10 +405,10 @@ def create_patient_days_off_view(request, patient_id):
                 x.created_by = request.user
                 x.last_update_by = request.user
                 x.save()
-                messages.success(request, 'تـــم التسجيل بنجــاح')
+                messages.success(request, _('SAVED SUCCESSFULLY'))
 
     offContext = {
-                  'page_title':' تسجيل اجازات لـ {}'.format(required_patient),
+                  'page_title':_('DAYS OFF FOR PATIENT {}').format(required_patient),
                   'days_formset':days_formset,
                   'patient_id':patient_id,
     }
@@ -406,10 +427,10 @@ def create_diabetes_view(request, patient_id):
             diabete_obj.created_by = request.user
             diabete_obj.last_update_by = request.user
             diabete_obj.save()
-            messages.success(request, 'تـــم التسجيل بنجــاح')
+            messages.success(request, _('SAVED SUCCESSFULLY'))
             return redirect('patient:create-diabetes', patient_id=patient_id)
     diabeteContext = {
-                  'page_title':'تسجيل قرءات السكر و الضغط للمريضة {}'.format(required_patient),
+                  'page_title':_('BLOOD SUGAR & PRESSURE READINGS FOR PATIENT {}').format(required_patient),
                  'required_patient':required_patient,
                  'list_diabetes':list_diabetes,
                  'diabete_form':diabete_form

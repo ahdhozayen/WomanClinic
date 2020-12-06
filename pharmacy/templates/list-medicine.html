@@ -2,49 +2,91 @@
 {% load static %}
 {% load i18n %}
 {% load l10n %}
+
 {% block body %}
+<div class="container-fluid">
 
-<div class="col-xl-12">
-  <p>
-    <a href="{% url 'pharmacy:create-medicine' %}" class="btn btn-s-md btn-success">{% trans "تسجيل دواء جديد" %}</a>
-  </p>
-  <div class="card">
-    <div class="card-header"><strong>{{ page_title }}</strong>
-
+  <!-- Title -->
+  <div class="row heading-bg">
+    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+      <h5 class="txt-dark">{{ page_title }}</h5>
     </div>
-    <!-- /.card-header -->
-    <div class="card-body">
-      <a href="{% url 'pharmacy:create-medicine' %}" class="btn btn-success">Create a New Medicine</a>
-      <div class="table-responsive">
-        <table class="table table-striped table-bordered table-hover">
-          <thead>
-            <tr role="row">
-              <th></th>
-              <th>الاسم العلمي</th>
-              <th>الاسم التجاري</th>
-              <th>البديل الاول</th>
-              <th>البديل الثاني</th>
-              <th></th>
-            </tr>
-          </thead>
 
-          <tbody>
-            {% for medicine in all_medicines %}
-            <tr>
-              <th scope="row">{{ forloop.counter }}</th>
-              <td>{{medicine.scientific_name}}</td>
-              <td>{{medicine.trade_name}}</td>
-              <td>{{medicine.alternate1}}</td>
-              <td>{{medicine.alternate2}}</td>
-              <td><a href="{% url 'pharmacy:update-medicine' pk=medicine.id %}">{% trans "تعديل" %}</a></td>
-            </tr>
-            {% endfor %}
-        </table>
-      </div>
-      <!-- /.table-responsive -->
-    </div>
-    <!-- /.card-body -->
   </div>
-  <!-- /.panel -->
+  <!-- /Title -->
+
+  <!-- Row -->
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="panel panel-default card-view">
+        <div class="panel-heading">
+          <div class="pull-left">
+            <h6 class="panel-title txt-dark"></h6>
+          </div>
+          <div class="pull-right">
+            <a href="{% url 'pharmacy:create-medicine' %}" class="btn btn-primary btn-anim">
+              <i class="fa fa-wpforms"></i>
+              <span class="btn-text">{% trans 'Add New Medicine' %}</span>
+            </a>
+          </div>
+          <div class="clearfix"></div>
+        </div>
+        <div class="panel-wrapper collapse in">
+          <div class="panel-body">
+            <div class="table-wrap">
+              <div class="table-responsive">
+                <div id="datable_1_wrapper" class="dataTables_wrapper">
+                  <table id="listPatientsTbl" class="table table-hover display  pb-30 dataTable">
+                    <thead>
+                      <tr role="row">
+                        <th>{% trans 'Scientific name' %}</th>
+                        <th>{% trans 'Trade name' %}</th>
+                        <th>{% trans 'Alternate1' %}</th>
+                        <th>{% trans 'Alternate2' %}</th>
+                        <th>{% trans 'Action' %}</th>
+                      </tr>
+                    </thead>
+                    <tfoot>
+                      <tr>
+                        <th>{% trans 'Scientific name' %}</th>
+                        <th>{% trans 'Trade name' %}</th>
+                        <th>{% trans 'Alternate1' %}</th>
+                        <th>{% trans 'Alternate2' %}</th>
+                        <th>{% trans 'Action' %}</th>
+                      </tr>
+                    </tfoot>
+                    <tbody>
+                      {% for medicine in all_medicines %}
+                      <tr>
+                        <td>{{medicine.scientific_name}}</td>
+                        <td>{{medicine.trade_name}}</td>
+                        <td>{{medicine.alternate1}}</td>
+                        <td>{{medicine.alternate2}}</td>
+                        <td class="text-nowrap">
+                          <a href="{% url 'pharmacy:update-medicine' pk=medicine.id %}" class="mr-25" data-toggle="tooltip" data-original-title="Edit">
+                            <i class="fa fa-pencil text-inverse m-r-10"></i>
+                          </a>
+                        </td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /Row -->
+
 </div>
 {% endblock body %}
+{% block js %}
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#listPatientsTbl').DataTable();
+  });
+</script>
+{% endblock js %}

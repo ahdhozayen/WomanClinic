@@ -1,0 +1,96 @@
+{% extends 'master.html' %}
+{% load static %}
+
+{% block body %}
+<div class="container-fluid">
+
+  <!-- Title -->
+  <div class="row heading-bg">
+    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+      <h5 class="txt-dark">All Patients</h5>
+    </div>
+    
+  </div>
+  <!-- /Title -->
+
+  <!-- Row -->
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="panel panel-default card-view">
+        <div class="panel-heading">
+          <div class="pull-left">
+            <h6 class="panel-title txt-dark">Patients List</h6>
+          </div>
+          <div class="pull-right">
+            <a href="{% url 'patient:create-patient' %}" class="btn btn-primary btn-anim">
+              <i class="fa fa-wpforms"></i>
+              <span class="btn-text">Add New Patient</span>
+            </a>
+          </div>
+          <div class="clearfix"></div>
+        </div>
+        <div class="panel-wrapper collapse in">
+          <div class="panel-body">
+            <div class="table-wrap">
+              <div class="table-responsive">
+                <div id="datable_1_wrapper" class="dataTables_wrapper">
+                  <table id="listPatientsTbl" class="table table-hover display  pb-30 dataTable">
+                    <thead>
+                      <tr role="row">
+                        <th>Name</th>
+                        <th>Phone</th>
+                        <th>Mobile</th>
+                        <th>Date Of Birth</th>
+                        <th>Husband Name</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tfoot>
+                      <tr>
+                        <th>Name</th>
+                        <th>Phone</th>
+                        <th>Mobile</th>
+                        <th>Date Of Birth</th>
+                        <th>Husband Name</th>
+                        <th>Actions</th>
+                      </tr>
+                    </tfoot>
+                    <tbody>
+                      {% for patient in patients_list %}
+                      <tr>
+                        <td>{{patient.name}}</td>
+                        <td>{{patient.phone}}</td>
+                        <td>{{patient.mobile}}</td>
+                        <td>{{patient.date_of_birth}}</td>
+                        <td>{{patient.husband_name}}</td>
+                        <td class="text-nowrap">
+                          <a href="#" class="mr-25" data-toggle="tooltip" data-original-title="Edit">
+                            <i class="fa fa-pencil text-inverse m-r-10"></i>
+                          </a>
+                          <a href="#" data-toggle="tooltip" data-original-title="Close">
+                              <i class="fa fa-close text-danger"></i>
+                          </a>
+                        </td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /Row -->
+
+</div>
+{% endblock body %}
+{% block js %}
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#listPatientsTbl').DataTable();
+  });
+</script>
+{% endblock js %}

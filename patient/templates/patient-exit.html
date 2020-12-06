@@ -1,0 +1,94 @@
+{% extends 'master.html'%}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load i18n %}
+{% load l10n %}
+
+{% block body %}
+<div class="container-fluid">
+  <!-- Title -->
+  <div class="row heading-bg">
+    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+      <h5 class="txt-dark">{{ page_title }}</h5>
+    </div>
+  </div>
+  <!-- /Title -->
+
+  <!-- Row -->
+  <form id="my_form" method="POST" enctype="multipart/form-data" class="form-horizontal">
+    {% csrf_token %}
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="panel panel-default card-view">
+          <div class="panel-heading">
+            <div class="pull-left">
+              <h6 class="panel-title txt-dark">{% trans "Patient Exits Form" %}</h6>
+            </div>
+            <div class="pull-right">
+
+            </div>
+            <div class="clearfix"></div>
+          </div>
+          <div class="panel-wrapper collapse in">
+            <div class="panel-body">
+              <div class="form-wrap">
+
+                <div class="form-group">
+                  <label class="control-label col-sm-1" >{{patient_form.name.label }}</label>
+                  <div class="col-sm-5">
+                    {{patient_form.name}}
+                  </div>
+                  <label class="control-label col-sm-1" >{{patient_form.address.label }}</label>
+                  <div class="col-sm-5">
+                    {{patient_form.address}}
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="control-label col-sm-1" >{{patient_form.job.label }}</label>
+                  <div class="col-sm-2">
+                    {{patient_form.job}}
+                  </div>
+                  <label class="control-label col-sm-1" >{{patient_form.phone.label }}</label>
+                  <div class="col-sm-2">
+                    {{patient_form.phone}}
+                  </div>
+                  <label class="control-label col-sm-1">{{patient_form.mobile.label }}</label>
+                  <div class="col-sm-2">
+                    {{patient_form.mobile}}
+                  </div>
+                  <label class="control-label col-sm-1">{{patient_form.date_of_birth.label }}</label>
+                  <div class="col-sm-2">
+                    {{patient_form.date_of_birth}}
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="control-label col-sm-1" >{{patient_form.exit_date.label }}</label>
+                  <div class="col-sm-2">
+                    {{patient_form.exit_date}}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pull-right">
+      <a href="{% url 'patient:create-patient' %}" class="btn btn-info btn-anim">
+        <i class="fa fa-arrow-circle-left"></i><span class="btn-text">{% trans "Clear" %}</span>
+      </a>
+      <button type="submit" class="btn btn-success btn-anim">
+        <i class="fa fa-arrow-circle-left"></i><span class="btn-text">{% trans "Save" %}</span>
+      </button>
+      <a href="{% url 'patient:all-patients' %}" class="btn btn-default btn-anim">
+        <i class="fa fa-arrow-circle-left"></i><span class="btn-text">{% trans "Back to list" %}</span>
+      </a>
+    </div>
+  </form>
+  <!-- /Row -->
+</div>
+
+{% endblock body %}

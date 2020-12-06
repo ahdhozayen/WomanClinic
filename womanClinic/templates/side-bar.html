@@ -1,0 +1,86 @@
+{% load static %}
+{% load i18n %}
+{% load l10n %}
+
+<ul class="nav navbar-nav side-nav nicescroll-bar">
+  <li class="navigation-header">
+    <span>{% trans 'Main'%}</span>
+    <i class="zmdi zmdi-more"></i>
+  </li>
+  <li>
+    <a href="{% url 'report:rep-dashboard' %}">
+      <div class="pull-left"><i class="zmdi zmdi-landscape mr-20"></i><span class="right-nav-text">{% trans 'Dashboard'%}</span></div>
+      <div class="clearfix"></div>
+    </a>
+  </li>
+
+
+
+  <li>
+    <hr class="light-grey-hr mb-10" />
+  </li>
+
+  <li class="navigation-header">
+    <span>{% trans 'Setup & main Pages'%}</span>
+    <i class="zmdi zmdi-more"></i>
+  </li>
+  <li>
+    <a href="javascript:void(0);" data-toggle="collapse" data-target="#ui_dr">
+      <div class="pull-left"><i class="zmdi zmdi-smartphone-setup mr-20"></i><span class="right-nav-text">{% trans 'Setup & main Pages'%}</span></div>
+      <div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div>
+      <div class="clearfix"></div>
+    </a>
+    <ul id="ui_dr" class="collapse collapse-level-1 two-col-list">
+      <li>
+        <a href="{% url 'patient:all-patients'%}">{% trans 'Patients' %}</a>
+      </li>
+      <li>
+        <a href="{% url 'pharmacy:all-medicines'%}">{% trans 'Medicines' %}</a>
+      </li>
+      <li>
+        <a href="{% url 'patient:all-gynos'%}">{% trans 'GYNOS Dygnosis' %}</a>
+      </li>
+      <li>
+        <a href="{% url 'surgery:list-surgery-types'%}">{% trans 'Surgeries' %}</a>
+      </li>
+      <li>
+        <a href="{% url 'surgery:list-surgery-doctors'%}">{% trans 'Surgery Doctors' %}</a>
+      </li>
+    </ul>
+  </li>
+
+
+  <li class="navigation-header">
+    <span>{% trans 'Follow Up' %}</span>
+    <i class="zmdi zmdi-more"></i>
+  </li>
+
+  <li>
+    <a href="javascript:void(0);" data-toggle="collapse" data-target="#follow_up">
+      <div class="pull-left"><i class="zmdi zmdi-smartphone-setup mr-20"></i><span class="right-nav-text">{% trans 'Follow Up' %}</span></div>
+      <div class="pull-right"><i class="zmdi zmdi-caret-down"></i></div>
+      <div class="clearfix"></div>
+    </a>
+    <ul id="follow_up" class="collapse collapse-level-1 two-col-list">
+      <li>
+        <a href="{% url 'patient:all-patients'%}">{% trans 'General Follow Up' %}</a>
+      </li>
+      <li>
+        <a href="{% url 'patient:all-con-patients'%}">{% trans 'Consultant Follow Up' %}</a>
+      </li>
+    </ul>
+  </li>
+
+
+
+  <li>
+    <a href="{% url 'report:rep-dashboard' %}">
+      <div class="pull-left"><i class="zmdi zmdi-edit mr-20"></i><span class="right-nav-text">{% trans 'Reports'%}</span></div>
+      <div class="clearfix"></div>
+    </a>
+  </li>
+
+  <li>
+    <hr class="light-grey-hr mb-10" />
+  </li>
+</ul>

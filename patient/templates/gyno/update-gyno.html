@@ -7,14 +7,13 @@
 
 <form id="my_form" method="POST" enctype="multipart/form-data">
   {% csrf_token %}
-  {% include 'messages.html' %}
 
   <section class="panel panel-default">
     <div class="panel-body">
       <header class="panel-heading font-bold pull-left">{{ page_title }}</header>
       <div class="doc-buttons pull-right">
         <button type="submit" class="btn btn-s-md btn-success">حفظ</button>
-        <a href="{% url 'patient:all-gynos' %}" class="btn btn-s-md btn-default">{% trans "الغاء" %}</a>
+        <a href="{% url 'patient:all-gynos' %}" class="btn btn-s-md btn-default">{% trans "Cancel" %}</a>
       </div>
     </div>
   </section>

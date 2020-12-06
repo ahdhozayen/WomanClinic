@@ -51,7 +51,7 @@ def user_login(request):
 
 @login_required(login_url='/login')
 def homepage(request):
-    return render(request, 'index.html', context=None)
+    return redirect('report:rep-dashboard')
 
 
 @login_required(login_url='/login')

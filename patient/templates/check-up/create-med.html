@@ -3,55 +3,77 @@
 {% load crispy_forms_tags %}
 {% load i18n %}
 {% load l10n %}
+
 {% block body %}
 
-<div class="col-xl-12">
-  <form id="my_form" method="POST" enctype="multipart/form-data">
+<div class="container-fluid">
+  <!-- Title -->
+  <div class="row heading-bg">
+    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+      <h5 class="txt-dark">{{ page_title }}</h5>
+    </div>
+  </div>
+  <!-- /Title -->
+
+  <!-- Row -->
+  <form id="my_form" method="POST"class="form-horizontal">
     {% csrf_token %}
-    {% include 'messages.html' %}
-    <p>
-      <button type="submit" class="btn btn-success">حفظ</button>
-      <a href="{% url 'patient:all-checkup' patient_id=patient_id.id %}" class="btn btn-secondary">{% trans "الغاء" %}</a>
-    </p>
-    <div class="card">
-      <div class="card-header">{{ page_title }}</div>
-      <div class="card-body">
-        <div class="table-responsive table-bordered">
-          <table class="table" style="width: 100%;" width="100%">
-            {{ patient_med.management_form }}
-            {% for form in patient_med %}
-            {{ form.id }}
-            {% if forloop.first %}
-            <thead style="background-color: #89acbdb3;">
-              <tr>
-                {% for field in form.visible_fields %}
-                <th style="text-align: center;">{{ field.label|capfirst }}</th>
-                {% endfor %}
-              </tr>
-            </thead>
-            {% endif %}
-            <tr>
-              {% for field in form.visible_fields %}
-              <td>
-                {# exclude the hidden fields in the form #}
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="panel panel-default card-view">
+          <div class="panel-heading">
+            <div class="pull-left">
+              <h6 class="panel-title txt-dark"></h6>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+          <div class="panel-wrapper collapse in">
+            <div class="panel-body">
+              <table class="table" id="dataTable">
+                {{ patient_med.management_form }}
+                {% for form in patient_med %}
+                {{ form.id }}
                 {% if forloop.first %}
-                {% for hidden in form.hidden_fields %}
-                {{ hidden }}
-                {% endfor %}
+                <thead>
+                  <tr>
+                    {% for field in form.visible_fields %}
+                    <th style="text-align:center;">{{ field.label|capfirst }}</th>
+                    {% endfor %}
+                  </tr>
+                </thead>
                 {% endif %}
-                {{ field.errors.as_ul }}
-                {{ field|as_crispy_field }}
-              </td>
-              {% endfor %}
-            </tr>
-            {% endfor %}
-          </table>
+                <tr>
+                  {% for field in form.visible_fields %}
+                  <td>
+                    {# exclude the hidden fields in the form #}
+                    {% if forloop.first %}
+                    {% for hidden in form.hidden_fields %}
+                    {{ hidden }}
+                    {% endfor %}
+                    {% endif %}
+                    {{ field.errors.as_ul }}
+                    {{ field }}
+                  </td>
+                  {% endfor %}
+                </tr>
+                {% endfor %}
+              </table>
+            </div>
+          </div>
         </div>
       </div>
-      <!-- /.card-body -->
     </div>
-    <!-- /.panel -->
+    <div class="pull-right">
+      <button type="submit" class="btn btn-success btn-anim">
+        <i class="fa fa-arrow-circle-left"></i><span class="btn-text">{% trans "Save" %}</span>
+      </button>
+      <a href="{% url 'patient:all-checkup' patient_id=patient_id.id %}" class="btn btn-default btn-anim">
+        <i class="fa fa-arrow-circle-left"></i><span class="btn-text">{% trans "Back to list" %}</span>
+      </a>
+    </div>
   </form>
+  <!-- /Row -->
 </div>
+
 
 {% endblock body %}
