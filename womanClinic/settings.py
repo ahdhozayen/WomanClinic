@@ -1,3 +1,4 @@
+import django_heroku
 import os
 from django.utils.translation import ugettext_lazy as _
 
@@ -161,3 +162,6 @@ EXPLORER_DEFAULT_CONNECTION = 'default'
 
 
 AUTH_USER_MODEL = 'custom_user.User'
+
+# Activate Django-Heroku.
+django_heroku.settings(locals())
