@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-23 15:40+0200\n"
+"POT-Creation-Date: 2021-02-26 17:59+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -28,22 +28,16 @@ msgid "Medical Insurance"
 msgstr ""
 
 #: .\patient\models.py:9
-#, fuzzy
-#| msgid "Consultant Follow Up"
 msgid "Consultant Doctor"
-msgstr "متابعة الاستشاري"
+msgstr "دكتور الأستشاري"
 
 #: .\patient\models.py:10
-#, fuzzy
-#| msgid "Resident Doctor"
 msgid "Outside Doctor"
-msgstr "الطبيب المقيم"
+msgstr "دكتور خارجي"
 
 #: .\patient\models.py:10
-#, fuzzy
-#| msgid "Patient Fiels"
 msgid "Patient himself"
-msgstr "ملفات المريضة"
+msgstr "بواسطة المريض نفسه"
 
 #: .\patient\models.py:11 .\surgery\models.py:35
 msgid "Hospital"
@@ -150,18 +144,16 @@ msgid "Check up"
 msgstr ""
 
 #: .\patient\models.py:33
-#, fuzzy
-#| msgid "Consultant Follow Up"
 msgid "Consultant"
 msgstr "متابعة الاستشاري"
 
 #: .\patient\models.py:33
 msgid "GYN operations"
-msgstr ""
+msgstr "عمليات النسا"
 
 #: .\patient\models.py:33 .\patient\templates\check-up\list-check-up.html:31
 msgid "Delivery"
-msgstr ""
+msgstr "الولادات"
 
 #: .\patient\models.py:34
 msgid "Patient Type"
@@ -341,7 +333,7 @@ msgstr ""
 
 #: .\patient\models.py:101
 msgid "History Of Blood Transfusion"
-msgstr ""
+msgstr "التاريخ الطبي لنقل الدم"
 
 #: .\patient\models.py:102
 msgid "History Of Blood Transfusion Value"
@@ -355,7 +347,7 @@ msgstr "اخري"
 msgid "File Name"
 msgstr "اسم املف"
 
-#: .\patient\models.py:119 .\patient\templates\view-patient.html:302
+#: .\patient\models.py:119 .\patient\templates\view-patient.html:299
 msgid "Attachment"
 msgstr "مرفقات"
 
@@ -433,13 +425,13 @@ msgid "Week Number"
 msgstr "الاسبوع رقم"
 
 #: .\patient\models.py:165
-#: .\patient\templates\check-up\create-check-up.html:170
+#: .\patient\templates\check-up\create-check-up.html:173
 #: .\patient\templates\check-up\create-ultrasound.html:80
 msgid "Complain"
 msgstr "الشكوي"
 
 #: .\patient\models.py:166 .\patient\models.py:246
-#: .\patient\templates\check-up\create-check-up.html:171
+#: .\patient\templates\check-up\create-check-up.html:174
 msgid "Visit date"
 msgstr "تاريخ الزيارة"
 
@@ -452,7 +444,7 @@ msgid "Blood presure"
 msgstr "سكر الدم"
 
 #: .\patient\models.py:169
-#: .\patient\templates\check-up\create-check-up.html:172
+#: .\patient\templates\check-up\create-check-up.html:175
 msgid "Protine"
 msgstr "البروتين"
 
@@ -489,7 +481,7 @@ msgid "Weight"
 msgstr "الوزن"
 
 #: .\patient\models.py:180
-#: .\patient\templates\check-up\create-check-up.html:175 .\surgery\models.py:64
+#: .\patient\templates\check-up\create-check-up.html:178 .\surgery\models.py:64
 msgid "Surgery"
 msgstr "الجراحة"
 
@@ -571,42 +563,39 @@ msgstr "درجة الحرارة"
 msgid "reading date"
 msgstr "تاريخ القراءة"
 
-#: .\patient\templates\check-up\create-check-up.html:149
+#: .\patient\templates\check-up\create-check-up.html:24
 #: .\patient\templates\check-up\create-med.html:68
 #: .\patient\templates\check-up\create-ultrasound.html:59
-#: .\patient\templates\create-days-off.html:68
+#: .\patient\templates\create-days-off.html:24
 #: .\patient\templates\create-patient.html:334
-#: .\patient\templates\delivery\create-delivery.html:89
-#: .\patient\templates\diabetes.html:71
+#: .\patient\templates\delivery\create-delivery.html:24
+#: .\patient\templates\diabetes.html:24
+#: .\patient\templates\gyno\update-gyno.html:24
 #: .\patient\templates\patient-exit.html:84
-#: .\pharmacy\templates\create-medicine.html:68
+#: .\pharmacy\templates\create-medicine.html:24
+#: .\pharmacy\templates\update-medicine.html:24
 #: .\surgery\templates\create-doctor.html:71
-#: .\surgery\templates\create-patient-surgery.html:82
+#: .\surgery\templates\create-patient-surgery.html:25
 #: .\surgery\templates\create-surgery.html:72
 msgid "Save"
 msgstr "حفظ"
 
-#: .\patient\templates\check-up\create-check-up.html:152
-#: .\patient\templates\check-up\create-med.html:71
-#: .\patient\templates\create-days-off.html:71
-#: .\patient\templates\create-patient.html:337
-#: .\patient\templates\delivery\create-delivery.html:92
-#: .\patient\templates\patient-exit.html:87
-#: .\pharmacy\templates\create-medicine.html:71
-#: .\surgery\templates\create-doctor.html:74
-#: .\surgery\templates\create-patient-surgery.html:85
-#: .\surgery\templates\create-surgery.html:75
-msgid "Back to list"
-msgstr "الرجوع الي القائمة"
+#: .\patient\templates\check-up\create-check-up.html:27
+#: .\patient\templates\create-days-off.html:27
+#: .\patient\templates\delivery\create-delivery.html:27
+#: .\patient\templates\diabetes.html:27
+#: .\surgery\templates\create-patient-surgery.html:28
+msgid "Back to patient"
+msgstr "الرجوع لبيانات المريضة"
 
-#: .\patient\templates\check-up\create-check-up.html:168
+#: .\patient\templates\check-up\create-check-up.html:171
 #: .\patient\templates\check-up\create-ultrasound.html:78
 #: .\patient\templates\check-up\list-check-up.html:28
-#: .\patient\templates\delivery\create-delivery.html:108
+#: .\patient\templates\delivery\create-delivery.html:111
 #: .\patient\templates\delivery\list-delivery.html:28
-#: .\patient\templates\diabetes.html:90
+#: .\patient\templates\diabetes.html:93
 #: .\surgery\templates\create-doctor.html:40
-#: .\surgery\templates\create-patient-surgery.html:101
+#: .\surgery\templates\create-patient-surgery.html:103
 #: .\surgery\templates\list-doctors.html:44
 #: .\surgery\templates\list-doctors.html:51
 #: .\surgery\templates\list-surgery.html:45
@@ -614,33 +603,33 @@ msgstr "الرجوع الي القائمة"
 msgid "#"
 msgstr "#"
 
-#: .\patient\templates\check-up\create-check-up.html:169
+#: .\patient\templates\check-up\create-check-up.html:172
 #: .\patient\templates\check-up\create-ultrasound.html:79
 msgid "Week number"
 msgstr "رقم الاسبوع"
 
-#: .\patient\templates\check-up\create-check-up.html:173
+#: .\patient\templates\check-up\create-check-up.html:176
 msgid "Exit nature"
 msgstr "طبيعة الخروج"
 
-#: .\patient\templates\check-up\create-check-up.html:174
+#: .\patient\templates\check-up\create-check-up.html:177
 msgid "Exit describtion"
 msgstr "توصيف الخروخ"
 
-#: .\patient\templates\check-up\create-check-up.html:176
-#: .\patient\templates\check-up\create-check-up.html:195
+#: .\patient\templates\check-up\create-check-up.html:179
+#: .\patient\templates\check-up\create-check-up.html:198
 msgid "Prescription"
 msgstr "الروشتة"
 
-#: .\patient\templates\check-up\create-check-up.html:177
+#: .\patient\templates\check-up\create-check-up.html:180
 #: .\patient\templates\check-up\list-check-up.html:39
-#: .\patient\templates\delivery\create-delivery.html:119
+#: .\patient\templates\delivery\create-delivery.html:122
 #: .\patient\templates\delivery\list-delivery.html:39
 #: .\patient\templates\gyno\list-gyno.html:45
 #: .\patient\templates\gyno\list-gyno.html:52
 #: .\pharmacy\templates\list-medicine.html:46
 #: .\pharmacy\templates\list-medicine.html:55
-#: .\surgery\templates\create-patient-surgery.html:109
+#: .\surgery\templates\create-patient-surgery.html:111
 #: .\surgery\templates\list-doctors.html:46
 #: .\surgery\templates\list-doctors.html:53
 #: .\surgery\templates\list-surgery.html:47
@@ -648,21 +637,29 @@ msgstr "الروشتة"
 msgid "Action"
 msgstr "اجراءات"
 
-#: .\patient\templates\check-up\create-check-up.html:184
+#: .\patient\templates\check-up\create-check-up.html:187
 msgid "Pregnancy week number "
 msgstr "اسبوع الحمل رقم "
 
-#: .\patient\templates\check-up\create-check-up.html:192
+#: .\patient\templates\check-up\create-check-up.html:195
 msgid "Ultrasound"
-msgstr ""
+msgstr "الســونار"
+
+#: .\patient\templates\check-up\create-med.html:71
+#: .\patient\templates\create-patient.html:337
+#: .\patient\templates\gyno\update-gyno.html:27
+#: .\patient\templates\patient-exit.html:87
+#: .\pharmacy\templates\create-medicine.html:27
+#: .\pharmacy\templates\update-medicine.html:27
+#: .\surgery\templates\create-doctor.html:74
+#: .\surgery\templates\create-surgery.html:75
+msgid "Back to list"
+msgstr "الرجوع الي القائمة"
 
 #: .\patient\templates\check-up\create-ultrasound.html:62
 #: .\patient\templates\check-up\update-check-up.html:13
 #: .\patient\templates\check-up\view-check-up.html:14
-#: .\patient\templates\diabetes.html:74
-#: .\patient\templates\gyno\update-gyno.html:16
 #: .\pharmacy\templates\create-medicine-form.html:13
-#: .\pharmacy\templates\update-medicine.html:11
 #: .\surgery\templates\create-after-surgery.html:14
 #: .\surgery\templates\update-surgery.html:16
 #: .\womanClinic\templates\top_nav.html:41
@@ -670,58 +667,54 @@ msgid "Cancel"
 msgstr "الغاء"
 
 #: .\patient\templates\check-up\list-check-up.html:29
-#, fuzzy
-#| msgid "Pregnancy week number "
 msgid "Pregnancy number"
-msgstr "اسبوع الحمل رقم "
+msgstr "الحمل رقم "
 
 #: .\patient\templates\check-up\list-check-up.html:30
-#, fuzzy
-#| msgid "Pregnancy week number "
 msgid "Pregnancy info"
-msgstr "اسبوع الحمل رقم "
+msgstr "بيانات الحمل"
 
 #: .\patient\templates\check-up\list-check-up.html:32
 msgid "Delivery hospital"
-msgstr ""
+msgstr "مستشفي الولادة"
 
 #: .\patient\templates\check-up\list-check-up.html:33
 msgid "Delivery date"
-msgstr ""
+msgstr "تاريخ الولادة"
 
 #: .\patient\templates\check-up\list-check-up.html:34
 msgid "Anesthesia"
-msgstr ""
+msgstr "التخدير"
 
 #: .\patient\templates\check-up\list-check-up.html:35
 msgid "Anesthesia doctor"
-msgstr ""
+msgstr "دكتور التخدير"
 
 #: .\patient\templates\check-up\list-check-up.html:36
-#: .\patient\templates\delivery\create-delivery.html:116
+#: .\patient\templates\delivery\create-delivery.html:119
 #: .\patient\templates\delivery\list-delivery.html:36
 msgid "abo rh"
 msgstr "abo rh"
 
 #: .\patient\templates\check-up\list-check-up.html:37
-#: .\patient\templates\delivery\create-delivery.html:117
+#: .\patient\templates\delivery\create-delivery.html:120
 #: .\patient\templates\delivery\list-delivery.html:37
 msgid "fetal sex"
 msgstr "نوع الجنين"
 
 #: .\patient\templates\check-up\list-check-up.html:38
-#: .\patient\templates\delivery\create-delivery.html:118
+#: .\patient\templates\delivery\create-delivery.html:121
 #: .\patient\templates\delivery\list-delivery.html:38
 msgid "lnmp"
 msgstr "lnmp"
 
 #: .\patient\templates\check-up\list-check-up.html:47
 msgid "Caesarean"
-msgstr ""
+msgstr "قيصري"
 
 #: .\patient\templates\check-up\list-check-up.html:47
 msgid "Normal"
-msgstr ""
+msgstr "طبيعي"
 
 #: .\patient\templates\consultant\list-patient.html:41
 #: .\patient\templates\consultant\list-patient.html:49
@@ -759,72 +752,71 @@ msgid "Patient Informations Form"
 msgstr "شاشة بيانات المريضة"
 
 #: .\patient\templates\create-patient.html:142
-#: .\patient\templates\view-patient.html:145
+#: .\patient\templates\view-patient.html:142
 msgid "Patient medical history"
 msgstr "التاريخ الطبي للمريضة"
 
 #: .\patient\templates\create-patient.html:288
-#: .\patient\templates\view-patient.html:291
+#: .\patient\templates\view-patient.html:288
 msgid "Patient Fiels"
 msgstr "ملفات المريضة"
 
 #: .\patient\templates\create-patient.html:331
-#: .\patient\templates\patient-exit.html:81
-msgid "Clear"
-msgstr "مسح"
+msgid "Save & Clear Form"
+msgstr "الحفظ و مسح البيانات"
 
-#: .\patient\templates\delivery\create-delivery.html:109
+#: .\patient\templates\delivery\create-delivery.html:112
 #: .\patient\templates\delivery\list-delivery.html:29
 msgid "ترتيب الحمل"
 msgstr ""
 
-#: .\patient\templates\delivery\create-delivery.html:110
+#: .\patient\templates\delivery\create-delivery.html:113
 #: .\patient\templates\delivery\list-delivery.html:30
 msgid "بيانات الحمل"
 msgstr ""
 
-#: .\patient\templates\delivery\create-delivery.html:111
+#: .\patient\templates\delivery\create-delivery.html:114
 #: .\patient\templates\delivery\list-delivery.html:31
 msgid "نوع الولادة"
 msgstr ""
 
-#: .\patient\templates\delivery\create-delivery.html:112
+#: .\patient\templates\delivery\create-delivery.html:115
 #: .\patient\templates\delivery\list-delivery.html:32
 msgid "مكان الولادة"
 msgstr ""
 
-#: .\patient\templates\delivery\create-delivery.html:113
+#: .\patient\templates\delivery\create-delivery.html:116
 #: .\patient\templates\delivery\list-delivery.html:33
 msgid "تاريخ الولادة"
 msgstr ""
 
-#: .\patient\templates\delivery\create-delivery.html:114
+#: .\patient\templates\delivery\create-delivery.html:117
 #: .\patient\templates\delivery\list-delivery.html:34
 msgid "نوع التخدير"
 msgstr ""
 
-#: .\patient\templates\delivery\create-delivery.html:115
+#: .\patient\templates\delivery\create-delivery.html:118
 #: .\patient\templates\delivery\list-delivery.html:35
 msgid "دكتور التخدير"
 msgstr ""
 
-#: .\patient\templates\diabetes.html:91
+#: .\patient\templates\diabetes.html:94
 msgid "Reading date"
 msgstr "تاريخ القراءة"
 
-#: .\patient\templates\diabetes.html:92
+#: .\patient\templates\diabetes.html:95
 msgid "Blood Sugar"
 msgstr "قراءة سكر الدم"
 
-#: .\patient\templates\diabetes.html:93
+#: .\patient\templates\diabetes.html:96
 msgid "Blood pressure up"
 msgstr "ضغط الدم / اعلي"
 
-#: .\patient\templates\diabetes.html:94
+#: .\patient\templates\diabetes.html:97
 msgid "Blood pressure down"
 msgstr "ضغط الدم / اسفل"
 
-#: .\patient\templates\diabetes.html:95
+#: .\patient\templates\diabetes.html:98
 msgid "Temperature"
 msgstr "درجة الحرارة"
 
@@ -833,15 +825,20 @@ msgid "Add New Diagnosis"
 msgstr "اضافة تشخيص جديد"
 
 #: .\patient\templates\gyno\list-gyno.html:90
-#: .\patient\templates\view-patient.html:337
 #: .\surgery\templates\list-doctors.html:93
+msgid "Save changes"
+msgstr "حفظ التعديلات"
+
+#: .\patient\templates\gyno\list-gyno.html:91
+#: .\patient\templates\view-patient.html:336
+#: .\surgery\templates\list-doctors.html:94
 msgid "Close"
 msgstr "اغلاق"
 
-#: .\patient\templates\gyno\list-gyno.html:91
-#: .\surgery\templates\list-doctors.html:94
-msgid "Save changes"
-msgstr "حفظ التعديلات"
+#: .\patient\templates\list-patients.html:29
+#: .\report\templates\list-all-patients-report.html:28
+msgid "Add New Patient"
+msgstr "تسجيل مريضة جديدة"
 
 #: .\patient\templates\list-patients.html:45
 #: .\patient\templates\list-patients.html:54
@@ -856,6 +853,10 @@ msgstr "النوع"
 #: .\patient\templates\patient-exit.html:25
 msgid "Patient Exits Form"
 msgstr "شاشة تسجيل الخروج للمريضة"
+
+#: .\patient\templates\patient-exit.html:81
+msgid "Clear"
+msgstr "مسح"
 
 #: .\patient\templates\top-button.html:9
 msgid "Patient Pages"
@@ -897,107 +898,103 @@ msgstr "تعديل"
 msgid "Cancel & Back"
 msgstr "الغاء و الرجوع"
 
-#: .\patient\templates\view-patient.html:301
+#: .\patient\templates\view-patient.html:298
 msgid "Fiels Name"
 msgstr "اسماء الملفات"
 
-#: .\patient\templates\view-patient.html:336
+#: .\patient\templates\view-patient.html:323
+msgid "Exit For Patient - "
+msgstr "تسجيل خروج للمريضة - "
+
+#: .\patient\templates\view-patient.html:335
 #: .\surgery\templates\list-surgery.html:79
 msgid "Yes"
 msgstr "موافق"
 
 #: .\patient\views.py:23
-#, fuzzy
-#| msgid "Patients"
 msgid "All Patients"
 msgstr "المريضات"
 
 #: .\patient\views.py:69
-#, fuzzy
-#| msgid "TOTAL CLEXANE PATIENTS"
 msgid "ADD NEW PATIENT"
-msgstr "اجمالي مريضات الكلكسان"
+msgstr "اضافة مريضة جديدة"
 
 #: .\patient\views.py:95
 msgid "FOLLOW UP MAIN PAGE"
-msgstr ""
+msgstr "شاشة المتابعة الرئيسية"
 
-#: .\patient\views.py:140
-#, fuzzy
-#| msgid "TOTAL PATIENTS"
+#: .\patient\views.py:141
 msgid "EDIT PATIENT {}"
-msgstr "اجمالي المريضات"
+msgstr "تعديل بيانات المريضة {}"
 
-#: .\patient\views.py:164
+#: .\patient\views.py:165
 msgid "GYN LIST"
 msgstr ""
 
-#: .\patient\views.py:165
+#: .\patient\views.py:166
 msgid "GYN DIAGNOSIS"
 msgstr ""
 
-#: .\patient\views.py:187
+#: .\patient\views.py:188
 msgid "تشخيص امراض النسا"
 msgstr ""
 
-#: .\patient\views.py:205
+#: .\patient\views.py:206
 msgid "EDIT {}"
-msgstr ""
+msgstr "تعديل {}"
 
-#: .\patient\views.py:213
+#: .\patient\views.py:214
 msgid "DELIVERY INFORMATIONS"
-msgstr ""
+msgstr "معلومات الولادة"
 
-#: .\patient\views.py:233
+#: .\patient\views.py:234
 msgid "DELIVERY MAIN PAGE"
-msgstr ""
+msgstr "صفحة الولادات الرئيسية"
 
-#: .\patient\views.py:257
+#: .\patient\views.py:258
 msgid "EDIT DELIVERY INFORMATIONS FOR  {}"
-msgstr ""
+msgstr "تعديل بيانات الولادة للمريضة {}"
 
-#: .\patient\views.py:279
+#: .\patient\views.py:280
 msgid "FOLLOW UP PAGE"
-msgstr ""
+msgstr "صفحة المتابعة الرئيسية"
 
-#: .\patient\views.py:299 .\patient\views.py:339 .\patient\views.py:362
-#: .\patient\views.py:408 .\patient\views.py:430
+#: .\patient\views.py:300 .\patient\views.py:340 .\patient\views.py:363
+#: .\patient\views.py:409 .\patient\views.py:431
 msgid "SAVED SUCCESSFULLY"
-msgstr ""
+msgstr "تم الحفظ بنجاح"
 
-#: .\patient\views.py:304
+#: .\patient\views.py:305
 msgid "ULTRASOUND READINGS FOR {}"
-msgstr ""
+msgstr "قراءة السونار للمريضة {}"
 
-#: .\patient\views.py:318
+#: .\patient\views.py:319
 msgid "FOLLOW UP WEEK {}"
-msgstr ""
+msgstr "متابعة الاسبوع رقم {}"
 
-#: .\patient\views.py:342
+#: .\patient\views.py:343
 msgid "EDIT FOLLOW UP FOR {}"
-msgstr ""
+msgstr "تعديل متابعات المريضة {}"
 
-#: .\patient\views.py:365
+#: .\patient\views.py:366
 msgid "DISPENSING MEDICINES"
-msgstr ""
+msgstr "صرف الأدوية"
 
-#: .\patient\views.py:378
+#: .\patient\views.py:379
 msgid "EDIT MEDICINES FOR {}"
-msgstr ""
+msgstr "تعديل الأدوية للمريضة {}"
 
-#: .\patient\views.py:390
-#, fuzzy
-#| msgid "CONSULTANT PATIENTS"
+#: .\patient\views.py:391
 msgid "CONSULTANT PATIENTS LIST"
-msgstr "اجمالي مريضات الاستشاري"
+msgstr "قائـمة مريضات الأستشاري"
 
-#: .\patient\views.py:411
+#: .\patient\views.py:412
 msgid "DAYS OFF FOR PATIENT {}"
-msgstr ""
+msgstr "الأجازات للمريضة {}"
 
-#: .\patient\views.py:433
+#: .\patient\views.py:434
 msgid "BLOOD SUGAR & PRESSURE READINGS FOR PATIENT {}"
-msgstr ""
+msgstr "قرأة ضغط الدم و السكري للمريضة {}"
 
 #: .\pharmacy\models.py:8
 msgid "Scientific Name"
@@ -1034,10 +1031,6 @@ msgstr "الاسم التجاري"
 #: .\pharmacy\views.py:28
 msgid "Create new medicine"
 msgstr "تسجيل دواء جديد"
-
-#: .\report\templates\list-all-patients-report.html:28
-msgid "Add New Patient"
-msgstr "تسجيل مريضة جديدة"
 
 #: .\report\templates\report-dashboard.html:19
 msgid "TOTAL PATIENTS"
@@ -1099,31 +1092,31 @@ msgstr "تاريخ المتابعة"
 msgid "تسجيل ملاحظات مابعد العملية"
 msgstr ""
 
-#: .\surgery\templates\create-patient-surgery.html:102
+#: .\surgery\templates\create-patient-surgery.html:104
 msgid "طبيعة العملية"
 msgstr ""
 
-#: .\surgery\templates\create-patient-surgery.html:103
+#: .\surgery\templates\create-patient-surgery.html:105
 msgid "اسم الجراح"
 msgstr ""
 
-#: .\surgery\templates\create-patient-surgery.html:104
+#: .\surgery\templates\create-patient-surgery.html:106
 msgid "تاريخ العملية"
 msgstr ""
 
-#: .\surgery\templates\create-patient-surgery.html:105
+#: .\surgery\templates\create-patient-surgery.html:107
 msgid "تاريخ الخروج"
 msgstr ""
 
-#: .\surgery\templates\create-patient-surgery.html:106
+#: .\surgery\templates\create-patient-surgery.html:108
 msgid "تطور الحالة"
 msgstr ""
 
-#: .\surgery\templates\create-patient-surgery.html:107
+#: .\surgery\templates\create-patient-surgery.html:109
 msgid "التشخيص النهائي"
 msgstr ""
 
-#: .\surgery\templates\create-patient-surgery.html:108
+#: .\surgery\templates\create-patient-surgery.html:110
 msgid "توصيات"
 msgstr ""
 
@@ -1149,7 +1142,7 @@ msgstr "اسم العملية"
 msgid ""
 "You are about to delete a record {{surgery.surgery_name}}. Do you want to "
 "continue?"
-msgstr ""
+msgstr "هل انت واثق من انك تريد حذف هذا السجل"
 
 #: .\surgery\templates\list-surgery.html:78
 msgid "No"
@@ -1171,11 +1164,11 @@ msgstr "تم الحفظ بنجاح"
 msgid "Doctors List"
 msgstr "قائمة الدكاترة"
 
-#: .\womanClinic\settings.py:133
+#: .\womanClinic\settings.py:134
 msgid "English"
 msgstr "انجليزي"
 
-#: .\womanClinic\settings.py:134
+#: .\womanClinic\settings.py:135
 msgid "Arabic"
 msgstr "عربي"
 
@@ -1188,35 +1181,27 @@ msgstr ""
 msgid "Toson Hospital"
 msgstr "مستشفى طوسون للتأمين الصحي"
 
-#: .\womanClinic\templates\login.html:39 .\womanClinic\templates\login.html:61
+#: .\womanClinic\templates\login.html:39 .\womanClinic\templates\login.html:60
 msgid "Abou Qir Central Hospital"
-msgstr ""
+msgstr "مستشفي ابوقير العام"
 
-#: .\womanClinic\templates\login.html:43
-msgid "Do not have an account?"
-msgstr "لا تمتلك حساب؟"
-
-#: .\womanClinic\templates\login.html:44
-msgid "Sign Up"
-msgstr "انشاء مستخدم جديد"
-
-#: .\womanClinic\templates\login.html:61
+#: .\womanClinic\templates\login.html:60
 msgid "Sign in to "
 msgstr "الدخول الي "
 
-#: .\womanClinic\templates\login.html:62
+#: .\womanClinic\templates\login.html:61
 msgid "Enter your details below"
 msgstr "ادخل بياناتك بالاسفل"
 
-#: .\womanClinic\templates\login.html:68
+#: .\womanClinic\templates\login.html:67
 msgid "Username"
 msgstr "اسم المستخدم"
 
-#: .\womanClinic\templates\login.html:72
+#: .\womanClinic\templates\login.html:71
 msgid "Password"
 msgstr "كلمة السر"
 
-#: .\womanClinic\templates\login.html:78
+#: .\womanClinic\templates\login.html:77
 msgid "sign in"
 msgstr "تسجيل الدخول"
 
@@ -1310,7 +1295,7 @@ msgstr ""
 
 #: .\womanClinic\templates\top_nav.html:22
 msgid "ADD NEW USER"
-msgstr ""
+msgstr "اضافة مستخدم جديد"
 
 #: .\womanClinic\templates\top_nav.html:34
 msgid "واثق من الخروج؟"
@@ -1323,3 +1308,9 @@ msgstr ""
 #: .\womanClinic\templates\top_nav.html:42
 msgid "خروج"
 msgstr ""
+
+#~ msgid "Do not have an account?"
+#~ msgstr "لا تمتلك حساب؟"
+
+#~ msgid "Sign Up"
+#~ msgstr "انشاء مستخدم جديد"

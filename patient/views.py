@@ -98,7 +98,8 @@ def view_patient_view(request, pk):
                      'patient_attachments':patient_attachments,
                      'patient_past_med':patient_past_med,
                      'media_url':settings.MEDIA_URL,
-                     'exit_form':exit_form
+                     'exit_form':exit_form,
+                     'required_patient':required_patient
     }
     return render(request, 'view-patient.html', createContext)
 
@@ -205,7 +206,7 @@ def update_gyno_view(request, pk):
                      'page_title':_('EDIT {}').format(required_gyno.diagnosis_en),
                      'gyno_form':gyno_form,
     }
-    return render(request, 'gyno/create-gyno.html', gynoContext)
+    return render(request, 'gyno/update-gyno.html', gynoContext)
 
 @login_required(login_url='/login')
 def list_delivery_view(request, pk):

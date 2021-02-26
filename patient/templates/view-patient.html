@@ -27,9 +27,6 @@
               <h6 class="panel-title txt-dark">{% trans 'Patient Informations Form' %}</h6>
             </div>
             <div class="pull-right">
-              <!-- <a href="{% url 'patient:all-patients' %}" class="btn btn-default btn-anim">
-                <i class="fa fa-arrow-circle-left"></i><span class="btn-text">Back to list</span>
-              </a> -->
             </div>
             <div class="clearfix"></div>
           </div>
@@ -323,18 +320,20 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <h5 class="modal-title" id="exampleModalLabel">{% trans 'Exit For Patient - '%}{{required_patient}}</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <form method='POST'>
             <div class="modal-body">
-              {{exit_form|crispy}}
+              {{exit_form.as_p}}
+              <!-- exit_date
+          exit_note -->
             </div>
             <div class="modal-footer">
               <button type="submit" class="btn btn-primary">{% trans 'Yes' %}</button>
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">{% trans 'Close' %}</button>
+              <button type="button" class="btn btn-danger" data-dismiss="modal">{% trans 'Close' %}</button>
             </div>
           </form>
         </div>

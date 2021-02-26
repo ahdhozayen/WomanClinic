@@ -23,7 +23,7 @@
     <ul class="nav navbar-right top-nav pull-right">
       <li class="dropdown auth-drp">
         <a href="#" class="dropdown-toggle pr-0" data-toggle="dropdown">
-          <span class="brand-text">{% trans 'WELCOME ' %} &ensp; {{request.user.first_name}} &ensp; {{request.user.last_name}}</span>
+          <span class="brand-text">{% trans 'WELCOME ' %} &ensp; {{request.user.first_name}} {{request.user.last_name}}</span>
         </a>
 
         <ul class="dropdown-menu user-auth-dropdown" data-dropdown-in="flipInX" data-dropdown-out="flipOutX">

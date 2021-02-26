@@ -1,79 +1,4 @@
 @charset "UTF-8";
-/*------------------------------------------------------------------
-[Master Stylesheet]
-Project:	Jetson
-++++ Imports ++++
-++++ Reset ++++
-++++ Basic ++++
-
-	++Effect 1: YouTube loading++
-	++typography++
-	++Buttons++
-	++Admin Basic++
-	++Form++
-	++Form-Wizard++
-	++Product Deatails*++
-	++Product Cart++
-	++Popover++
-	++Typerhead++
-	++Editors++
-	++Accordion++
-	++Tabs++
-	++Table++
-	++Morris Chart++
-	++Flot Chart++
-	++Chartist++
-	++Easy pie chart++
-	++Skills Counter++
-	++Nestable++
-	++Treeview++
-	++Modals++
-	++sweet-alert++
-	++Notification++
-	++Tooltop++
-	++Icons++
-	++File Upload++
-	++File Manager++
-	++Carousel++
-	++Testimonial slider++
-	++Twitter slider++
-	++Range Slider++
-	++Gallery++
-	++Typography++
-	++Panel++
-	++Pricing Table++
-	++Dropdown++
-	++Weather++
-	++Sparkline++
-	++Pagination++
-	++Pager++
-	++Labels++
-	++Badge++
-	++Task Panel++
-	++Vecotor Map++
-	++Progressbar++
-	++Search Bar++
-	++Chat UI++
-	++Widgets++
-	++Profile++
-	++Followers++
-	++Small Graph++
-	++Timeline++
-	++Caledar++
-	++Todo List++
-	++Activity++
-	++Message Box++
-	++Inbox++
-	++Contact Cards++
-	++Contact List++
-	++Login Form++
-	++Error Page++
-	++Products++
-	++Cropperjs++
-
-++++ Mediaqueries ++++
--------------------------------------------------------------------*/
-
 /****************************/
 /** Imports **/
 /****************************/
@@ -114,11 +39,12 @@ $lightviolet:#bb9ac1;
 $gold:#e58b25;
 $silver:#83878d;
 $black:#212121;
-$grey:#878787;
+// $grey:#878787;
+$grey:#fff;
 $beige:#f7ce99;
 $light_grey:#dedede;
-$menu_bg_col_1:#2a3e4c;
-$menu_bg_col_2:#24333e;
+$menu_bg_col_1:#4c677a;
+$menu_bg_col_2:#585e63;
 $white:#fff;
 $twitter_blue:#00aced;
 $light_white:rgba(255,255,255,0.1);
@@ -367,7 +293,7 @@ $num: 0;
 	background:$seagreen !important;
 }
 .bg-grey {
-	background:$grey !important;
+	background:$grey;
 }
 .bg-yellow,
 .bg-warning {
@@ -413,7 +339,7 @@ $num: 0;
 	color:$white !important;
 }
 .txt-grey {
-	color:$grey !important;
+	color:$white !important;
 }
 .txt-light-grey {
 	color:$light_grey !important;
@@ -535,12 +461,12 @@ $num: 0;
 	border:none!important;
 }
 small {
-	color:$grey;
+	color:$white;
 	padding-left:5px;
 }
 
 .text-muted {
-	color:$grey;
+	color:$white;
 }
 
 .truncate {
@@ -1360,7 +1286,7 @@ ul.uo-list {
 					display:block;
 					text-transform:uppercase;
 					font-weight: 500;
-					color:$grey;
+					color:$white;
 				}
 				>i {
 					display:none;
@@ -1389,7 +1315,7 @@ ul.uo-list {
 					}
 				}
 				.pull-right i {
-					color:$grey;
+					color:$white;
 				}
 			}
 		}
@@ -1399,7 +1325,7 @@ ul.uo-list {
 					color:$black;
 					padding:7px 15px;
 					&:hover{
-						background:$xtra_lighter_grey;
+						background:#ffffff;
 					}
 					&:focus,&:active {
 						background:$xtra_lighter_grey;
@@ -1417,19 +1343,19 @@ ul.uo-list {
 						a {
 							padding:7px 15px 7px 51px;
 							display:block;
-							color:$grey;
+							color:$white;
 							&:hover,&:focus,&:active {
 								background:$xtra_lighter_grey;
-								color:$grey;
+								color:$white;
 							}
 						}
 						> ul {
 							>li {
 								a {
 									padding-left:62px;
-									color:$grey;
+									color:$white;
 									&:hover,&:focus,&:active {
-										color:$grey;
+										color:$white;
 									}
 								}
 							}
@@ -1901,7 +1827,7 @@ a#toggle_mobile_nav {
 			}
 		}
 		.fixed-sidebar-left .side-nav {
-			background:#f4f4f4;
+			background:#fff;
 		}
 	}
 	&.theme-3-active {
@@ -2188,7 +2114,7 @@ a#toggle_mobile_nav {
 							border: medium none;
 							padding: 0;
 							i {
-								color:$grey;
+								color:$white;
 								font-size:20px;
 							}
 						}
@@ -2204,7 +2130,7 @@ a#toggle_mobile_nav {
 						position:static;
 					}
 					> a {
-						color:$grey;
+						color:$white;
 						background:transparent!important;
 						@include transition (.3s ease);
 						padding:0 9px;
@@ -2236,7 +2162,7 @@ a#toggle_mobile_nav {
 								padding-bottom: 10px;
 								padding-top: 10px;
 								text-align: center;
-								color:$grey;
+								color:$white;
 								text-transform:capitalize;
 								width:80px;
 								i {
@@ -2244,7 +2170,7 @@ a#toggle_mobile_nav {
 									padding-bottom: 5px;
 								}
 								&:hover {
-									color:$grey;
+									color:$white;
 									background:$xtra_lighter_grey;
 								}
 							}
@@ -2258,7 +2184,7 @@ a#toggle_mobile_nav {
 								.read-all {
 									padding:5px 15px 0;
 									font-size:13px;
-									color:$grey;
+									color:$white;
 									text-transform:capitalize;
 								}
 							}
@@ -2283,7 +2209,7 @@ a#toggle_mobile_nav {
 								.read-all {
 									padding:5px 15px 0;
 									font-size:13px;
-									color:$grey;
+									color:$white;
 									text-transform:capitalize;
 								}
 							}
@@ -2334,11 +2260,11 @@ a#toggle_mobile_nav {
 											font-weight:500;
 										}
 										.notifications-time {
-											color:$grey;
+											color:$white;
 										}
 										> p {
 											font-size:13px;
-											color:$grey;
+											color:$white;
 										}
 									}
 								}
@@ -2386,7 +2312,7 @@ a#toggle_mobile_nav {
 											display: block;
 											text-transform:capitalize;
 											padding: 8px 0 8px 39px;
-											color:$grey;
+											color:$white;
 										}
 									}
 								}
@@ -2800,7 +2726,7 @@ footer {
 	height:42px;
 }
 .help-block {
-	color:$grey;
+	color:$white;
 }
 .has-success .form-control {
     border-color: rgba(74, 162, 60,.5);
@@ -3218,7 +3144,7 @@ div.colorpicker {
 				background:transparent;
 				border:none;
 				padding:10px 20px;
-				color:$grey;
+				color:$white;
 				margin:0;
 				border-radius:0;
 				text-transform:capitalize;
@@ -3522,7 +3448,7 @@ ul.wysihtml5-toolbar {
 					}
 				}
 				a {
-					color:$grey	;
+					color:$white	;
 					text-transform:capitalize;
 					padding: 10px 20px;
 					width:100%;
@@ -3557,11 +3483,11 @@ ul.wysihtml5-toolbar {
 						}
 
 						a {
-							color:$grey;
+							color:$white;
 						}
 					}
 					a {
-						color:$grey;
+						color:$white;
 					}
 				}
 			}
@@ -3629,7 +3555,7 @@ ul.wysihtml5-toolbar {
 			background:$light_grey;
 			border:none;
 			padding:10px 20px;
-			color:$grey;
+			color:$white;
 			margin:0;
 			border-radius:0;
 			text-transform:capitalize;
@@ -3831,7 +3757,7 @@ ul.wysihtml5-toolbar {
 			background:#f7f7f9;
 			border:none;
 			padding:10px 20px;
-			color:$grey;
+			color:$white;
 			margin:0;
 			border-radius:0;
 			text-transform:capitalize;
@@ -3913,7 +3839,7 @@ ul.wysihtml5-toolbar {
 			>a {
 				background-color:transparent!important;
 				border:2px solid #f7f7f9;
-				color:$grey;
+				color:$white;
 				&:hover,&:active,&:focus {
 					border-color:$green;
 					color:$black;
@@ -4081,14 +4007,14 @@ table.dataTable > caption + thead > tr:first-child > td, table.dataTable > capti
 	.dataTables_length,.dataTables_filter {
 		padding-top:20px;
 		margin-bottom:14px;
-		color:$grey;
+		color:$white;
 	}
 	.dataTables_length,
 	.dataTables_info {
 		padding-left:15px;
 	}
 	.dataTables_info {
-		color:$grey;
+		color:$white;
 	}
 	.dataTables_filter {
 		padding-right:15px;
@@ -4338,12 +4264,12 @@ table.footable > tbody > tr.footable-empty > td {
 		}
 	}
 	td a {
-		color:$grey!important;
+		color:$white!important;
 	}
 	td,tbody th {
 	  vertical-align: middle;
 	  font-size: inherit;
-	  color:$grey!important;
+	  color:$white!important;
 	}
 }
 
@@ -4519,12 +4445,12 @@ table.footable > tbody > tr.footable-empty > td {
 	display:none;
 }
 .ct-label {
-	color:$grey;
+	color:$white;
 	fill:$white;
 }
 
 .ct-chart-bar .ct-label.ct-horizontal.ct-end {
-	color:$grey;
+	color:$white;
 }
 .ct-chart-before-pad-zero:before {
 	padding-bottom:0;
@@ -4609,7 +4535,7 @@ table.footable > tbody > tr.footable-empty > td {
 	font-size:14px;
 	padding-top:10px;
 	background:transparent;
-	color:$grey;
+	color:$white;
 	&:hover,&:focus,&:active {
 		color:$black;
 	}
@@ -4626,7 +4552,7 @@ table.footable > tbody > tr.footable-empty > td {
 .dd3-content {
   display: block;
   @extend .form-control;
-  color:$grey;
+  color:$white;
   margin: 0 0 15px;
   font-size:14px;
 	padding-top:10px;
@@ -4657,7 +4583,7 @@ table.footable > tbody > tr.footable-empty > td {
   &:before {
     font-family: FontAwesome;
     content: "\f047";
-	color:$grey;
+	color:$white;
     display: block;
     position: absolute;
     left: 0;
@@ -5148,7 +5074,7 @@ table.footable > tbody > tr.footable-empty > td {
 		border-top: 1px solid $xtra_lighter_grey;
 		span {
 			font-size:12px;
-			color:$grey;
+			color:$white;
 		}
 	}
 }
@@ -5254,7 +5180,7 @@ a.compose-mail {
 .carousel-indicators {
 	z-index:1;
 	li {
-		border-color:$grey;
+		border-color:$white;
 		background:$grey;
 		opacity:.6;
 	 	&:hover {
@@ -5499,7 +5425,7 @@ a.compose-mail {
 .panel-title {
 	@extend h6;
 	> small {
-		color:$grey;
+		color:$white;
 		font-size:14px;
 	}
 }
@@ -5532,7 +5458,7 @@ a.compose-mail {
 		.pull-right {
 			i {
 				font-size:20px;
-				color:$grey;
+				color:$white;
 			}
 			.dropdown {
 				i {
@@ -5687,7 +5613,7 @@ a.compose-mail {
 				background: $xtra_lighter_grey;
 			}
 			i {
-				color:$grey;
+				color:$white;
 				font-size: 18px;
 				margin-right: 10px;
 				width: 18px;
@@ -5886,7 +5812,7 @@ a.compose-mail {
 	color:$green;
 }
 .pagination > li > a:focus, .pagination > li > a:hover, .pagination > li > span:focus, .pagination > li > span:hover {
-	color:$grey;
+	color:$white;
 }
 /*Pager*/
 .pager li > a, .pager li > span {
@@ -5977,7 +5903,7 @@ a.compose-mail {
 		border-bottom:none;
 		padding: 15px;
 		i {
-			color:$grey;
+			color:$white;
 			padding-right:10px;
 			font-size:18px;
 			width:25px;
@@ -6175,7 +6101,7 @@ a.compose-mail {
 				border: medium none;
 				padding: 0;
 				i {
-					color:$grey;
+					color:$white;
 					font-size:20px;
 				}
 			}
@@ -6505,7 +6431,7 @@ a.compose-mail {
 			font-size:21px;
 		}
 		.counts-text {
-			color:$grey;
+			color:$white;
 		}
 	}
 }
@@ -6823,7 +6749,7 @@ button.fc-agendaWeek-button,
 	.fc-next-button,.fc-prev-button {
 		background:transparent;
 		border:none;
-		color:$grey;
+		color:$white;
 		font-size: 20px !important;
 		padding: 0;
 		line-height: 0;
@@ -7028,7 +6954,7 @@ button.fc-agendaWeek-button,
 		.read-all {
 			padding:5px 15px;
 			font-size:13px;
-			color:$grey;
+			color:$white;
 			text-transform:capitalize;
 		}
 	}
@@ -7056,7 +6982,7 @@ button.fc-agendaWeek-button,
 			.sl-content {
 				margin-left: 50px;
 				.message-time {
-					color:$grey;
+					color:$white;
 				}
 				.message-subject {
 					font-size:13px;
@@ -7169,7 +7095,7 @@ ul {
 				i {
 					font-size: 16px;
 					padding-right: 10px;
-					color:$grey;
+					color:$white;
 				}
 			}
 		}
@@ -7215,7 +7141,7 @@ ul.inbox-nav li a:hover, ul.inbox-nav li.active a, ul.inbox-nav li a:focus {
 	   color:$black;
 	   font-weight:500;
 		i{
-		   color:$grey;
+		   color:$white;
 		}
 	}
 	&.table-hover > tbody > tr {
@@ -7223,7 +7149,7 @@ ul.inbox-nav li a:hover, ul.inbox-nav li.active a, ul.inbox-nav li a:focus {
 		td {
 			color:$black;
 			i{
-			   color:$grey;
+			   color:$white;
 			}
 		}
 		&.unread {
@@ -7253,7 +7179,7 @@ ul.inbox-nav li a:hover, ul.inbox-nav li.active a, ul.inbox-nav li a:focus {
 			background:transparent;
 			color:$black;
 			i {
-				color:$grey;
+				color:$white;
 			}
 		}
 		input[type="checkbox"] {
@@ -7281,7 +7207,7 @@ ul.inbox-nav li a:hover, ul.inbox-nav li.active a, ul.inbox-nav li a:focus {
 	background:transparent;
 	i {
 		font-size:17px;
-		color:$grey;
+		color:$white;
 		&.zmdi-chevron-left {
 			font-size:27px;
 		}
@@ -7299,7 +7225,7 @@ ul.inbox-nav li a:hover, ul.inbox-nav li.active a, ul.inbox-nav li a:focus {
 
 .download-blocks {
 	a {
-		color:$grey;
+		color:$white;
 	}
 }
 .sender-img-wrap {
@@ -7325,7 +7251,7 @@ ul.inbox-nav li a:hover, ul.inbox-nav li.active a, ul.inbox-nav li a:focus {
 		.dropdown-toggle {
 			> i {
 					font-size:17px;
-					color:$grey;
+					color:$white;
 					vertical-align:middle;
 				}
 		}
@@ -7398,7 +7324,7 @@ ul.inbox-nav li a:hover, ul.inbox-nav li.active a, ul.inbox-nav li a:focus {
 	}
 
 	.card-user-email,.card-user-phone {
-		color:$grey;
+		color:$white;
 	}
 }
 

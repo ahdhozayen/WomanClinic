@@ -49,17 +49,16 @@ class Past_Medical_History_Form(forms.ModelForm):
 
 
 class Patient_Exit_Form(forms.ModelForm):
+    class Meta:
+        model = Patient_Exit
+        fields = ('exit_date', 'exit_note')
+        exclude = common_items_to_execlude
     def __init__(self, *args, **kwargs):
         super(Patient_Exit_Form, self).__init__(*args, **kwargs)
         self.helper = FormHelper(self)
         self.helper.form_show_labels = True
         for field in self.fields:
             self.fields[field].widget.attrs['class'] = 'form-control'
-
-    class Meta:
-        model = Patient_Exit
-        fields = ('exit_date', 'exit_note')
-        exclude = common_items_to_execlude
 
 
 class Patient_FilesForm(forms.ModelForm):
@@ -135,7 +134,7 @@ class Check_Up_Form(forms.ModelForm):
         if form_type=='view':
             for field in self.fields:
                 self.fields[field].widget.attrs['disabled'] = True
-                
+
     class Meta:
         model = Check_Up
         fields = '__all__'

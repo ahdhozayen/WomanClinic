@@ -7,7 +7,7 @@
 {% block body %}
 <form method="post" id="my_form">
   {% csrf_token %}
-  {% include 'messages.html' %}
+  {% include 'message.html' %}
   <section class="panel panel-default">
     <div class="panel-body">
       <header class="panel-heading font-bold pull-right">{{page_title|title}}</header>

@@ -40,8 +40,7 @@
 				</a>
 			</div>
 			<div class="form-group mb-0 pull-right">
-				<span class="inline-block pr-10">{% trans 'Do not have an account?' %}</span>
-				<a class="inline-block btn btn-info  btn-rounded btn-outline" href="signup.html">{% trans 'Sign Up' %}</a>
+				<!-- sign up button -->
 			</div>
 			<div class="clearfix"></div>
 		</header>
@@ -146,21 +145,7 @@
 	<script src="{% static 'dist/js/toast-data.js' %}"></script>
 
   {% block js %}
-	<script>
-	$('.tst4').on('click',function(e){
-		$.toast().reset('all');
-		$("body").removeAttr('class');
-		$.toast({
-						heading: 'Opps! somthing wents wrong',
-						text: '{{error_msg}}',
-						position: 'top-right',
-						loaderBg:'#fec107',
-						icon: 'error',
-						hideAfter: 3500
-				});
-		return false;
-		});
-	</script>
+	
   {% endblock js %}
 </body>
 

@@ -5,26 +5,54 @@
 {% load l10n %}
 {% block body %}
 
-<form id="my_form" method="POST" enctype="multipart/form-data">
-  {% csrf_token %}
+<div class="container-fluid">
 
-  <section class="panel panel-default">
-    <div class="panel-body">
-      <header class="panel-heading font-bold pull-left">{{ page_title }}</header>
-      <div class="doc-buttons pull-right">
-        <button type="submit" class="btn btn-s-md btn-success">حفظ</button>
-        <a href="{% url 'patient:all-gynos' %}" class="btn btn-s-md btn-default">{% trans "Cancel" %}</a>
+  <!-- Title -->
+  <div class="row heading-bg">
+    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+      <h5 class="txt-dark">{{ page_title|title }}</h5>
+    </div>
+  </div>
+  <!-- /Title -->
+
+  <!-- Row -->
+  <form method="post" class="form-horizontal" id="my_form" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="row">
+      <div class="pull-right" style="padding-bottom: 10px;">
+        <button type="submit" class="btn btn-success btn-anim">
+          <i class="icon-rocket"></i><span class="btn-text">{% trans "Save" %}</span>
+        </button>
+        <a href="{% url 'patient:all-gynos' %}" class="btn btn-default btn-anim">
+          <i class="fa fa-arrow-circle-left"></i><span class="btn-text">{% trans "Back to list" %}</span>
+        </a>
       </div>
     </div>
-  </section>
-  <section class="panel panel-default">
-    <div class="panel-body">
-      <section class="panel panel-default">
-        {{gyno_form|crispy}}
-      </section>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="panel panel-default card-view">
+          <div class="panel-heading">
+            <div class="pull-left">
+              <h6 class="panel-title txt-dark"></h6>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+          <div class="panel-wrapper collapse in">
+            <div class="form-group" style="padding: 5px 20px 5px 20px;">
+              <label for="id_diagnosis_en">{{ gyno_form.diagnosis_en.label }}</label>
+              {{ gyno_form.diagnosis_en }}
+            </div>
+            <div class="form-group" style="padding: 5px 20px 5px 20px;">
+              <label for="id_diagnosis_ar">{{ gyno_form.diagnosis_ar.label }}</label>
+              {{ gyno_form.diagnosis_ar }}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-  </section>
-</form>
+  </form>
+
+</div>
 
 
 {% endblock body %}

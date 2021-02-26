@@ -18,6 +18,16 @@
   <!-- Row -->
   <form id="my_form" method="POST"class="form-horizontal">
     {% csrf_token %}
+    <div class="row" style="padding-bottom: 10px;">
+      <div class="pull-right">
+        <button type="submit" class="btn btn-success btn-anim">
+          <i class="fa fa-arrow-circle-left"></i><span class="btn-text">{% trans "Save" %}</span>
+        </button>
+        <a href="{% url 'patient:view-patient' pk=patient_id %}" class="btn btn-default btn-anim">
+          <i class="fa fa-arrow-circle-left"></i><span class="btn-text">{% trans "Back to patient" %}</span>
+        </a>
+      </div>
+    </div>
     <div class="row">
       <div class="col-sm-12">
         <div class="panel panel-default card-view">
@@ -144,14 +154,7 @@
         </div>
       </div>
     </div>
-    <div class="pull-right">
-      <button type="submit" class="btn btn-success btn-anim">
-        <i class="fa fa-arrow-circle-left"></i><span class="btn-text">{% trans "Save" %}</span>
-      </button>
-      <a href="{% url 'patient:view-patient' pk=patient_id %}" class="btn btn-default btn-anim">
-        <i class="fa fa-arrow-circle-left"></i><span class="btn-text">{% trans "Back to list" %}</span>
-      </a>
-    </div>
+
   </form>
   <!-- /Row -->
   <div class="row">

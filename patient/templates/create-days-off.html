@@ -9,7 +9,7 @@
 <div class="container-fluid">
   <!-- Title -->
   <div class="row heading-bg">
-    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
       <h5 class="txt-dark">{{ page_title }}</h5>
     </div>
   </div>
@@ -18,6 +18,17 @@
   <!-- Row -->
   <form id="my_form" method="POST"class="form-horizontal">
     {% csrf_token %}
+    <div class="row" style="padding-bottom: 10px;">
+      <div class="pull-right">
+        <button type="submit" class="btn btn-success btn-anim">
+          <i class="fa fa-arrow-circle-left"></i><span class="btn-text">{% trans "Save" %}</span>
+        </button>
+        <a href="{% url 'patient:view-patient' pk=patient_id %}" class="btn btn-default btn-anim">
+          <i class="fa fa-arrow-circle-left"></i><span class="btn-text">{% trans "Back to patient" %}</span>
+        </a>
+      </div>
+    </div>
+
     <div class="row">
       <div class="col-sm-12">
         <div class="panel panel-default card-view">
@@ -63,14 +74,7 @@
         </div>
       </div>
     </div>
-    <div class="pull-right">
-      <button type="submit" class="btn btn-success btn-anim">
-        <i class="fa fa-arrow-circle-left"></i><span class="btn-text">{% trans "Save" %}</span>
-      </button>
-      <a href="{% url 'patient:view-patient' pk=patient_id %}" class="btn btn-default btn-anim">
-        <i class="fa fa-arrow-circle-left"></i><span class="btn-text">{% trans "Back to list" %}</span>
-      </a>
-    </div>
+
   </form>
   <!-- /Row -->
 </div>
