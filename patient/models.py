@@ -258,7 +258,7 @@ class Diabetes(models.Model):
     bp_up = models.PositiveIntegerField(default=120, verbose_name=_('BP Up'))
     bp_down = models.PositiveIntegerField(default=80, verbose_name=_('BP Down'))
     temp = models.PositiveIntegerField(default=37, verbose_name=_('Temprature'))
-    reading_date = models.DateTimeField(auto_now=False, auto_now_add=False, default=datetime.now() ,verbose_name=_('reading date'))
+    reading_date = models.DateTimeField(auto_now=False, auto_now_add=False, default=datetime.now ,verbose_name=_('reading date'))
     created_by  = models.ForeignKey(settings.AUTH_USER_MODEL, blank=False, on_delete=models.CASCADE, related_name="diabetes_created_by")
     creation_date = models.DateField(auto_now=True, auto_now_add=False)
     last_update_by = models.ForeignKey(settings.AUTH_USER_MODEL, blank=False, on_delete=models.CASCADE, related_name="diabetes_last_updated_by")
