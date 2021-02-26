@@ -18,9 +18,9 @@ MEDIA_DIR       = os.path.join(BASE_DIR,'womanClinic','media')
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'sn7mr&f%1^$d)72kf3zf*rdm%$s3vye+glj)ja+f3@pf6f(g%)')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost','127.0.0.1','127.0.1.1','64.227.126.140']
 
 
 # Application definition
@@ -156,7 +156,7 @@ LOCALE_PATHS = (
     os.path.join(BASE_DIR, 'locale'),
 )
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = '/home/woman_clinic/site/public/static'
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
