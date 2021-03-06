@@ -197,8 +197,7 @@ def update_gyno_view(request, pk):
     if request.method == 'POST':
         gyno_form = GynecologyForm(request.POST)
         if gyno_form.is_valid():
-            gyno_obj = gyno_formset.save(commit=False)
-            # for x in gyno_obj:
+            gyno_obj = gyno_form.save(commit=False)
             gyno_obj.created_by = request.user
             gyno_obj.last_update_by = request.user
             gyno_obj.save()

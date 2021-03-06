@@ -18,7 +18,7 @@ MEDIA_DIR       = os.path.join(BASE_DIR,'womanClinic','media')
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'sn7mr&f%1^$d)72kf3zf*rdm%$s3vye+glj)ja+f3@pf6f(g%)')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['localhost','127.0.0.1','127.0.1.1','64.227.126.140']
 
@@ -79,26 +79,26 @@ WSGI_APPLICATION = 'womanClinic.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
 
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'woman_gyno',
-        'USER': 'ahd_sysadmin',
-        'PASSWORD': 'm@$hreq123',
-        'HOST': 'localhost',
-        'PORT': '',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'woman_gyno',
+#         'USER': 'ahd_sysadmin',
+#         'PASSWORD': 'm@$hreq123',
+#         'HOST': 'localhost',
+#         'PORT': '',
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
