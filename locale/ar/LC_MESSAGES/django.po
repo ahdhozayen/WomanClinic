@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-06 13:44+0200\n"
+"POT-Creation-Date: 2021-03-06 14:12+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -256,7 +256,7 @@ msgid "Diabetes"
 msgstr "DM"
 
 #: .\patient\models.py:78
-msgid "Pulmonar"
+msgid "Pulmonary"
 msgstr ""
 
 #: .\patient\models.py:79
@@ -269,7 +269,7 @@ msgstr "حساسية"
 
 #: .\patient\models.py:82
 msgid "Allergies Name"
-msgstr "أسم الحساسية"
+msgstr "الوصــف"
 
 #: .\patient\models.py:83
 msgid "Heart Disease"
@@ -284,8 +284,8 @@ msgid "Autoimmun Disorder"
 msgstr "أمراض مناعية"
 
 #: .\patient\models.py:86
-msgid "Autoimmun Disorder Name"
-msgstr "أسم المرض"
+msgid "Autoimmun Disorder Type"
+msgstr "الوصــف"
 
 #: .\patient\models.py:87
 msgid "Abnormal PAP"
@@ -296,8 +296,8 @@ msgid "Kidney Disease"
 msgstr "أمراض الكلي"
 
 #: .\patient\models.py:89
-msgid "Kidney Disease Name"
-msgstr "أسم المرض"
+msgid "Kidney Disease Type"
+msgstr "الوصــف"
 
 #: .\patient\models.py:90
 msgid "Uterine"
@@ -324,10 +324,8 @@ msgid "HLD"
 msgstr ""
 
 #: .\patient\models.py:96
-#, fuzzy
-#| msgid "HLD Value"
-msgid "HLD Name"
-msgstr "القيمة"
+msgid "HLD Type"
+msgstr "الوصــف"
 
 #: .\patient\models.py:97
 msgid "GYNS"
@@ -346,10 +344,8 @@ msgid "THYROID DYSFUNCTION"
 msgstr "قصور الغدة الدرقية"
 
 #: .\patient\models.py:101
-#, fuzzy
-#| msgid "THYROID DYSFUNCTION Value"
-msgid "THYROID DYSFUNCTION Name"
-msgstr "الوصف"
+msgid "THYROID DYSFUNCTION Type"
+msgstr "الوصــف"
 
 #: .\patient\models.py:102
 msgid "ANESTHETIC"
@@ -364,9 +360,7 @@ msgid "History Of Blood Transfusion"
 msgstr "التاريخ الطبي لنقل الدم"
 
 #: .\patient\models.py:105
-#, fuzzy
-#| msgid "History Of Blood Transfusion Value"
-msgid "History Of Blood Transfusion Name"
+msgid "History Of Blood Transfusion Type"
 msgstr "الوصف"
 
 #: .\patient\models.py:106
@@ -1338,6 +1332,18 @@ msgstr ""
 #: .\womanClinic\templates\top_nav.html:42
 msgid "خروج"
 msgstr ""
+
+#~ msgid "Autoimmun Disorder Name"
+#~ msgstr "أسم المرض"
+
+#~ msgid "Kidney Disease Name"
+#~ msgstr "أسم المرض"
+
+#~ msgid "History Of Blood Transfusion Name"
+#~ msgstr "الوصف"
+
+#~ msgid "THYROID DYSFUNCTION Name"
+#~ msgstr "الوصف"
 
 #~ msgid "Do not have an account?"
 #~ msgstr "لا تمتلك حساب؟"
