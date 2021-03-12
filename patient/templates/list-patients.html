@@ -28,6 +28,10 @@
               <i class="fa fa-wpforms"></i>
               <span class="btn-text">{% trans 'Add New Patient' %}</span>
             </a>
+            <a href="#" class="btn btn-primary btn-anim" data-toggle="modal"  data-target="#barcode-modal">
+              <i class="fa fa-wpforms"></i>
+              <span class="btn-text">{% trans 'Serach Barcode' %}</span>
+            </a>
           </div>
           <div class="clearfix"></div>
         </div>
@@ -44,6 +48,7 @@
                         <th>{% trans 'Patient number' %}</th>
                         <th>{% trans 'date of birth' %}</th>
                         <th>{% trans 'Type' %}</th>
+                        <th>{% trans 'Barcode Print' %}</th>
                       </tr>
                     </thead>
                     <tfoot>
@@ -53,6 +58,7 @@
                         <th>{% trans 'Patient number' %}</th>
                         <th>{% trans 'date of birth' %}</th>
                         <th>{% trans 'Type' %}</th>
+                        <th>{% trans 'Barcode Print' %}</th>
                       </tr>
                     </tfoot>
                     <tbody>
@@ -75,6 +81,9 @@
                           --
                           {% endif %}
                         </td>
+                        <td>
+                          <a href="/media/{{patient.barcode_image}}" target="_blank">Print</a>
+                        </td>
                       </tr>
                       {% endfor %}
                     </tbody>
@@ -88,6 +97,27 @@
     </div>
   </div>
   <!-- /Row -->
+  <div class="modal fade in" id="barcode-modal" tabindex="-1" role="dialog" aria-labelledby="barcode-modal" aria-hidden="true">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal">×</button>
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-body">
+            <form action="{% url 'patient:search-barcode' %}" method="post">
+              {% csrf_token %}
+              <div class="form-group">
+                <label class="control-label mb-10" for="username">{% trans 'Enter Barcode' %}</label>
+                <input type="text" class="form-control" name="barcode" id="barcode" placeholder="Barcode Search ...">
+              </div>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">{% trans 'Cancel' %}</button>
+
+              <button type="submit" name="button" class="btn btn-danger">{% trans 'Search' %}</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
 </div>
 {% endblock body %}

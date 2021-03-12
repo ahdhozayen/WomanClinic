@@ -3,7 +3,7 @@ from django.conf import settings
 from django.shortcuts import render, get_object_or_404, get_list_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from datetime import date
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse, Http404
 from django.contrib import messages
 from patient.models import (Patient, Patient_Files, Delivery, Check_Up,
                             Gynecology, Patient_Medicine, Patient_Days_Off,
@@ -34,6 +34,7 @@ def create_patient_view(request):
         if patient_form.is_valid() and patient_attachments.is_valid() and patient_past_med.is_valid():
             master_obj = patient_form.save(commit=False)
             master_obj.hospital_id = request.user.clinic_id
+            master_obj.barcode = master_obj.insurance_number
             master_obj.created_by = request.user
             master_obj.last_update_by = request.user
             master_obj.save()
@@ -103,6 +104,20 @@ def view_patient_view(request, pk):
     }
     return render(request, 'view-patient.html', createContext)
 
+
+@login_required(login_url='/login')
+def view_patient_barcode(request):
+    if request.method == "POST":
+        url_code = request.POST.get('barcode')
+        truncated_barcode = url_code[:-1]
+        try:
+            required_patient = get_object_or_404(Patient, barcode=truncated_barcode)
+            return redirect('patient:view-patient', pk= required_patient.pk)
+        except Http404:
+            raise
+
+
+
 @login_required(login_url='/login')
 def update_patient_view(request, pk):
     required_patient = Patient.objects.get(pk=pk)
@@ -117,6 +132,7 @@ def update_patient_view(request, pk):
         if patient_form.is_valid() and patient_attachments.is_valid() and patient_past_med.is_valid():
             master_obj = patient_form.save(commit=False)
             master_obj.created_by = request.user
+            master_obj.barcode = master_obj.insurance_number
             master_obj.last_update_by = request.user
             master_obj.save()
             patient_attachments = Patient_Files_formset(request.POST, request.FILES, instance=master_obj)
@@ -133,6 +149,7 @@ def update_patient_view(request, pk):
             messages.success(request, 'تم الحفظ بنجاح')
             return redirect('patient:view-patient', pk=master_obj.id)
         else:
+            print(patient_form.errors)
             messages.error(request, patient_form.errors)
             messages.error(request, patient_past_med.errors)
             for error in patient_attachments.errors:

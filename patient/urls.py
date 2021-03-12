@@ -22,4 +22,7 @@ urlpatterns =[
     path('create/days-off/<int:patient_id>', views.create_patient_days_off_view, name='create-days-off'),
     path('create/diabete/<int:patient_id>', views.create_diabetes_view, name='create-diabetes'),
     path('chart/diabete/<int:patient_id>', views.patient_diabete_chart, name='patients-diabetes-chart'),
+
+
+    path('search/barcode/', views.view_patient_barcode, name='search-barcode'),
 ]

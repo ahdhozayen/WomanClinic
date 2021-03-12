@@ -8,7 +8,7 @@ from patient.models import (Patient,Delivery,Check_Up,
 common_items_to_execlude = (
                             'start_date','end_date',
                             'created_by', 'creation_date', 'patient',
-                            'last_update_by',  'last_update_date', 'hospital',
+                            'last_update_by',  'last_update_date', 'hospital','barcode'
 )
 
 class PatientForm(forms.ModelForm):

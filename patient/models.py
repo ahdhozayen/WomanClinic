@@ -1,13 +1,24 @@
+import os
 from django.conf import settings
 from django.db import models
 from datetime import datetime, date
+from django.dispatch import receiver
+from django.db.models.signals import pre_save, post_save
 from clinic.models import Clinic
 from pharmacy.models import Medicine
 from django.utils.translation import ugettext_lazy as _
 
+import barcode
+from barcode.writer import ImageWriter
+from io import BytesIO
+from django.core.files import File
+
+
 class Patient(models.Model):
     transferred_list = [('insurance',_("Medical Insurance")),('consultant',_('Consultant Doctor')),
                         ('outpatient',_('Outside Doctor')),('patient',_('Patient himself'))]
+    barcode_image = models.ImageField(upload_to='barcode/', blank=True, null=True)
+    barcode = models.CharField(max_length=70, blank=True, null=True, verbose_name=_('barcode Number'))
     hospital = models.ForeignKey(Clinic, on_delete=models.CASCADE, verbose_name=_('Hospital'))
     name = models.CharField(max_length=70, verbose_name=_('Patient Name'))
     address = models.CharField(max_length=255, blank=True, null=True, verbose_name=_('Address'))
@@ -17,11 +28,11 @@ class Patient(models.Model):
     job = models.CharField(max_length=30, verbose_name=_('Job'))
     husband_name = models.CharField(max_length=255, blank=True, null=True, verbose_name=_('Husband Name'))
     husband_phone = models.CharField(max_length=255, blank=True, null=True, verbose_name=_('Husband Phone'))
-    # ******************************************************
+    # *******************************************************
     g = models.PositiveIntegerField(blank=True, null=True, verbose_name=_('G'))
     p = models.PositiveIntegerField(blank=True, null=True, verbose_name=_('P'))
     pre = models.PositiveIntegerField(blank=True, null=True, verbose_name=_('PRE'))
-    insurance_number = models.PositiveIntegerField(verbose_name=_('Insurance Number'))
+    insurance_number = models.CharField(max_length=70, verbose_name=_('Insurance Number'))
     entrance_number = models.PositiveIntegerField(verbose_name=_('Enterance Number'))
     hospital_number = models.PositiveIntegerField(verbose_name=_('Hospital Number'))
     patient_number = models.PositiveIntegerField(verbose_name=_('Patient Number'))
@@ -44,6 +55,21 @@ class Patient(models.Model):
     def __str__(self):
         return self.name
 
+
+
+@receiver(pre_save, sender='patient.Patient')
+def save_barcode_image(sender, instance, **kwargs):
+    barcode_dir       = os.path.join(settings.MEDIA_DIR, 'barcode')
+    bar_code_name = instance.barcode
+    EAN = barcode.get_barcode_class('code39')
+    ean = EAN(bar_code_name, writer=ImageWriter())
+    fullname = ean.save(os.path.join(barcode_dir,bar_code_name))
+    file = open(f'{os.path.join(barcode_dir,bar_code_name)}.png', 'rb')
+    instance.barcode_image = 'barcode/'+f'{bar_code_name}.png'
+    # instance.barcode.save(f'{bar_code_name}.png', File(buffer), save=False)
+
+
+
 class Patient_Exit(models.Model):
     exit_nature_list = [('better',_('Better')),
                         ('responsibility',_('Responsibility')),
@@ -54,8 +80,6 @@ class Patient_Exit(models.Model):
     exit_nature = models.CharField(max_length=50,  choices=exit_nature_list, blank=True, null=True, verbose_name=_('Exit Nature'))
     physician = models.CharField(max_length=150, blank=True, null=True, verbose_name=_('Physician'))
     resident_doctor = models.CharField(max_length=150, blank=True, null=True, verbose_name=_('Resident Doctor'))
-    date_start  = models.DateField(auto_now=False, auto_now_add=False, verbose_name=_('Days-off Start Date'))
-    date_end    = models.DateField(auto_now=False, auto_now_add=False, blank=True, null=True, verbose_name=_('Days-off End Date'))
     exit_note = models.TextField(max_length=250, blank=True, null=True, verbose_name=_('Exit Note'))
     created_by  = models.ForeignKey(settings.AUTH_USER_MODEL, blank=False, on_delete=models.CASCADE, related_name="exit_created_by")
     creation_date = models.DateField(auto_now=True, auto_now_add=False)
