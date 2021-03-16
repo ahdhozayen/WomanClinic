@@ -21,16 +21,17 @@
       <div class="panel panel-default card-view">
         <div class="panel-heading">
           <div class="pull-left">
-            <h6 class="panel-title txt-dark"></h6>
+            <form action="{% url 'patient:search-barcode' %}" method="post">
+              {% csrf_token %}
+              <div class="col-md-12">
+                <input type="text" class="form-control" name="barcode" id="barcode" placeholder="Barcode Search ...">
+              </div>
+            </form>
           </div>
           <div class="pull-right">
             <a href="{% url 'patient:create-patient' %}" class="btn btn-primary btn-anim">
               <i class="fa fa-wpforms"></i>
               <span class="btn-text">{% trans 'Add New Patient' %}</span>
-            </a>
-            <a href="#" class="btn btn-primary btn-anim" data-toggle="modal"  data-target="#barcode-modal">
-              <i class="fa fa-wpforms"></i>
-              <span class="btn-text">{% trans 'Serach Barcode' %}</span>
             </a>
           </div>
           <div class="clearfix"></div>
@@ -82,7 +83,9 @@
                           {% endif %}
                         </td>
                         <td>
+                          {% if patient.barcode_image %}
                           <a href="/media/{{patient.barcode_image}}" target="_blank">Print</a>
+                          {% endif %}
                         </td>
                       </tr>
                       {% endfor %}

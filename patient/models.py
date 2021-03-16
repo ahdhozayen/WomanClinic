@@ -12,6 +12,8 @@ import barcode
 from barcode.writer import ImageWriter
 from io import BytesIO
 from django.core.files import File
+from svglib.svglib import svg2rlg
+from reportlab.graphics import renderPDF
 
 
 class Patient(models.Model):
@@ -62,11 +64,16 @@ def save_barcode_image(sender, instance, **kwargs):
     barcode_dir       = os.path.join(settings.MEDIA_DIR, 'barcode')
     bar_code_name = instance.barcode
     EAN = barcode.get_barcode_class('code39')
-    ean = EAN(bar_code_name, writer=ImageWriter())
+    ean = EAN(bar_code_name)
     fullname = ean.save(os.path.join(barcode_dir,bar_code_name))
-    file = open(f'{os.path.join(barcode_dir,bar_code_name)}.png', 'rb')
-    instance.barcode_image = 'barcode/'+f'{bar_code_name}.png'
-    # instance.barcode.save(f'{bar_code_name}.png', File(buffer), save=False)
+    file = open(f'{os.path.join(barcode_dir,bar_code_name)}.svg', 'rb')
+    drawing = svg2rlg(file)
+    pdf_file = renderPDF.drawToFile(drawing, f'{os.path.join(barcode_dir,bar_code_name)}.pdf')
+    instance.barcode_image = 'barcode/'+f'{bar_code_name}.pdf'
+
+
+
+
 
 
 

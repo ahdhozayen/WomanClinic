@@ -117,7 +117,6 @@ def view_patient_barcode(request):
             raise
 
 
-
 @login_required(login_url='/login')
 def update_patient_view(request, pk):
     required_patient = Patient.objects.get(pk=pk)
