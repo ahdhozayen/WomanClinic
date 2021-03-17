@@ -18,6 +18,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='patient',
             name='barcode',
-            field=models.CharField(max_length=70, verbose_name='barcode Number'),
+            field=models.CharField(max_length=70,blank=True, null=True, verbose_name='barcode Number'),
         ),
     ]
