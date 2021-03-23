@@ -184,6 +184,34 @@ def create_surgery_doctor_view(request):
     }
     return render(request, 'create-doctor.html', surgeryContext)
 
+@login_required(login_url='/login')
+def update_surgery_doctor_view(request,pk):
+    required_doctor = get_object_or_404(Surgery_Doctor, pk=pk)
+    doctor_form = Surgery_Doctor_Form(instance=required_doctor)
+    if request.method == 'POST':
+        doctor_form = Surgery_Doctor_Form(request.POST , instance=required_doctor)
+        if doctor_form.is_valid():
+            doctor_obj = doctor_form.save(commit=False)
+            doctor_obj.created_by = request.user
+            doctor_obj.last_update_by = request.user
+            doctor_obj.save()
+            return redirect('surgery:list-surgery-doctors')
+            messages.success(request, 'تـــم التسجيل بنجــاح')
+        else:
+            messages.error(request, doctor_form.errors)
+    surgeryContext = {
+                      'page_title':_('EDIT {}').format(required_doctor.doctor_name),
+                      'doctor_form':doctor_form
+    }
+    return render(request, 'update-doctors.html', surgeryContext)
+
+
+@login_required(login_url='/login')
+def delete_surgery_doctor_view(request, pk):
+    required_doctor = get_object_or_404(Surgery_Doctor, pk=pk)
+    required_doctor.delete()
+    return redirect('surgery:list-surgery-doctors')
+
 def create_after_surgery_view(request, surgery_id_v):
     after_surg_form = After_Surgery_Form()
     all_follow_ups = After_Surgery.objects.filter()

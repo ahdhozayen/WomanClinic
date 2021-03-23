@@ -43,3 +43,10 @@ def update_medicine_view(request, pk):
                   'medicine_form':medicine_form,
     }
     return render(request, 'update-medicine.html', medContext)
+
+@login_required(login_url='/login')
+def delete_medicine_view(request, pk):
+    required_medicine = get_object_or_404(Medicine, pk=pk)
+    medicine_form = MedicineForm(instance=required_medicine)
+    required_medicine.delete()
+    return redirect('pharmacy:all-medicines')
