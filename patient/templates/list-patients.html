@@ -84,7 +84,8 @@
                         </td>
                         <td>
                           {% if patient.barcode_image %}
-                          <a href="/media/{{patient.barcode_image}}" target="_blank">Print</a>
+                          <iframe src="/media/{{patient.barcode_image}}" id="barcodeImage" width="25px" height="20px" style="display:none;"></iframe>
+                          <button type="button" name="button" onclick="printImage()">Print</button>
                           {% endif %}
                         </td>
                       </tr>
@@ -129,5 +130,12 @@
   $(document).ready(function() {
     $('#listPatientsTbl').DataTable();
   });
+</script>
+
+<script type="text/javascript">
+  function printImage() {
+    var iframe = document.getElementById('barcodeImage')
+    iframe.contentWindow.print()
+  }
 </script>
 {% endblock js %}
