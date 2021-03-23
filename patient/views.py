@@ -163,6 +163,13 @@ def update_patient_view(request, pk):
     return render(request, 'create-patient.html', createContext)
 
 @login_required(login_url='/login')
+def delete_patient(request, pk):
+    required_patient = get_object_or_404(Patient, pk=pk)
+    required_patient.delete()
+    return redirect('patient:all-patients')
+
+
+@login_required(login_url='/login')
 def list_gyno_view(request):
     all_gyno = Gynecology.objects.all()
     gyno_formset = GynecologyForm()
@@ -211,7 +218,7 @@ def update_gyno_view(request, pk):
     required_gyno = get_object_or_404(Gynecology, pk=pk)
     gyno_form = GynecologyForm(instance=required_gyno)
     if request.method == 'POST':
-        gyno_form = GynecologyForm(request.POST)
+        gyno_form = GynecologyForm(request.POST,instance=required_gyno)
         if gyno_form.is_valid():
             gyno_obj = gyno_form.save(commit=False)
             gyno_obj.created_by = request.user
@@ -222,6 +229,13 @@ def update_gyno_view(request, pk):
                      'gyno_form':gyno_form,
     }
     return render(request, 'gyno/update-gyno.html', gynoContext)
+
+
+@login_required(login_url='/login')
+def delete_gyno_view(request, pk):
+    required_gyno = get_object_or_404(Gynecology, pk=pk)
+    required_gyno.delete()
+    return redirect('patient:all-gynos')
 
 @login_required(login_url='/login')
 def list_delivery_view(request, pk):

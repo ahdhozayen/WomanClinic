@@ -7,4 +7,5 @@ urlpatterns =[
     path('list/', views.list_medicines_view, name='all-medicines'),
     path('medicine/create/', views.create_medicine_view, name='create-medicine'),
     path('medicine/update/<int:pk>', views.update_medicine_view, name='update-medicine'),
+     path('medicine/delete/<int:pk>', views.delete_medicine_view, name='delete-medicine'),
 ]
