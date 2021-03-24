@@ -21,13 +21,19 @@ from django.conf.urls.static import static
 
 urlpatterns = [
             path('i18n/', include('django.conf.urls.i18n')),
-    ]
-
-urlpatterns += i18n_patterns(
             path('admin/', admin.site.urls),
             path('', include('home.urls'), name='home'),
             path('patients/', include('patient.urls'), name='patient'),
             path('medicine/', include('pharmacy.urls'), name='pharmacy'),
             path('surgery/', include('surgery.urls'), name='surgery'),
             path('report/', include('report.urls'), name='reports'),
-)+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+# urlpatterns += i18n_patterns(
+#             path('admin/', admin.site.urls),
+#             path('', include('home.urls'), name='home'),
+#             path('patients/', include('patient.urls'), name='patient'),
+#             path('medicine/', include('pharmacy.urls'), name='pharmacy'),
+#             path('surgery/', include('surgery.urls'), name='surgery'),
+#             path('report/', include('report.urls'), name='reports'),
+# )+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

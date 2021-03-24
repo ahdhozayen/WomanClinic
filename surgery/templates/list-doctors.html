@@ -59,9 +59,7 @@
                         <th scope="row">{{ forloop.counter }}</th>
                         <td>{{doc.doctor_name}}</td>
                         <td class="text-nowrap">
-                          <a href="{% url 'surgery:update-doctor' pk=doc.id %}" class="mr-25" data-original-title="Edit" data-toggle="tooltip">
-                            <i class="fa fa-pencil text-inverse m-r-10"></i>
-                          </a>
+                          
                           <a href="#" class="mr-25" data-toggle="modal" data-target="#delete-modal{{doc.pk}}" title="{% trans 'Delete' %}">
                             <i class="fa fa-trash-o" style="font-size:20px;color:red"></i>
                           </a>

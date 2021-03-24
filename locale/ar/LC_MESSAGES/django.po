@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-24 11:15+0200\n"
+"POT-Creation-Date: 2021-03-24 12:04+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -695,7 +695,7 @@ msgstr "الرجوع الي القائمة"
 #: .\pharmacy\templates\create-medicine-form.html:13
 #: .\pharmacy\templates\list-medicine.html:87
 #: .\surgery\templates\create-after-surgery.html:14
-#: .\surgery\templates\list-doctors.html:79
+#: .\surgery\templates\list-doctors.html:77
 #: .\surgery\templates\list-surgery.html:81
 #: .\surgery\templates\update-surgery.html:16
 #: .\womanClinic\templates\top_nav.html:41
@@ -866,8 +866,8 @@ msgstr "اضافة تشخيص جديد"
 #: .\patient\templates\list-patients.html:106
 #: .\pharmacy\templates\list-medicine.html:70
 #: .\pharmacy\templates\list-medicine.html:85
-#: .\surgery\templates\list-doctors.html:65
-#: .\surgery\templates\list-doctors.html:77
+#: .\surgery\templates\list-doctors.html:63
+#: .\surgery\templates\list-doctors.html:75
 #: .\surgery\templates\list-surgery.html:66
 #: .\surgery\templates\list-surgery.html:79
 msgid "Delete"
@@ -879,13 +879,13 @@ msgid "Are you sure you want to delete this diagnosis ?"
 msgstr "هل انت متأكد من انك تريد حذف هذا السجل"
 
 #: .\patient\templates\gyno\list-gyno.html:108
-#: .\surgery\templates\list-doctors.html:110
+#: .\surgery\templates\list-doctors.html:108
 msgid "Save changes"
 msgstr "حفظ التعديلات"
 
 #: .\patient\templates\gyno\list-gyno.html:109
 #: .\patient\templates\view-patient.html:359
-#: .\surgery\templates\list-doctors.html:111
+#: .\surgery\templates\list-doctors.html:109
 msgid "Close"
 msgstr "اغلاق"
 
@@ -914,6 +914,10 @@ msgstr "طباعة الباركود"
 #: .\patient\templates\top-button.html:26
 msgid "Actions"
 msgstr "اجراءات"
+
+#: .\patient\templates\list-patients.html:90
+msgid "Print"
+msgstr "طباعة"
 
 #: .\patient\templates\list-patients.html:134
 msgid "Enter Barcode"
@@ -1201,7 +1205,7 @@ msgstr "تسجيل طبيب جديد"
 msgid "Doctor name"
 msgstr "اسم الطبيب"
 
-#: .\surgery\templates\list-doctors.html:74
+#: .\surgery\templates\list-doctors.html:72
 msgid "Are you sure you want to delete this doctor ?"
 msgstr "هل انت متأكد من انك تريد حذف هذا السجل"
 

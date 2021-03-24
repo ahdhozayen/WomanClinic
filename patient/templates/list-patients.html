@@ -87,7 +87,7 @@
                         <td>
                           {% if patient.barcode_image %}
                           <iframe src="/media/{{patient.barcode_image}}" id="barcodeImage" width="25px" height="20px" style="display:none;"></iframe>
-                          <button type="button" name="button" onclick="printImage()">Print</button>
+                          <button type="button" name="button" onclick="printImage()">{% trans 'Print' %}</button>
                           {% endif %}
                         </td>
                         <td class="text-nowrap">
