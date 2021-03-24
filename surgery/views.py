@@ -61,7 +61,7 @@ def create_surgery_view(request):
                     obj.created_by = request.user
                     obj.last_update_by = request.user
                     obj.save()
-                    return redirect('surgery:list-surgery-types')
+            return redirect('surgery:list-surgery-types')
     surgeryContext = {
         "page_title": 'اضافة عملية جديدة',
         'master_form': master_form,

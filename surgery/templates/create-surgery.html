@@ -35,31 +35,29 @@
                   <label class="control-label mb-10">{{ master_form.surgery_name.label }}</label>
                   {{ master_form.surgery_name}}
                 </div>
+                <hr>
+
                 <div class="form-group mt-30 mb-30">
-                  <table class="table">
-                    {{ detail_fromset.management_form }}
+                  {{ detail_fromset.management_form }}
+                  <div id="form_set" class="col-md-9">
                     {% for form in detail_fromset %}
-                    {{ form.id }}
-                    {% if forloop.first %}
-                    {% endif %}
-                    <tr>
-                      <td style="width: 10%;">Step -{{ forloop.counter }}</td>
-                      {% for field in form.visible_fields %}
-                      <td>
-                        <!-- # exclude the hidden fields in the form # -->
-                        {% if forloop.first %}
-                        {% for hidden in form.hidden_fields %}
-                        {{ hidden }}
-                        {% endfor %}
-                        {% endif %}
-                        {{ field.errors.as_ul }}
-                        {{ field|as_crispy_field }}
-                      </td>
-                      {% endfor %}
-                    </tr>
+                    <div class="form-group mt-30 mb-30">
+                      <label class="control-label mb-10">{{ form.step_name.label }}</label>
+                      {{ form.step_name}}
+                    </div>
                     {% endfor %}
-                  </table>
+                  </div>
+
+                  <div id="empty_form" style="display:none">
+                    <table class='no_error'>
+                      <div class="form-group mt-30 mb-30">
+                        <label class="control-label mb-10">{{ detail_fromset.empty_form.step_name.label }} </label>
+                        {{ detail_fromset.empty_form.step_name}}
+                      </div>
+                    </table>
+                  </div>
                 </div>
+
 
               </div>
             </div>
@@ -68,6 +66,7 @@
       </div>
     </div>
     <div class="pull-right">
+      <button type="button" id="add_more" class="btn cur-p btn-success">{% trans "Add New Line"%}</button>
       <button type="submit" class="btn btn-success btn-anim">
         <i class="fa fa-arrow-circle-left"></i><span class="btn-text">{% trans "Save" %}</span>
       </button>
@@ -82,3 +81,12 @@
 
 
 {% endblock body %}
+{% block js %}
+<script>
+  $('#add_more').click(function() {
+    var form_idx = $('#id_surgery_steps_set-TOTAL_FORMS').val();
+    $('#form_set').append($('#empty_form').html().replace(/__prefix__/g, form_idx));
+    $('#id_surgery_steps_set-TOTAL_FORMS').val(parseInt(form_idx) + 1);
+  });
+</script>
+{% endblock js %}

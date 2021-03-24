@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-24 12:04+0200\n"
+"POT-Creation-Date: 2021-03-24 12:48+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -606,7 +606,7 @@ msgstr "تاريخ القراءة"
 #: .\pharmacy\templates\update-medicine.html:24
 #: .\surgery\templates\create-doctor.html:71
 #: .\surgery\templates\create-patient-surgery.html:25
-#: .\surgery\templates\create-surgery.html:72
+#: .\surgery\templates\create-surgery.html:71
 msgid "Save"
 msgstr "حفظ"
 
@@ -682,7 +682,7 @@ msgstr "الســونار"
 #: .\pharmacy\templates\create-medicine.html:27
 #: .\pharmacy\templates\update-medicine.html:27
 #: .\surgery\templates\create-doctor.html:74
-#: .\surgery\templates\create-surgery.html:75
+#: .\surgery\templates\create-surgery.html:74
 msgid "Back to list"
 msgstr "الرجوع الي القائمة"
 
@@ -1126,7 +1126,7 @@ msgstr "اسم الجراحة"
 
 #: .\surgery\models.py:22
 msgid "Step"
-msgstr "خطوة"
+msgstr "بيـــان الخطوة"
 
 #: .\surgery\models.py:34
 msgid "Doctor Name"
@@ -1195,6 +1195,10 @@ msgstr ""
 #: .\surgery\templates\create-patient-surgery.html:110
 msgid "توصيات"
 msgstr ""
+
+#: .\surgery\templates\create-surgery.html:69
+msgid "Add New Line"
+msgstr "اضـافة سطر جديد"
 
 #: .\surgery\templates\list-doctors.html:31 .\surgery\views.py:158
 msgid "Add New Doctor"

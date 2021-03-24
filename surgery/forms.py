@@ -35,7 +35,7 @@ class Surgery_Steps_Form(forms.ModelForm):
 
 Surgery_Inline = forms.inlineformset_factory(models.Surgery_Master,
                                              models.Surgery_Steps,
-                                             extra=5,
+                                             extra=2,
                                              form=Surgery_Steps_Form,
                                              can_delete=False)
 
