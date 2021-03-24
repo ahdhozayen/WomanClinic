@@ -151,7 +151,6 @@ def list_surgery_doctor_view(request):
             return redirect('surgery:list-surgery-doctors')
             messages.success(request, _('Saved Successfully'))
         else:
-            print(doctor_form.errors)
             messages.error(request, doctor_form.errors)
     surgeryContext = {
                       'page_title':_('Doctors List'),

@@ -63,22 +63,26 @@
                           <a href="{% url 'surgery:update-surgery' surgery.id %}" class="mr-25" data-toggle="tooltip" data-original-title="Edit">
                             <i class="fa fa-pencil text-inverse m-r-10"></i>
                           </a>
-                           <button type="button" class="btn cur-p btn-outline-danger" data-toggle="modal" data-target="#delete-modal{{surgery.pk}}" title="{% trans 'Delete' %}"><i class="fa fa-trash-o" style="font-size:20px;color:red"></i></button>
+                          <a type="button" class="btn cur-p btn-outline-danger" data-toggle="modal" data-target="#delete-modal{{surgery.pk}}" title="{% trans 'Delete' %}">
+                            <i class="fa fa-trash-o" style="font-size:20px;color:red"></i>
+                          </a>
                         </td>
                       </tr>
                       <div class="modal fade" id="delete-modal{{surgery.pk}}" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-body">
-                  <p>{% trans "Are you sure you want to delete this surgery ?" %}</p>
-                  <a href="{% url 'surgery:delete-surgery' pk=surgery.id %}" class="btn btn-outline-danger" type="button"
-                     data-toggle="tooltip" data-placement="bottom" title="{% trans 'Delete' %}"><i class="fa fa-trash-o" style="font-size:20px;color:red"></i></a>
-                  <button type="button" class="btn btn-outline-secondary" data-dismiss="modal"
-                          data-toggle="tooltip" data-placement="bottom" title="{% trans 'Cancel' %}">&#x2718</button>
-                </div>
-              </div>
-            </div>
-          </div>
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-body">
+                              <p>{% trans "Are you sure you want to delete this surgery ?" %}</p>
+
+                            </div>
+                            <div class="modal-footer">
+                              <a href="{% url 'surgery:delete-surgery' pk=surgery.id %}" class="btn btn-outline-danger" type="button" data-toggle="tooltip" data-placement="bottom" title="{% trans 'Delete' %}"><i class="fa fa-trash-o"
+                                  style="font-size:20px;color:red"></i></a>
+                              <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" data-toggle="tooltip" data-placement="bottom" title="{% trans 'Cancel' %}">&#x2718</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                       {% endfor %}
                     </tbody>
                   </table>
